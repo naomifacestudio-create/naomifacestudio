@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Blogs" %}{% endblock %}
+
+{% block meta_description %}{% trans "Read our latest blog posts about skincare, beauty tips, and facial treatments." %}{% endblock %}
+
+{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{% url 'blogs:list' %}{% if page_obj.has_other_pages %}?page={{ page_obj.number }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Our Blog" %}</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {% for blog in blogs %}
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {% if blog.thumbnail %}
+            <img src="{{ blog.thumbnail.url }}" alt="{{ blog.get_title }}" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-3 text-[#593d09]">{{ blog.get_title }}</h2>
+                <p class="text-[#593d09] mb-4">{{ blog.get_short_description }}</p>
+                <a href="{{ blog.get_absolute_url }}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+                    {% trans "See more" %}
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-12">
+            <p class="text-[#593d09] text-lg">{% trans "No blog posts available at the moment." %}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav class="flex justify-center">
+        <ul class="flex gap-2">
+            {% if page_obj.has_previous %}
+            <li>
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                    {% trans "Previous" %}
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li>
+                <span class="px-4 py-2 bg-[#593d09] text-white rounded">{{ num }}</span>
+            </li>
+            {% else %}
+            <li>
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-[#593d09] rounded hover:bg-gray-300">
+                    {{ num }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li>
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                    {% trans "Next" %}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
+

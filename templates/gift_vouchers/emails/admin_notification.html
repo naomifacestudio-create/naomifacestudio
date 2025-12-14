@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #593d09; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #593d09; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background-color: #f9f9f9; }
+        .footer { text-align: center; padding: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Gift Voucher Order</h1>
+        </div>
+        <div class="content">
+            <h2>Order Details</h2>
+            <p><strong>Treatment:</strong> {{ gift_voucher.treatment.get_title }}</p>
+            <p><strong>Recipient Name:</strong> {{ gift_voucher.recipient_name }}</p>
+            <p><strong>From:</strong> {{ gift_voucher.from_name }}</p>
+            <p><strong>Personalised Message:</strong> {{ gift_voucher.personalised_message|default:"N/A" }}</p>
+            
+            <h3>Purchaser Details</h3>
+            <p><strong>Name:</strong> {{ gift_voucher.purchaser_first_name }} {{ gift_voucher.purchaser_last_name }}</p>
+            <p><strong>Email:</strong> {{ gift_voucher.purchaser_email }}</p>
+            <p><strong>Mobile:</strong> {{ gift_voucher.purchaser_mobile }}</p>
+            
+            <p><strong>Email Delivery:</strong> {{ gift_voucher.get_email_option_display }}</p>
+            {% if gift_voucher.recipient_email %}
+            <p><strong>Recipient Email:</strong> {{ gift_voucher.recipient_email }}</p>
+            {% endif %}
+        </div>
+        <div class="footer">
+            <p>Naomi Face Studio</p>
+        </div>
+    </div>
+</body>
+</html>
+

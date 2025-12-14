@@ -1,0 +1,28 @@
+python manage.py runserver
+
+.\venv\Scripts\activate
+
+deactivate
+
+python manage.py makemigrations
+python manage.py migrate
+
+.\export_structure.ps1 - kompletna struktura sa sadržajem
+
+.\export_django_structure.ps1 - kompletna struktura sa sadržajem settings.py i Exercises i Blogs app-activate
+
+Prevodjenje:
+
+django-admin makemessages -l hr
+django-admin makemessages -l en
+django-admin compilemessages
+
+
+Git commit and push commands(puštati jednu po jednu):
+
+git add .
+git commit -m "update"
+git push
+
+git push --force - nakon backup kopiranja
+

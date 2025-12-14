@@ -1,0 +1,140 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    {% block meta %}
+    <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock meta_keywords %}">
+    <meta name="author" content="Naomi Face Studio">
+    {% endblock meta %}
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
+    <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock og_image %}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="twitter:title" content="{% block twitter_title %}{% endblock twitter_title %}">
+    <meta property="twitter:description" content="{% block twitter_description %}{% endblock twitter_description %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock twitter_image %}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path|slice:':-1'|default:request.path }}{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    
+    <title>{% block title %}{% endblock %} - Naomi Face Studio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Flowbite CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #593d09;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: bold;
+        }
+        p {
+            font-weight: normal;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+    
+    <!-- JSON-LD Structured Data -->
+    {% block structured_data %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+    
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% if messages %}
+            <div class="container mx-auto px-4 py-4">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} mb-4 p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 text-red-800{% elif message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+    
+    <!-- Cookie Banner -->
+    {% include 'includes/cookie_banner.html' %}
+    
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-[#593d09] text-white p-3 rounded-full shadow-lg hover:bg-[#4a3207] transition-all duration-300 opacity-0 invisible z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <!-- Flowbite JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Cookie banner
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.classList.remove('hidden');
+        }
+        
+        if (acceptCookies) {
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookieBanner.classList.add('hidden');
+            });
+        }
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

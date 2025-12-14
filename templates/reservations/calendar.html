@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Reservations" %}{% endblock %}
+
+{% block meta_description %}{% trans "Book your facial treatment appointment at Naomi Face Studio." %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Book Your Treatment" %}</h1>
+    
+    {% if not user.is_authenticated %}
+    <div class="max-w-2xl mx-auto mb-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <p class="text-[#593d09] mb-4">{% trans "You need to create an account to make a reservation." %}</p>
+        <a href="{% url 'admin:login' %}?next={{ request.path }}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+            {% trans "Create Account / Login" %}
+        </a>
+    </div>
+    {% endif %}
+    
+    <div class="max-w-4xl mx-auto">
+        <!-- Treatment Selection -->
+        <div class="mb-8">
+            <label for="treatment_select" class="block mb-2 font-bold text-[#593d09]">{% trans "Select Treatment" %}</label>
+            <select id="treatment_select" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+                <option value="">{% trans "-- Select Treatment --" %}</option>
+                {% for t in treatments %}
+                <option value="{{ t.id }}" {% if treatment and treatment.id == t.id %}selected{% endif %}>{{ t.get_title }} - {{ t.get_duration_display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Calendar -->
+        <div id="calendar-container" class="bg-white p-6 rounded-lg shadow-md">
+            <div id="calendar" class="mb-6"></div>
+            <div id="time-slots" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    let selectedDate = null;
+    let selectedTreatment = null;
+    let availableSlots = [];
+    
+    // Treatment selection handler
+    document.getElementById('treatment_select').addEventListener('change', function() {
+        selectedTreatment = this.value;
+        if (selectedTreatment) {
+            loadCalendar();
+        }
+    });
+    
+    // Initialize with pre-selected treatment
+    {% if treatment %}
+    selectedTreatment = {{ treatment.id }};
+    document.getElementById('treatment_select').value = {{ treatment.id }};
+    loadCalendar();
+    {% endif %}
+    
+    function loadCalendar() {
+        // Simple calendar implementation
+        const today = new Date();
+        const calendar = document.getElementById('calendar');
+        calendar.innerHTML = '';
+        
+        // Create calendar grid
+        const monthNames = ['{% trans "January" %}', '{% trans "February" %}', '{% trans "March" %}', '{% trans "April" %}', '{% trans "May" %}', '{% trans "June" %}', '{% trans "July" %}', '{% trans "August" %}', '{% trans "September" %}', '{% trans "October" %}', '{% trans "November" %}', '{% trans "December" %}'];
+        const dayNames = ['{% trans "Mon" %}', '{% trans "Tue" %}', '{% trans "Wed" %}', '{% trans "Thu" %}', '{% trans "Fri" %}', '{% trans "Sat" %}', '{% trans "Sun" %}'];
+        
+        // Calendar HTML will be generated here
+        // This is a simplified version - you may want to use a calendar library
+        let calendarHTML = '<div class="grid grid-cols-7 gap-2 mb-4">';
+        dayNames.forEach(day => {
+            calendarHTML += `<div class="text-center font-bold text-[#593d09]">${day}</div>`;
+        });
+        
+        // Add date cells (simplified - you'd want a full calendar implementation)
+        for (let i = 0; i < 30; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() + i);
+            const dayOfWeek = date.getDay();
+            const adjustedDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Monday = 0
+            
+            if (i === 0 || adjustedDay === 0) {
+                calendarHTML += '</div><div class="grid grid-cols-7 gap-2">';
+            }
+            
+            const dateStr = date.toISOString().split('T')[0];
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+            const isAvailable = !isWeekend && (dayOfWeek !== 6 && dayOfWeek !== 0); // Not Saturday or Sunday
+            
+            calendarHTML += `
+                <button 
+                    onclick="selectDate('${dateStr}')" 
+                    class="p-2 rounded ${isAvailable ? 'bg-gray-100 hover:bg-[#593d09] hover:text-white' : 'bg-gray-300 cursor-not-allowed'} ${selectedDate === dateStr ? 'bg-[#593d09] text-white' : ''}"
+                    ${!isAvailable ? 'disabled' : ''}
+                >
+                    ${date.getDate()}
+                </button>
+            `;
+        }
+        calendarHTML += '</div>';
+        calendar.innerHTML = calendarHTML;
+    }
+    
+    function selectDate(date) {
+        selectedDate = date;
+        loadTimeSlots(date);
+    }
+    
+    function loadTimeSlots(date) {
+        if (!selectedTreatment) {
+            alert('{% trans "Please select a treatment first" %}');
+            return;
+        }
+        
+        fetch(`{% url 'reservations:available_slots' %}?treatment_id=${selectedTreatment}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                availableSlots = data.available_slots;
+                displayTimeSlots();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    
+    function displayTimeSlots() {
+        const container = document.getElementById('time-slots');
+        container.innerHTML = '';
+        
+        if (availableSlots.length === 0) {
+            container.innerHTML = '<p class="text-[#593d09]">{% trans "No available slots for this date" %}</p>';
+            return;
+        }
+        
+        availableSlots.forEach(slot => {
+            const button = document.createElement('button');
+            button.className = 'px-4 py-2 bg-gray-100 text-[#593d09] rounded hover:bg-[#593d09] hover:text-white transition-colors';
+            button.textContent = slot.start;
+            button.onclick = () => bookSlot(slot.start);
+            container.appendChild(button);
+        });
+    }
+    
+    function bookSlot(startTime) {
+        {% if not user.is_authenticated %}
+        window.location.href = '{% url "admin:login" %}?next={{ request.path }}';
+        return;
+        {% endif %}
+        
+        if (!selectedDate || !selectedTreatment) {
+            alert('{% trans "Please select a date and treatment" %}');
+            return;
+        }
+        
+        fetch('{% url "reservations:create" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                treatment_id: selectedTreatment,
+                date: selectedDate,
+                start_time: startTime
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('{% trans "Reservation created successfully!" %}');
+                window.location.reload();
+            } else {
+                alert(data.error || '{% trans "Error creating reservation" %}');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('{% trans "Error creating reservation" %}');
+        });
+    }
+</script>
+{% endblock %}
+{% endblock %}
+

@@ -1,0 +1,44 @@
+{% load static %}
+{% load i18n %}
+<footer class="bg-gray-100 mt-auto py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Contact Information -->
+            <div>
+                <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Contact" %}</h3>
+                <p class="mb-2">
+                    <a href="mailto:info@naomifacestudio.com" class="text-[#593d09] hover:text-[#4a3207]">info@naomifacestudio.com</a>
+                </p>
+                <p class="mb-2">
+                    <a href="tel:+385955551282" class="text-[#593d09] hover:text-[#4a3207]">0955551282</a>
+                </p>
+                <p class="text-[#593d09]">Korzo 35, Rijeka</p>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Quick Links" %}</h3>
+                <ul class="space-y-2">
+                    <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207]">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207]">{% trans "Treatments" %}</a></li>
+                    <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207]">{% trans "Blogs" %}</a></li>
+                    <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207]">{% trans "Contact" %}</a></li>
+                </ul>
+            </div>
+            
+            <!-- Company Credit -->
+            <div>
+                <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Website by" %}</h3>
+                <a href="https://yourcompany.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2">
+                    <img src="{% static 'images/company-logo.png' %}" alt="Company Logo" class="h-8">
+                    <span class="text-[#593d09] hover:text-[#4a3207]">{% trans "Company Name" %}</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-gray-300 text-center text-sm text-gray-600">
+            <p>&copy; {% now "Y" %} Naomi Face Studio. {% trans "All rights reserved." %}</p>
+        </div>
+    </div>
+</footer>
+

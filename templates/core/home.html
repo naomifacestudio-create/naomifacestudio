@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock title %}
+{% block og_title %}{% trans "Home" %} - Naomi Face Studio{% endblock og_title %}
+{% block twitter_title %}{% trans "Home" %} - Naomi Face Studio{% endblock twitter_title %}
+
+{% block meta_description %}{% trans "Naomi Face Studio - Premium facial treatments combining ritual care, modern anti-age methods, and luxury Japanese cosmetics." %}{% endblock meta_description %}
+{% block og_description %}{% trans "Naomi Face Studio - Premium facial treatments combining ritual care, modern anti-age methods, and luxury Japanese cosmetics." %}{% endblock og_description %}
+{% block twitter_description %}{% trans "Naomi Face Studio - Premium facial treatments combining ritual care, modern anti-age methods, and luxury Japanese cosmetics." %}{% endblock twitter_description %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+        <div class="prose prose-lg max-w-none text-[#593d09]">
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske kozmetike." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku svježinu." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-12">
+                {% trans "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah." %}
+            </p>
+        </div>
+        
+        <!-- FAQ Section -->
+        <section class="mt-16">
+            <h2 class="text-3xl font-bold mb-8 text-[#593d09]">{% trans "Frequently Asked Questions" %}</h2>
+            <div class="space-y-4" id="faq-section">
+                <!-- FAQ items will be added dynamically or via admin -->
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="font-bold text-lg mb-2 text-[#593d09]">{% trans "How do I book a treatment?" %}</h3>
+                    <p class="text-[#593d09]">{% trans "You can book a treatment by clicking on the 'Reservations' button in the navigation menu or directly from a treatment page. You'll need to create an account first if you don't have one." %}</p>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="font-bold text-lg mb-2 text-[#593d09]">{% trans "What are your working hours?" %}</h3>
+                    <p class="text-[#593d09]">{% trans "Monday: 12:00 - 20:00, Tuesday - Friday: 09:00 - 17:00, Saturday - Sunday: Closed" %}</p>
+                </div>
+                <div class="border border-gray-200 rounded-lg p-6">
+                    <h3 class="font-bold text-lg mb-2 text-[#593d09]">{% trans "Can I cancel my reservation?" %}</h3>
+                    <p class="text-[#593d09]">{% trans "Yes, you can cancel your reservation from your account's 'My Reservations' page." %}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "{% trans 'How do I book a treatment?' %}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{% trans 'You can book a treatment by clicking on the Reservations button in the navigation menu or directly from a treatment page. You will need to create an account first if you do not have one.' %}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{% trans 'What are your working hours?' %}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{% trans 'Monday: 12:00 - 20:00, Tuesday - Friday: 09:00 - 17:00, Saturday - Sunday: Closed' %}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{% trans 'Can I cancel my reservation?' %}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{% trans 'Yes, you can cancel your reservation from your accounts My Reservations page.' %}"
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+{% endblock %}
+

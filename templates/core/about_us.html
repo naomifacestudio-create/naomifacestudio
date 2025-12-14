@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "About Us" %}{% endblock %}
+
+{% block meta_description %}{% trans "Learn more about Maja Divjaković, medical cosmetologist and certified therapist specializing in Forlle'd professional treatments and Face Gym techniques." %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-[#593d09]">{% trans "About Me" %}</h1>
+        
+        <div class="prose prose-lg max-w-none text-[#593d09]">
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim iskustvom rada u wellnesima i estetskim centrima." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Kroz godine rada razvila sam poseban pristup koji spaja stručnost i luksuz s naglaskom na rezultate koji se vide odmah, ali i na osjećaj potpune opuštenosti i harmonije." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu japansku kozmetiku za anti-age njegu – te sam certificirani terapeut. Osim ritualnih tretmana, posvećena sam i Face Gym tehnikama koje prirodnim putem oblikuju i učvršćuju lice, aktivirajući više od 40 mišića te vraćajući koži tonus i svježinu." %}
+            </p>
+            <p class="text-lg leading-relaxed mb-6">
+                {% trans "Moja vizija je podići svijest o važnosti kvalitetne i personalizirane njege lica te približiti klijentima iskustvo koje nadilazi klasične tretmane." %}
+            </p>
+            <p class="text-lg leading-relaxed">
+                {% trans "U Naomi Face Studiju želim svakom klijentu pružiti više od njege – prostor gdje se ljepota i zdravlje kože susreću s ritualom, luksuzom i unutarnjim balansom." %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
