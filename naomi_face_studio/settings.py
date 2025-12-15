@@ -165,13 +165,13 @@ if USE_R2:
     AWS_S3_ENDPOINT_URL = env('R2_ENDPOINT_URL', default='')
     
     # Custom domain for R2 (should be just the domain name, e.g., 'media.naomifacestudio.com')
-    # django-storages will automatically add https:// when generating URLs
+    # Our custom storage class will use this if set
     custom_domain = env('R2_CUSTOM_DOMAIN', default='')
     if custom_domain:
         # Remove https:// if accidentally included, and strip trailing slash
         AWS_S3_CUSTOM_DOMAIN = custom_domain.replace('https://', '').replace('http://', '').rstrip('/')
     else:
-        AWS_S3_CUSTOM_DOMAIN = ''  # Empty string means use default endpoint
+        AWS_S3_CUSTOM_DOMAIN = None  # Explicitly None when not set
     
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
@@ -181,8 +181,8 @@ if USE_R2:
     AWS_S3_USE_SSL = True
     AWS_S3_VERIFY = True
     
-    # Use R2 for media files
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # Use R2 for media files with custom storage class that handles custom domains
+    DEFAULT_FILE_STORAGE = 'naomi_face_studio.storage.R2Storage'
     # Keep static files local or use WhiteNoise
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
     
@@ -406,7 +406,7 @@ startup_logger.info(f"Database: {'PostgreSQL' if is_postgres else 'SQLite'}")
 if is_postgres:
     startup_logger.info(f"Database Name: {DATABASES['default']['NAME']}")
     startup_logger.info(f"Database Host: {DATABASES['default'].get('HOST', 'N/A')}")
-startup_logger.info(f"R2 Storage Enabled: {USE_R2}")
+    startup_logger.info(f"R2 Storage Enabled: {USE_R2}")
 if USE_R2:
     startup_logger.info(f"R2 Bucket: {AWS_STORAGE_BUCKET_NAME}")
     startup_logger.info(f"R2 Endpoint: {AWS_S3_ENDPOINT_URL}")
