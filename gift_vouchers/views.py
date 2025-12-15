@@ -10,6 +10,9 @@ from django_ratelimit.decorators import ratelimit
 from .models import GiftVoucher
 from treatments.models import Treatment
 from core.models import EmailCollection
+import logging
+
+logger = logging.getLogger('gift_vouchers')
 
 
 @ratelimit(key='ip', rate='5/m', method='POST')
@@ -89,49 +92,56 @@ def gift_voucher_form(request):
 
 def send_gift_voucher_emails(gift_voucher, language_code='hr'):
     """Send gift voucher emails to purchaser, recipient, and admin"""
-    # Email to purchaser/admin
-    context = {
-        'gift_voucher': gift_voucher,
-        'language_code': language_code,
-    }
-    
-    # Admin email
-    admin_subject = f'New Gift Voucher Order - {gift_voucher.recipient_name}'
-    admin_message = render_to_string('gift_vouchers/emails/admin_notification.html', context)
-    send_mail(
-        admin_subject,
-        admin_message,
-        settings.DEFAULT_FROM_EMAIL,
-        [settings.ADMIN_EMAIL],
-        html_message=admin_message,
-        fail_silently=False,
-    )
-    
-    # Purchaser email
-    purchaser_subject = f'Gift Voucher Order Confirmation - {gift_voucher.treatment.get_title(language_code)}'
-    purchaser_message = render_to_string('gift_vouchers/emails/purchaser_confirmation.html', context)
-    send_mail(
-        purchaser_subject,
-        purchaser_message,
-        settings.DEFAULT_FROM_EMAIL,
-        [gift_voucher.purchaser_email],
-        html_message=purchaser_message,
-        fail_silently=False,
-    )
-    
-    # Recipient email (if different)
-    if gift_voucher.email_option == 'recipient' and gift_voucher.recipient_email:
-        recipient_subject = f'You received a Gift Voucher! - {gift_voucher.treatment.get_title(language_code)}'
-        recipient_message = render_to_string('gift_vouchers/emails/recipient_notification.html', context)
+    try:
+        context = {
+            'gift_voucher': gift_voucher,
+            'language_code': language_code,
+        }
+        
+        # Admin email
+        admin_subject = f'New Gift Voucher Order - {gift_voucher.recipient_name}'
+        admin_message = render_to_string('gift_vouchers/emails/admin_notification.html', context)
         send_mail(
-            recipient_subject,
-            recipient_message,
+            admin_subject,
+            admin_message,
             settings.DEFAULT_FROM_EMAIL,
-            [gift_voucher.recipient_email],
-            html_message=recipient_message,
+            [settings.ADMIN_EMAIL],
+            html_message=admin_message,
             fail_silently=False,
         )
-    
-    gift_voucher.is_sent = True
-    gift_voucher.save()
+        logger.info(f"Gift voucher admin notification sent for voucher ID: {gift_voucher.id}")
+        
+        # Purchaser email
+        purchaser_subject = f'Gift Voucher Order Confirmation - {gift_voucher.treatment.get_title(language_code)}'
+        purchaser_message = render_to_string('gift_vouchers/emails/purchaser_confirmation.html', context)
+        send_mail(
+            purchaser_subject,
+            purchaser_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [gift_voucher.purchaser_email],
+            html_message=purchaser_message,
+            fail_silently=False,
+        )
+        logger.info(f"Gift voucher confirmation email sent to purchaser: {gift_voucher.purchaser_email} for voucher ID: {gift_voucher.id}")
+        
+        # Recipient email (if different)
+        if gift_voucher.email_option == 'recipient' and gift_voucher.recipient_email:
+            recipient_subject = f'You received a Gift Voucher! - {gift_voucher.treatment.get_title(language_code)}'
+            recipient_message = render_to_string('gift_vouchers/emails/recipient_notification.html', context)
+            send_mail(
+                recipient_subject,
+                recipient_message,
+                settings.DEFAULT_FROM_EMAIL,
+                [gift_voucher.recipient_email],
+                html_message=recipient_message,
+                fail_silently=False,
+            )
+            logger.info(f"Gift voucher notification sent to recipient: {gift_voucher.recipient_email} for voucher ID: {gift_voucher.id}")
+        
+        gift_voucher.is_sent = True
+        gift_voucher.save()
+        logger.info(f"Gift voucher emails sent successfully for voucher ID: {gift_voucher.id}")
+    except Exception as e:
+        logger.error(f"Failed to send gift voucher emails for voucher ID: {gift_voucher.id}. Error: {str(e)}", exc_info=True)
+        raise
 

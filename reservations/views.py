@@ -13,61 +13,75 @@ from .models import Reservation
 from treatments.models import Treatment
 from core.models import EmailCollection
 import json
+import logging
+
+logger = logging.getLogger('reservations')
 
 
 def send_reservation_emails(reservation, language_code='hr'):
     """Send reservation confirmation emails to user and admin"""
-    context = {
-        'reservation': reservation,
-        'treatment': reservation.treatment,
-        'user': reservation.user,
-        'language_code': language_code,
-    }
-    
-    # User email
-    user_subject = f'Reservation Confirmation - {reservation.treatment.get_title(language_code)}'
-    user_message = render_to_string('reservations/emails/user_confirmation.html', context)
-    send_mail(
-        user_subject,
-        user_message,
-        settings.DEFAULT_FROM_EMAIL,
-        [reservation.user.email],
-        html_message=user_message,
-        fail_silently=False,
-    )
-    
-    # Admin email
-    admin_subject = f'New Reservation - {reservation.treatment.get_title(language_code)}'
-    admin_message = render_to_string('reservations/emails/admin_notification.html', context)
-    send_mail(
-        admin_subject,
-        admin_message,
-        settings.DEFAULT_FROM_EMAIL,
-        [settings.ADMIN_EMAIL],
-        html_message=admin_message,
-        fail_silently=False,
-    )
+    try:
+        context = {
+            'reservation': reservation,
+            'treatment': reservation.treatment,
+            'user': reservation.user,
+            'language_code': language_code,
+        }
+        
+        # User email
+        user_subject = f'Reservation Confirmation - {reservation.treatment.get_title(language_code)}'
+        user_message = render_to_string('reservations/emails/user_confirmation.html', context)
+        send_mail(
+            user_subject,
+            user_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [reservation.user.email],
+            html_message=user_message,
+            fail_silently=False,
+        )
+        logger.info(f"Reservation confirmation email sent to user: {reservation.user.email} for reservation ID: {reservation.id}")
+        
+        # Admin email
+        admin_subject = f'New Reservation - {reservation.treatment.get_title(language_code)}'
+        admin_message = render_to_string('reservations/emails/admin_notification.html', context)
+        send_mail(
+            admin_subject,
+            admin_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+            html_message=admin_message,
+            fail_silently=False,
+        )
+        logger.info(f"Reservation notification email sent to admin for reservation ID: {reservation.id}")
+    except Exception as e:
+        logger.error(f"Failed to send reservation emails for reservation ID: {reservation.id}. Error: {str(e)}", exc_info=True)
+        raise
 
 
 def send_cancellation_email(reservation, language_code='hr'):
     """Send cancellation email to admin"""
-    context = {
-        'reservation': reservation,
-        'treatment': reservation.treatment,
-        'user': reservation.user,
-        'language_code': language_code,
-    }
-    
-    admin_subject = f'Reservation Cancelled - {reservation.treatment.get_title(language_code)}'
-    admin_message = render_to_string('reservations/emails/cancellation_notification.html', context)
-    send_mail(
-        admin_subject,
-        admin_message,
-        settings.DEFAULT_FROM_EMAIL,
-        [settings.ADMIN_EMAIL],
-        html_message=admin_message,
-        fail_silently=False,
-    )
+    try:
+        context = {
+            'reservation': reservation,
+            'treatment': reservation.treatment,
+            'user': reservation.user,
+            'language_code': language_code,
+        }
+        
+        admin_subject = f'Reservation Cancelled - {reservation.treatment.get_title(language_code)}'
+        admin_message = render_to_string('reservations/emails/cancellation_notification.html', context)
+        send_mail(
+            admin_subject,
+            admin_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+            html_message=admin_message,
+            fail_silently=False,
+        )
+        logger.info(f"Cancellation email sent to admin for reservation ID: {reservation.id}")
+    except Exception as e:
+        logger.error(f"Failed to send cancellation email for reservation ID: {reservation.id}. Error: {str(e)}", exc_info=True)
+        raise
 
 
 def reservation_calendar(request, treatment_slug=None):

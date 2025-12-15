@@ -257,3 +257,143 @@ if not DEBUG:
 SITE_URL = env('SITE_URL', default='https://www.naomifacestudio.com')
 SITE_NAME = 'Naomi Face Studio'
 
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'simple': {
+            'format': '[{levelname}] {asctime} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django_errors.log',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO' if not DEBUG else 'DEBUG',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'WARNING',  # Set to DEBUG to see all SQL queries
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        # Application-specific loggers
+        'core': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'treatments': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'blogs': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'reservations': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'gift_vouchers': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'contacts': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        # Third-party loggers
+        'boto3': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'botocore': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'storages': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
+
+# Create logs directory if it doesn't exist
+LOGS_DIR = BASE_DIR / 'logs'
+LOGS_DIR.mkdir(exist_ok=True)
+
+# Log startup configuration (after logging is configured)
+import logging
+startup_logger = logging.getLogger('django')
+startup_logger.info("=" * 60)
+startup_logger.info("Naomi Face Studio - Application Starting")
+startup_logger.info("=" * 60)
+startup_logger.info(f"DEBUG Mode: {DEBUG}")
+startup_logger.info(f"Database: {'PostgreSQL' if USE_POSTGRES else 'SQLite'}")
+if USE_POSTGRES:
+    startup_logger.info(f"Database Name: {DATABASES['default']['NAME']}")
+    startup_logger.info(f"Database Host: {DATABASES['default']['HOST']}")
+startup_logger.info(f"R2 Storage Enabled: {USE_R2}")
+if USE_R2:
+    startup_logger.info(f"R2 Bucket: {AWS_STORAGE_BUCKET_NAME}")
+    startup_logger.info(f"R2 Endpoint: {AWS_S3_ENDPOINT_URL}")
+startup_logger.info(f"Email Backend: {EMAIL_BACKEND}")
+startup_logger.info(f"From Email: {DEFAULT_FROM_EMAIL}")
+startup_logger.info(f"Admin Email: {ADMIN_EMAIL}")
+startup_logger.info(f"Site URL: {SITE_URL}")
+startup_logger.info(f"Allowed Hosts: {', '.join(ALLOWED_HOSTS)}")
+startup_logger.info("=" * 60)
+

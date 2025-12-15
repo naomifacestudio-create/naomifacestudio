@@ -5,6 +5,9 @@ from import_export import resources
 from .models import Blog
 from django.conf import settings
 import boto3
+import logging
+
+logger = logging.getLogger('blogs')
 
 
 class BlogResource(resources.ModelResource):
@@ -30,8 +33,9 @@ def delete_media_files_from_r2(file_path):
             if settings.AWS_LOCATION:
                 key = f"{settings.AWS_LOCATION}/{key}"
             s3_client.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=key)
+            logger.info(f"Successfully deleted media file from R2: {key}")
         except Exception as e:
-            print(f"Error deleting file from R2: {e}")
+            logger.error(f"Error deleting media file from R2: {file_path}. Error: {str(e)}", exc_info=True)
 
 
 @admin.register(Blog)

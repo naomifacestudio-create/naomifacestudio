@@ -9,6 +9,9 @@ from honeypot.decorators import check_honeypot
 from django_ratelimit.decorators import ratelimit
 from .models import ContactSubmission
 from core.models import EmailCollection
+import logging
+
+logger = logging.getLogger('contacts')
 
 
 @ratelimit(key='ip', rate='5/m', method='POST')
@@ -62,20 +65,25 @@ def contact_form(request):
 
 def send_contact_email(submission, language_code='hr'):
     """Send contact form email to admin"""
-    context = {
-        'submission': submission,
-        'language_code': language_code,
-    }
-    
-    subject = f'New Contact Form Submission from {submission.first_name} {submission.last_name}'
-    message = render_to_string('contacts/emails/admin_notification.html', context)
-    
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [settings.ADMIN_EMAIL],
-        html_message=message,
-        fail_silently=False,
-    )
+    try:
+        context = {
+            'submission': submission,
+            'language_code': language_code,
+        }
+        
+        subject = f'New Contact Form Submission from {submission.first_name} {submission.last_name}'
+        message = render_to_string('contacts/emails/admin_notification.html', context)
+        
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+            html_message=message,
+            fail_silently=False,
+        )
+        logger.info(f"Contact form email sent to admin for submission ID: {submission.id} from {submission.email}")
+    except Exception as e:
+        logger.error(f"Failed to send contact form email for submission ID: {submission.id}. Error: {str(e)}", exc_info=True)
+        raise
 

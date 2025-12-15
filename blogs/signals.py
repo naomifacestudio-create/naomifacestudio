@@ -3,7 +3,10 @@ from django.dispatch import receiver
 from django.conf import settings
 import boto3
 import re
+import logging
 from .models import Blog
+
+logger = logging.getLogger('blogs')
 
 
 def delete_file_from_r2(file_path):
@@ -20,8 +23,9 @@ def delete_file_from_r2(file_path):
             if settings.AWS_LOCATION:
                 key = f"{settings.AWS_LOCATION}/{key}"
             s3_client.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=key)
+            logger.info(f"Successfully deleted file from R2: {key}")
         except Exception as e:
-            print(f"Error deleting file from R2: {e}")
+            logger.error(f"Error deleting file from R2: {file_path}. Error: {str(e)}", exc_info=True)
 
 
 def extract_image_urls_from_html(html_content):
