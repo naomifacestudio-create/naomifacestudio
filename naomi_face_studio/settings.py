@@ -163,20 +163,34 @@ if USE_R2:
     AWS_SECRET_ACCESS_KEY = env('R2_SECRET_ACCESS_KEY', default='')
     AWS_STORAGE_BUCKET_NAME = env('R2_BUCKET_NAME', default='')
     AWS_S3_ENDPOINT_URL = env('R2_ENDPOINT_URL', default='')
-    AWS_S3_CUSTOM_DOMAIN = env('R2_CUSTOM_DOMAIN', default='')
+    
+    # Custom domain for R2 (should be just the domain name, e.g., 'media.naomifacestudio.com')
+    # django-storages will automatically add https:// when generating URLs
+    custom_domain = env('R2_CUSTOM_DOMAIN', default='')
+    if custom_domain:
+        # Remove https:// if accidentally included, and strip trailing slash
+        AWS_S3_CUSTOM_DOMAIN = custom_domain.replace('https://', '').replace('http://', '').rstrip('/')
+    else:
+        AWS_S3_CUSTOM_DOMAIN = ''  # Empty string means use default endpoint
+    
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
     AWS_DEFAULT_ACL = 'public-read'
     AWS_LOCATION = 'media'
+    AWS_S3_USE_SSL = True
+    AWS_S3_VERIFY = True
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     # Keep static files local or use WhiteNoise
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
     
+    # Set MEDIA_URL for reference (storage backend generates URLs, but this helps with consistency)
     if AWS_S3_CUSTOM_DOMAIN:
         MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    else:
+        MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/'
 else:
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
@@ -396,6 +410,9 @@ startup_logger.info(f"R2 Storage Enabled: {USE_R2}")
 if USE_R2:
     startup_logger.info(f"R2 Bucket: {AWS_STORAGE_BUCKET_NAME}")
     startup_logger.info(f"R2 Endpoint: {AWS_S3_ENDPOINT_URL}")
+    startup_logger.info(f"R2 Custom Domain: {AWS_S3_CUSTOM_DOMAIN if AWS_S3_CUSTOM_DOMAIN else 'Not set (using endpoint)'}")
+    startup_logger.info(f"Media URL: {MEDIA_URL}")
+    startup_logger.info(f"Default Storage: {DEFAULT_FILE_STORAGE}")
 startup_logger.info(f"Email Backend: {EMAIL_BACKEND}")
 startup_logger.info(f"From Email: {DEFAULT_FROM_EMAIL}")
 startup_logger.info(f"Admin Email: {ADMIN_EMAIL}")
