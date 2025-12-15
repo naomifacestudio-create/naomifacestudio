@@ -86,10 +86,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'naomi_face_studio.wsgi.application'
 
 # Database
-# Use SQLite for local development, PostgreSQL for production
-USE_POSTGRES = env.bool('USE_POSTGRES', default=False)
-
-if USE_POSTGRES:
+# Use DATABASE_URL if available (Render, Heroku, etc.), otherwise use individual variables or SQLite
+if env('DATABASE_URL', default=None):
+    # Parse DATABASE_URL (used by Render, Heroku, etc.)
+    DATABASES = {
+        'default': env.db()
+    }
+elif env.bool('USE_POSTGRES', default=False):
+    # Fallback to individual database variables
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
