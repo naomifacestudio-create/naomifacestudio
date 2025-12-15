@@ -386,10 +386,12 @@ startup_logger.info("=" * 60)
 startup_logger.info("Naomi Face Studio - Application Starting")
 startup_logger.info("=" * 60)
 startup_logger.info(f"DEBUG Mode: {DEBUG}")
-startup_logger.info(f"Database: {'PostgreSQL' if USE_POSTGRES else 'SQLite'}")
-if USE_POSTGRES:
+db_engine = DATABASES['default']['ENGINE']
+is_postgres = 'postgresql' in db_engine
+startup_logger.info(f"Database: {'PostgreSQL' if is_postgres else 'SQLite'}")
+if is_postgres:
     startup_logger.info(f"Database Name: {DATABASES['default']['NAME']}")
-    startup_logger.info(f"Database Host: {DATABASES['default']['HOST']}")
+    startup_logger.info(f"Database Host: {DATABASES['default'].get('HOST', 'N/A')}")
 startup_logger.info(f"R2 Storage Enabled: {USE_R2}")
 if USE_R2:
     startup_logger.info(f"R2 Bucket: {AWS_STORAGE_BUCKET_NAME}")
