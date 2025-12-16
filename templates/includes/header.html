@@ -77,7 +77,7 @@
                     <div class="flex items-center gap-2">
                         {% if user.is_authenticated %}
                             <a href="{% url 'core:account' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "My Account" %}</a>
-                            <a href="{% url 'admin:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
+                            <a href="{% url 'core:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
                         {% else %}
                             <a href="{% url 'core:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
                             <a href="{% url 'core:signup' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>

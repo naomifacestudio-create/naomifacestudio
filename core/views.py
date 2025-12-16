@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.translation import get_language, gettext_lazy as _
@@ -125,4 +125,11 @@ def account_view(request):
         'past_reservations': past_reservations,
     }
     return render(request, 'core/account.html', context)
+
+
+def logout_view(request):
+    """User logout view"""
+    logout(request)
+    messages.success(request, _('You have been logged out successfully.'))
+    return redirect('core:home')
 
