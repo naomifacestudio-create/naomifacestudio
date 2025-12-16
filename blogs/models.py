@@ -5,9 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 def blog_thumbnail_upload_path(instance, filename):
-    """Generate upload path for blog thumbnails"""
-    ext = filename.split('.')[-1]
-    filename = f"{instance.slug_hr}.{ext}"
+    """Generate upload path for blog thumbnails - keeps original filename"""
     return f"blogs/thumbnails/{filename}"
 
 

@@ -1,4 +1,4 @@
-from django.db.models.signals import pre_delete, pre_save
+from django.db.models.signals import pre_delete, pre_save, post_save
 from django.dispatch import receiver
 from django.conf import settings
 import boto3
@@ -86,4 +86,12 @@ def cleanup_old_treatment_files(sender, instance, **kwargs):
                             delete_file_from_r2(path)
         except Treatment.DoesNotExist:
             pass
+
+
+@receiver(post_save, sender=Treatment)
+def cleanup_orphaned_uploads_on_save(sender, instance, **kwargs):
+    """Clean up orphaned CKEditor uploads after treatment is saved"""
+    # Import here to avoid circular imports
+    from blogs.signals import cleanup_orphaned_ckeditor_uploads
+    cleanup_orphaned_ckeditor_uploads()
 

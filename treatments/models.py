@@ -7,9 +7,7 @@ import os
 
 
 def treatment_thumbnail_upload_path(instance, filename):
-    """Generate upload path for treatment thumbnails"""
-    ext = filename.split('.')[-1]
-    filename = f"{instance.slug}.{ext}"
+    """Generate upload path for treatment thumbnails - keeps original filename"""
     return f"treatments/thumbnails/{filename}"
 
 
