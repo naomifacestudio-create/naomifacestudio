@@ -216,6 +216,7 @@ def create_reservation(request):
     treatment_id = data.get('treatment_id')
     reservation_date = data.get('date')
     start_time_str = data.get('start_time')
+    message = data.get('message', '').strip()
     
     if not all([treatment_id, reservation_date, start_time_str]):
         return JsonResponse({'error': 'Missing required fields'}, status=400)
@@ -237,6 +238,7 @@ def create_reservation(request):
         treatment=treatment,
         date=reservation_date,
         start_time=start_time,
+        notes=message,
     )
     
     # Collect email with user details (only if not already archived)

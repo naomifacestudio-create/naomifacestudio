@@ -47,7 +47,22 @@
                 </button>
             </div>
             <div id="calendar" class="mb-6"></div>
-            <div id="time-slots" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
+            <div id="time-slots" class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4"></div>
+            <div id="slot-message" class="text-center text-[#593d09] mt-4"></div>
+            
+            <!-- Selected Time Display and Message Field -->
+            <div id="booking-form" style="display: none;" class="mt-6 pt-6 border-t border-gray-200">
+                <div class="mb-4">
+                    <p class="text-[#593d09] mb-2"><strong>{% trans "Selected Time:" %} <span id="selected-time-display"></span></strong></p>
+                </div>
+                <div class="mb-4">
+                    <label for="reservation-message" class="block mb-2 font-medium text-[#593d09]">{% trans "Message (optional)" %}</label>
+                    <textarea id="reservation-message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]" placeholder="{% trans 'Add any special requests or notes...' %}"></textarea>
+                </div>
+                <button id="submit-reservation-btn" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                    {% trans "Submit Reservation" %}
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -59,6 +74,7 @@
     let availableSlots = [];
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
+    let selectedTimeSlot = null;
     
     // Treatment selection handler
     document.getElementById('treatment_select').addEventListener('change', function() {
@@ -179,6 +195,9 @@
     
     function selectDate(date) {
         selectedDate = date;
+        selectedTimeSlot = null; // Reset selected time when date changes
+        document.getElementById('booking-form').style.display = 'none'; // Hide booking form
+        document.getElementById('reservation-message').value = ''; // Clear message
         loadTimeSlots(date);
     }
     
@@ -225,21 +244,31 @@
             const button = document.createElement('button');
             button.className = 'px-4 py-2 bg-gray-100 text-[#593d09] rounded hover:bg-[#593d09] hover:text-white transition-colors';
             button.textContent = slot.start;
-            button.onclick = () => bookSlot(slot.start);
+            button.onclick = () => selectTimeSlot(slot.start);
             container.appendChild(button);
         });
     }
     
-    function bookSlot(startTime) {
+    function selectTimeSlot(startTime) {
+        selectedTimeSlot = startTime;
+        document.getElementById('selected-time-display').textContent = startTime;
+        document.getElementById('booking-form').style.display = 'block';
+        // Scroll to booking form
+        document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    document.getElementById('submit-reservation-btn').addEventListener('click', function() {
         {% if not user.is_authenticated %}
         window.location.href = '{% url "core:signup" %}?next={{ request.path }}';
         return;
         {% endif %}
         
-        if (!selectedDate || !selectedTreatment) {
-            alert('{% trans "Please select a date and treatment" %}');
+        if (!selectedDate || !selectedTreatment || !selectedTimeSlot) {
+            alert('{% trans "Please select a date, treatment, and time" %}');
             return;
         }
+        
+        const message = document.getElementById('reservation-message').value.trim();
         
         fetch('{% url "reservations:create" %}', {
             method: 'POST',
@@ -250,7 +279,8 @@
             body: JSON.stringify({
                 treatment_id: selectedTreatment,
                 date: selectedDate,
-                start_time: startTime
+                start_time: selectedTimeSlot,
+                message: message
             })
         })
         .then(response => response.json())
@@ -266,7 +296,7 @@
             console.error('Error:', error);
             alert('{% trans "Error creating reservation" %}');
         });
-    }
+    });
 </script>
 {% endblock %}
 {% endblock %}

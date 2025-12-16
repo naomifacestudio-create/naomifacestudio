@@ -23,11 +23,6 @@
                 {% trans "Reservation" %}
             </a>
         </div>
-        
-        <!-- Fixed Reservation Button -->
-        <a href="{% url 'reservations:calendar_with_treatment' treatment.get_slug %}" class="fixed right-8 top-1/2 transform -translate-y-1/2 bg-[#593d09] text-white px-8 py-4 rounded-lg hover:bg-[#4a3207] transition-colors shadow-lg z-40 hidden md:block">
-            {% trans "Reservation" %}
-        </a>
     </div>
 </div>
 {% endblock %}

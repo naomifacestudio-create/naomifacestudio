@@ -13,19 +13,14 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = ['user_info', 'treatment', 'date', 'start_time', 'end_time', 'status', 'created_at']
     list_filter = ['status', 'date', 'created_at']
     search_fields = ['user__username', 'user__email', 'user__first_name', 'user__last_name', 'user__profile__mobile', 'treatment__title_hr', 'treatment__title_en']
-    readonly_fields = ['created_at', 'updated_at', 'user_info_display', 'user_email_display', 'user_mobile_display']
+    readonly_fields = ['user_info_display']
     date_hierarchy = 'date'
     fieldsets = (
         ('Reservation Details', {
             'fields': ('user', 'treatment', 'date', 'start_time', 'end_time', 'status', 'notes')
         }),
         ('User Information', {
-            'fields': ('user_info_display', 'user_email_display', 'user_mobile_display'),
-            'classes': ('collapse',),
-        }),
-        ('Timestamps', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',),
+            'fields': ('user_info_display',),
         }),
     )
     
@@ -53,17 +48,6 @@ class ReservationAdmin(admin.ModelAdmin):
             profile.mobile if profile and profile.mobile else 'Not provided'
         )
     user_info_display.short_description = 'User Information'
-    
-    def user_email_display(self, obj):
-        """Display user email"""
-        return obj.user.email
-    user_email_display.short_description = 'Email'
-    
-    def user_mobile_display(self, obj):
-        """Display user mobile"""
-        profile = getattr(obj.user, 'profile', None)
-        return profile.mobile if profile and profile.mobile else 'Not provided'
-    user_mobile_display.short_description = 'Mobile'
     
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
