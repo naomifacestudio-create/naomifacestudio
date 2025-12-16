@@ -172,9 +172,20 @@ function renderCalendar() {
         const date = new Date(currentYear, currentMonth, day);
         const dayOfWeek = date.getDay();
         
-        const dateStr = date.toISOString().split('T')[0];
-        const isPast = date < today;
-        const isToday = dateStr === today.toISOString().split('T')[0];
+        // Format date as YYYY-MM-DD using local timezone (avoid UTC conversion issues)
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const dayStr = String(day).padStart(2, '0');
+        const dateStr = `${year}-${month}-${dayStr}`;
+        
+        // Format today's date for comparison
+        const todayYear = today.getFullYear();
+        const todayMonth = String(today.getMonth() + 1).padStart(2, '0');
+        const todayDay = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${todayYear}-${todayMonth}-${todayDay}`;
+        
+        const isPast = dateStr < todayStr;
+        const isToday = dateStr === todayStr;
         const hasReservations = reservationsByDate[dateStr] !== undefined;
         const isSelected = selectedDate === dateStr;
         
