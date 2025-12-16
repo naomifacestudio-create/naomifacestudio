@@ -23,7 +23,13 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-change-this-in-productio
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', 'naomifacestudio.com', 'www.naomifacestudio.com'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
+    'localhost',
+    '127.0.0.1',
+    'naomifacestudio.com',
+    'www.naomifacestudio.com',
+    'naomifacestudio.onrender.com',  # Render service hostname
+])
 
 # Application definition
 INSTALLED_APPS = [
