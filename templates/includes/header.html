@@ -1,59 +1,174 @@
 {% load static %}
 {% load i18n %}
-<header class="bg-white shadow-md">
+<header class="bg-white shadow-md sticky top-0 z-40">
     <div class="container mx-auto px-4">
-        <!-- Logo -->
-        <div class="flex justify-center py-4">
-            <a href="{% url 'core:home' %}">
-                <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-20 md:h-24">
+        <!-- Mobile Header: Logo, Hamburger, and Top Actions -->
+        <div class="flex items-center justify-between py-4 md:hidden">
+            <!-- Hamburger Menu Button -->
+            <button type="button" data-drawer-target="mobile-menu" data-drawer-toggle="mobile-menu" aria-controls="mobile-menu" class="p-2 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            
+            <!-- Logo (Centered) -->
+            <a href="{% url 'core:home' %}" class="flex-1 flex justify-center">
+                <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-16">
             </a>
+            
+            <!-- Language Switcher (Mobile) -->
+            <div class="flex items-center">
+                <form action="{% url 'set_language' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
+                        <img src="{% static 'images/croatia-flag.png' %}" alt="Croatian" class="w-5 h-3">
+                    </button>
+                    <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
+                        <img src="{% static 'images/uk-flag.png' %}" alt="English" class="w-5 h-3">
+                    </button>
+                </form>
+            </div>
         </div>
         
-        <!-- Navbar and Login/Signup -->
-        <nav class="flex flex-col md:flex-row justify-between items-center py-4 border-t border-gray-200">
-            <!-- Navbar Items -->
-            <ul class="flex flex-wrap justify-center gap-4 md:gap-6 mb-4 md:mb-0">
-                <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Home" %}</a></li>
-                <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Treatments" %}</a></li>
-                <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Gift Voucher" %}</a></li>
-                <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Blogs" %}</a></li>
-                <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Contact" %}</a></li>
-                <li><a href="{% url 'core:about_us' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "About us" %}</a></li>
-            </ul>
-            
-            <!-- Language Switcher and Reservations Button -->
-            <div class="flex items-center gap-4">
-                <!-- Language Switcher -->
-                <div class="flex items-center gap-2">
-                    <form action="{% url 'set_language' %}" method="post" class="inline">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
-                            <img src="{% static 'images/croatia-flag.png' %}" alt="Croatian" class="w-6 h-4">
-                        </button>
-                        <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
-                            <img src="{% static 'images/uk-flag.png' %}" alt="English" class="w-6 h-4">
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Reservations Button -->
-                <a href="{% url 'treatments:list' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors">
-                    {% trans "Reservations" %}
+        <!-- Desktop Header: Logo, Nav, Actions -->
+        <div class="hidden md:block">
+            <!-- Logo -->
+            <div class="flex justify-center py-4">
+                <a href="{% url 'core:home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-24">
                 </a>
-                
-                <!-- Login/Signup -->
-                <div class="flex items-center gap-2">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'reservations:my_reservations' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "My Reservations" %}</a>
-                        <a href="{% url 'admin:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Logout" %}</a>
-                    {% else %}
-                        <a href="{% url 'admin:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors">{% trans "Login" %}</a>
-                        <a href="{% url 'admin:login' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors">{% trans "Sign Up" %}</a>
-                    {% endif %}
-                </div>
             </div>
-        </nav>
+            
+            <!-- Navbar and Login/Signup -->
+            <nav class="flex flex-row justify-between items-center py-4 border-t border-gray-200">
+                <!-- Navbar Items -->
+                <ul class="flex justify-center gap-6">
+                    <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Treatments" %}</a></li>
+                    <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
+                    <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Blogs" %}</a></li>
+                    <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Contact" %}</a></li>
+                    <li><a href="{% url 'core:about_us' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About us" %}</a></li>
+                </ul>
+                
+                <!-- Language Switcher and Reservations Button -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Switcher -->
+                    <div class="flex items-center gap-2">
+                        <form action="{% url 'set_language' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
+                                <img src="{% static 'images/croatia-flag.png' %}" alt="Croatian" class="w-6 h-4">
+                            </button>
+                            <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
+                                <img src="{% static 'images/uk-flag.png' %}" alt="English" class="w-6 h-4">
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Reservations Button -->
+                    <a href="{% url 'treatments:list' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                        {% trans "Reservations" %}
+                    </a>
+                    
+                    <!-- Login/Signup -->
+                    <div class="flex items-center gap-2">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'reservations:my_reservations' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "My Reservations" %}</a>
+                            <a href="{% url 'admin:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
+                        {% else %}
+                            <a href="{% url 'admin:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
+                            <a href="{% url 'admin:login' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
     </div>
 </header>
+
+<!-- Mobile Offcanvas Menu (Drawer) -->
+<div id="mobile-menu" class="fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80" tabindex="-1" aria-labelledby="mobile-menu-label">
+    <div class="flex flex-col h-full">
+        <!-- Header with Logo and Close Button -->
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+            <a href="{% url 'core:home' %}" class="flex items-center">
+                <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-12">
+            </a>
+            <button type="button" data-drawer-hide="mobile-menu" aria-controls="mobile-menu" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-2 transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Navigation Links -->
+        <nav class="flex-1">
+            <ul class="space-y-2">
+                <li>
+                    <a href="{% url 'core:home' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Home" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'treatments:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Treatments" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'gift_vouchers:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Gift Voucher" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'blogs:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Blogs" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'contacts:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Contact" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'core:about_us' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "About us" %}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Bottom Section: Actions -->
+        <div class="pt-6 border-t border-gray-200 space-y-4">
+            <!-- Reservations Button -->
+            <a href="{% url 'treatments:list' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+                {% trans "Reservations" %}
+            </a>
+            
+            <!-- Login/Signup -->
+            <div class="space-y-2">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'reservations:my_reservations' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                        {% trans "My Reservations" %}
+                    </a>
+                    <a href="{% url 'admin:logout' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                        {% trans "Logout" %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'admin:login' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                        {% trans "Login" %}
+                    </a>
+                    <a href="{% url 'admin:login' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Sign Up" %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Backdrop for mobile menu -->
+<div id="mobile-menu-backdrop" class="hidden fixed inset-0 z-40 bg-gray-900/50" data-drawer-backdrop="mobile-menu"></div>
 

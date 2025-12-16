@@ -1,0 +1,281 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .calendar-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .calendar-nav button {
+        background: #417690;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .calendar-nav button:hover {
+        background: #205067;
+    }
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        margin-bottom: 20px;
+    }
+    .calendar-day-header {
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        background: #f5f5f5;
+    }
+    .calendar-day {
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #ddd;
+        background: white;
+        min-height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .calendar-day:hover {
+        background: #e8f4f8;
+    }
+    .calendar-day.past {
+        background: #f5f5f5;
+        color: #999;
+        cursor: not-allowed;
+    }
+    .calendar-day.today {
+        background: #fff3cd;
+        font-weight: bold;
+    }
+    .calendar-day.has-reservations {
+        background: #d1ecf1;
+        color: #0c5460;
+        font-weight: bold;
+    }
+    .calendar-day.selected {
+        background: #417690;
+        color: white;
+    }
+    .reservations-list {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 4px;
+    }
+    .reservation-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        background: white;
+        border-left: 4px solid #417690;
+        border-radius: 4px;
+    }
+    .reservation-item h4 {
+        margin: 0 0 10px 0;
+        color: #417690;
+    }
+    .reservation-item p {
+        margin: 5px 0;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="calendar-container">
+    <h1>{% trans "Reservation Calendar" %}</h1>
+    
+    <!-- Calendar Navigation -->
+    <div class="calendar-nav">
+        <button onclick="changeMonth(-1)">← {% trans "Previous" %}</button>
+        <h2 id="calendar-month-year"></h2>
+        <button onclick="changeMonth(1)">{% trans "Next" %} →</button>
+    </div>
+    
+    <!-- Calendar Grid -->
+    <div id="calendar"></div>
+    
+    <!-- Selected Day Reservations -->
+    <div id="reservations-container" class="reservations-list" style="display: none;">
+        <h3 id="selected-date-title"></h3>
+        <div id="reservations-list"></div>
+    </div>
+</div>
+
+<script>
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let selectedDate = null;
+let reservationsByDate = {};
+
+const monthNames = ['{% trans "January" %}', '{% trans "February" %}', '{% trans "March" %}', '{% trans "April" %}', '{% trans "May" %}', '{% trans "June" %}', '{% trans "July" %}', '{% trans "August" %}', '{% trans "September" %}', '{% trans "October" %}', '{% trans "November" %}', '{% trans "December" %}'];
+const dayNames = ['{% trans "Mon" %}', '{% trans "Tue" %}', '{% trans "Wed" %}', '{% trans "Thu" %}', '{% trans "Fri" %}', '{% trans "Sat" %}', '{% trans "Sun" %}'];
+
+function changeMonth(delta) {
+    currentMonth += delta;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    selectedDate = null;
+    reservationsByDate = {};
+    loadCalendar();
+}
+
+function renderCalendar() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const calendar = document.getElementById('calendar');
+    
+    // Update month/year display
+    document.getElementById('calendar-month-year').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    
+    // Get first day of month and number of days
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    const adjustedStartingDay = startingDayOfWeek === 0 ? 6 : startingDayOfWeek - 1;
+    
+    let calendarHTML = '<div class="calendar-grid">';
+    
+    // Day headers
+    dayNames.forEach(day => {
+        calendarHTML += `<div class="calendar-day-header">${day}</div>`;
+    });
+    
+    // Empty cells for days before month starts
+    for (let i = 0; i < adjustedStartingDay; i++) {
+        calendarHTML += '<div class="calendar-day" style="background: transparent; border: none;"></div>';
+    }
+    
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const dayOfWeek = date.getDay();
+        
+        const dateStr = date.toISOString().split('T')[0];
+        const isPast = date < today;
+        const isToday = dateStr === today.toISOString().split('T')[0];
+        const hasReservations = reservationsByDate[dateStr] !== undefined;
+        const isSelected = selectedDate === dateStr;
+        
+        let dayClass = 'calendar-day';
+        if (isPast) dayClass += ' past';
+        if (isToday) dayClass += ' today';
+        if (hasReservations) dayClass += ' has-reservations';
+        if (isSelected) dayClass += ' selected';
+        
+        const dayContent = isPast ? `${day}` : `${day}${hasReservations ? `<br><small>(!)</small>` : ''}`;
+        
+        calendarHTML += `
+            <div 
+                class="${dayClass}"
+                onclick="${!isPast ? `selectDate('${dateStr}')` : ''}"
+                style="${isPast ? 'cursor: not-allowed;' : 'cursor: pointer;'}"
+            >
+                ${dayContent}
+            </div>
+        `;
+    }
+    
+    calendarHTML += '</div>';
+    calendar.innerHTML = calendarHTML;
+}
+
+function loadCalendar() {
+    renderCalendar();
+    loadMonthReservations();
+}
+
+function loadMonthReservations() {
+    // Get all dates in current month that have reservations
+    fetch(`{% url "admin:reservations_month_reservations" %}?year=${currentYear}&month=${currentMonth + 1}`)
+        .then(response => response.json())
+        .then(data => {
+            // Reset reservationsByDate
+            reservationsByDate = {};
+            
+            // Mark dates with reservations
+            data.dates.forEach(dateStr => {
+                reservationsByDate[dateStr] = []; // Placeholder, actual data loaded on click
+            });
+            
+            // Re-render calendar to highlight dates with reservations  
+            const calendar = document.getElementById('calendar');
+            renderCalendar();
+        })
+        .catch(error => {
+            console.error('Error loading month reservations:', error);
+        });
+}
+
+function selectDate(dateStr) {
+    selectedDate = dateStr;
+    renderCalendar();
+    loadDayReservations(dateStr);
+}
+
+function loadDayReservations(dateStr) {
+    const container = document.getElementById('reservations-container');
+    const list = document.getElementById('reservations-list');
+    const title = document.getElementById('selected-date-title');
+    
+    fetch(`{% url "admin:reservations_day_reservations" %}?date=${dateStr}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.reservations && data.reservations.length > 0) {
+                title.textContent = `{% trans "Reservations for" %} ${new Date(dateStr).toLocaleDateString()}`;
+                list.innerHTML = '';
+                
+                data.reservations.forEach(reservation => {
+                    const item = document.createElement('div');
+                    item.className = 'reservation-item';
+                    item.innerHTML = `
+                        <h4>${reservation.treatment}</h4>
+                        <p><strong>{% trans "Client" %}:</strong> ${reservation.user} (${reservation.user_email})</p>
+                        <p><strong>{% trans "Time" %}:</strong> ${reservation.start_time} - ${reservation.end_time}</p>
+                        <p><strong>{% trans "Status" %}:</strong> ${reservation.status}</p>
+                        ${reservation.notes ? `<p><strong>{% trans "Notes" %}:</strong> ${reservation.notes}</p>` : ''}
+                        <a href="/admin/reservations/reservation/${reservation.id}/change/" class="button">{% trans "View/Edit" %}</a>
+                    `;
+                    list.appendChild(item);
+                });
+                
+                container.style.display = 'block';
+            } else {
+                title.textContent = `{% trans "No reservations for" %} ${new Date(dateStr).toLocaleDateString()}`;
+                list.innerHTML = '<p>{% trans "No reservations scheduled for this date." %}</p>';
+                container.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            list.innerHTML = '<p>{% trans "Error loading reservations" %}</p>';
+            container.style.display = 'block';
+        });
+}
+
+// Initialize calendar on page load
+loadCalendar();
+</script>
+{% endblock %}
+

@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <a href="{% url 'admin:reservations_reservation_calendar' %}" class="addlink">
+            {% trans "View Calendar" %}
+        </a>
+    </li>
+{% endblock %}
+

@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, time as dt_time
 from .models import Reservation
 from treatments.models import Treatment
 from core.models import EmailCollection
@@ -98,10 +98,14 @@ def reservation_calendar(request, treatment_slug=None):
     
     treatments = Treatment.objects.filter(is_active=True)
     
+    # Get current date in Croatia timezone for calendar
+    today_croatia = timezone.localtime(timezone.now()).date()
+    
     context = {
         'treatment': treatment,
         'treatments': treatments,
         'language_code': language_code,
+        'today_croatia': today_croatia.isoformat(),  # Pass as ISO format string
     }
     return render(request, 'reservations/calendar.html', context)
 
@@ -126,7 +130,12 @@ def get_available_slots(request):
     working_hours = Reservation.get_working_hours(day_of_week)
     
     if not working_hours:
-        return JsonResponse({'available_slots': []})
+        # Day is closed (Saturday or Sunday)
+        return JsonResponse({
+            'available_slots': [],
+            'reason': 'closed',
+            'message': 'This day is closed (Saturday or Sunday)'
+        })
     
     # Get existing reservations for the date
     existing_reservations = Reservation.objects.filter(
@@ -144,9 +153,37 @@ def get_available_slots(request):
     current_time = datetime.combine(selected_date, start_time)
     end_datetime = datetime.combine(selected_date, end_time)
     
+    # Get current datetime in Croatia timezone (settings.TIME_ZONE = 'Europe/Zagreb')
+    # timezone.localtime() converts UTC to the timezone set in settings.TIME_ZONE
+    now_croatia = timezone.localtime(timezone.now())
+    today_croatia = now_croatia.date()
+    
+    if selected_date == today_croatia:
+        # If selecting today, start from current time in Croatia + 1 hour buffer
+        now_time_croatia = now_croatia.replace(second=0, microsecond=0) + timedelta(hours=1)
+        # Create timezone-aware datetime from current_time (assume Croatia timezone)
+        # For comparison, we need both datetimes to be timezone-aware
+        current_time_aware = timezone.make_aware(current_time)
+        
+        if current_time_aware < now_time_croatia:
+            current_time_aware = now_time_croatia
+            # Round up to next 15-minute interval
+            minutes_to_add = 15 - (current_time_aware.minute % 15)
+            if minutes_to_add < 15:
+                current_time_aware += timedelta(minutes=minutes_to_add)
+            # Convert back to naive datetime (in Croatia timezone) for the loop
+            current_time = current_time_aware.astimezone(timezone.get_current_timezone()).replace(tzinfo=None)
+    
     while current_time + treatment_duration <= end_datetime:
         slot_start = current_time.time()
         slot_end = (current_time + treatment_duration).time()
+        
+        # Skip if slot is in the past (for today) - compare in Croatia timezone
+        if selected_date == today_croatia:
+            current_time_aware = timezone.make_aware(current_time)
+            if current_time_aware < now_croatia:
+                current_time += slot_duration
+                continue
         
         # Check if slot is available
         is_available = True
