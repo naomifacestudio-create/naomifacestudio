@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %}{% endblock title %}
+
+{% block meta_description %}{% trans "Login to your account at Naomi Face Studio." %}{% endblock meta_description %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-md mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Login" %}</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" class="bg-white p-8 rounded-lg shadow-md">
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label for="{{ form.username.id_for_label }}" class="block mb-2 font-medium text-[#593d09]">{% trans "Username or Email" %}</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="mt-1 text-red-600 text-sm">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-6">
+                <label for="{{ form.password.id_for_label }}" class="block mb-2 font-medium text-[#593d09]">{% trans "Password" %}</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="mt-1 text-red-600 text-sm">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+            
+            {% if form.non_field_errors %}
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+            <button type="submit" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                {% trans "Login" %}
+            </button>
+        </form>
+        
+        <div class="mt-6 text-center">
+            <p class="text-[#593d09]">
+                {% trans "Don't have an account?" %}
+                <a href="{% url 'core:signup' %}?next={{ request.GET.next|default:'' }}" class="text-[#593d09] font-medium hover:underline">
+                    {% trans "Sign up here" %}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

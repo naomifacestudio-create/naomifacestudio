@@ -10,11 +10,60 @@ from .models import Reservation
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ['user', 'treatment', 'date', 'start_time', 'end_time', 'status', 'created_at']
+    list_display = ['user_info', 'treatment', 'date', 'start_time', 'end_time', 'status', 'created_at']
     list_filter = ['status', 'date', 'created_at']
-    search_fields = ['user__username', 'user__email', 'treatment__title_hr', 'treatment__title_en']
-    readonly_fields = ['created_at', 'updated_at']
+    search_fields = ['user__username', 'user__email', 'user__first_name', 'user__last_name', 'user__profile__mobile', 'treatment__title_hr', 'treatment__title_en']
+    readonly_fields = ['created_at', 'updated_at', 'user_info_display', 'user_email_display', 'user_mobile_display']
     date_hierarchy = 'date'
+    fieldsets = (
+        ('Reservation Details', {
+            'fields': ('user', 'treatment', 'date', 'start_time', 'end_time', 'status', 'notes')
+        }),
+        ('User Information', {
+            'fields': ('user_info_display', 'user_email_display', 'user_mobile_display'),
+            'classes': ('collapse',),
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',),
+        }),
+    )
+    
+    def user_info(self, obj):
+        """Display user name and email in list view"""
+        profile = getattr(obj.user, 'profile', None)
+        name = obj.user.get_full_name() or obj.user.username
+        return format_html(
+            '<strong>{}</strong><br><small>{}</small>',
+            name,
+            obj.user.email
+        )
+    user_info.short_description = 'User'
+    
+    def user_info_display(self, obj):
+        """Display full user information in detail view"""
+        profile = getattr(obj.user, 'profile', None)
+        name = obj.user.get_full_name() or obj.user.username
+        return format_html(
+            '<strong>Name:</strong> {}<br>'
+            '<strong>Email:</strong> {}<br>'
+            '<strong>Mobile:</strong> {}',
+            name,
+            obj.user.email,
+            profile.mobile if profile and profile.mobile else 'Not provided'
+        )
+    user_info_display.short_description = 'User Information'
+    
+    def user_email_display(self, obj):
+        """Display user email"""
+        return obj.user.email
+    user_email_display.short_description = 'Email'
+    
+    def user_mobile_display(self, obj):
+        """Display user mobile"""
+        profile = getattr(obj.user, 'profile', None)
+        return profile.mobile if profile and profile.mobile else 'Not provided'
+    user_mobile_display.short_description = 'Mobile'
     
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
@@ -55,15 +104,18 @@ class ReservationAdmin(admin.ModelAdmin):
         
         reservations_data = []
         for reservation in reservations:
+            profile = getattr(reservation.user, 'profile', None)
             reservations_data.append({
                 'id': reservation.id,
                 'user': reservation.user.get_full_name() or reservation.user.username,
                 'user_email': reservation.user.email,
+                'user_mobile': profile.mobile if profile and profile.mobile else 'Not provided',
                 'treatment': reservation.treatment.get_title(),
                 'start_time': reservation.start_time.strftime('%H:%M'),
                 'end_time': reservation.end_time.strftime('%H:%M'),
                 'status': reservation.get_status_display(),
                 'notes': reservation.notes,
+                'admin_url': f"/admin/reservations/reservation/{reservation.id}/change/",
             })
         
         return JsonResponse({'reservations': reservations_data})

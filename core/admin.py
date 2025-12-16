@@ -1,14 +1,22 @@
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import EmailCollection
+from .models import EmailCollection, UserProfile
 import csv
+
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'first_name', 'last_name', 'mobile', 'created_at']
+    list_filter = ['created_at']
+    search_fields = ['user__username', 'user__email', 'first_name', 'last_name', 'mobile']
+    readonly_fields = ['created_at', 'updated_at']
 
 
 @admin.register(EmailCollection)
 class EmailCollectionAdmin(admin.ModelAdmin):
-    list_display = ['email', 'source', 'created_at', 'user']
+    list_display = ['email', 'first_name', 'last_name', 'mobile', 'source', 'created_at', 'user']
     list_filter = ['source', 'created_at']
-    search_fields = ['email', 'source']
+    search_fields = ['email', 'first_name', 'last_name', 'mobile', 'source']
     readonly_fields = ['created_at']
     
     actions = ['export_as_csv', 'export_as_text']
@@ -17,9 +25,9 @@ class EmailCollectionAdmin(admin.ModelAdmin):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="email_collection.csv"'
         writer = csv.writer(response)
-        writer.writerow(['Email', 'Source', 'Created At', 'User'])
+        writer.writerow(['Email', 'First Name', 'Last Name', 'Mobile', 'Source', 'Created At', 'User'])
         for obj in queryset:
-            writer.writerow([obj.email, obj.source, obj.created_at, obj.user])
+            writer.writerow([obj.email, obj.first_name, obj.last_name, obj.mobile, obj.source, obj.created_at, obj.user])
         return response
     export_as_csv.short_description = "Export selected emails as CSV"
     

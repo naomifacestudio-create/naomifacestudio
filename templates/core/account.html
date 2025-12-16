@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "My Account" %}{% endblock title %}
+
+{% block meta_description %}{% trans "View and manage your account information and reservations." %}{% endblock meta_description %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "My Account" %}</h1>
+        
+        <!-- User Information Section -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-md mb-8">
+            <h2 class="text-2xl font-bold text-[#593d09] mb-4">{% trans "Personal Information" %}</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-gray-600 mb-1">{% trans "First Name" %}</p>
+                    <p class="text-[#593d09] font-medium">{{ user.first_name|default:"—" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 mb-1">{% trans "Last Name" %}</p>
+                    <p class="text-[#593d09] font-medium">{{ user.last_name|default:"—" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 mb-1">{% trans "Email" %}</p>
+                    <p class="text-[#593d09] font-medium">{{ user.email }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 mb-1">{% trans "Mobile Number" %}</p>
+                    <p class="text-[#593d09] font-medium">{{ profile.mobile|default:"—" }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 mb-1">{% trans "Username" %}</p>
+                    <p class="text-[#593d09] font-medium">{{ user.username }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Future Reservations Section -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-md mb-8">
+            <h2 class="text-2xl font-bold text-[#593d09] mb-4">{% trans "Upcoming Reservations" %}</h2>
+            {% if future_reservations %}
+            <div class="space-y-4">
+                {% for reservation in future_reservations %}
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#593d09] mb-2">{{ reservation.treatment.get_title }}</h3>
+                            <p class="text-[#593d09] mb-1"><strong>{% trans "Date:" %}</strong> {{ reservation.date|date:"d.m.Y" }}</p>
+                            <p class="text-[#593d09] mb-1"><strong>{% trans "Time:" %}</strong> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</p>
+                            <p class="text-[#593d09] mb-1"><strong>{% trans "Price:" %}</strong> {{ reservation.treatment.price }} €</p>
+                            <p class="text-[#593d09]"><strong>{% trans "Status:" %}</strong> 
+                                <span class="{% if reservation.status == 'confirmed' %}text-green-600{% elif reservation.status == 'pending' %}text-yellow-600{% elif reservation.status == 'cancelled' %}text-red-600{% else %}text-gray-600{% endif %}">
+                                    {{ reservation.get_status_display }}
+                                </span>
+                            </p>
+                        </div>
+                        {% if reservation.status != 'cancelled' %}
+                        <button onclick="cancelReservation({{ reservation.id }})" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
+                            {% trans "Cancel" %}
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-[#593d09] text-center py-8">{% trans "You have no upcoming reservations." %}</p>
+            <div class="text-center">
+                <a href="{% url 'reservations:calendar' %}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+                    {% trans "Book a Treatment" %}
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Past Reservations Section -->
+        {% if past_reservations %}
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-md">
+            <h2 class="text-2xl font-bold text-[#593d09] mb-4">{% trans "Past Reservations" %}</h2>
+            <div class="space-y-4">
+                {% for reservation in past_reservations %}
+                <div class="border border-gray-200 rounded-lg p-4 opacity-75">
+                    <h3 class="text-lg font-bold text-[#593d09] mb-2">{{ reservation.treatment.get_title }}</h3>
+                    <p class="text-[#593d09] mb-1"><strong>{% trans "Date:" %}</strong> {{ reservation.date|date:"d.m.Y" }}</p>
+                    <p class="text-[#593d09] mb-1"><strong>{% trans "Time:" %}</strong> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</p>
+                    <p class="text-[#593d09]"><strong>{% trans "Status:" %}</strong> 
+                        <span class="{% if reservation.status == 'completed' %}text-green-600{% elif reservation.status == 'cancelled' %}text-red-600{% else %}text-gray-600{% endif %}">
+                            {{ reservation.get_status_display }}
+                        </span>
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mt-4 text-center">
+                <a href="{% url 'reservations:my_reservations' %}" class="text-[#593d09] hover:underline">
+                    {% trans "View all past reservations" %}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function cancelReservation(reservationId) {
+        if (!confirm('{% trans "Are you sure you want to cancel this reservation?" %}')) {
+            return;
+        }
+        
+        fetch(`{% url 'reservations:cancel' 0 %}`.replace('0', reservationId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('{% trans "Reservation cancelled successfully" %}');
+                window.location.reload();
+            } else {
+                alert(data.error || '{% trans "Error cancelling reservation" %}');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('{% trans "Error cancelling reservation" %}');
+        });
+    }
+</script>
+{% endblock %}
+

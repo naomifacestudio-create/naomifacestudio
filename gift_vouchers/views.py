@@ -71,10 +71,13 @@ def gift_voucher_form(request):
             recipient_email=recipient_email if email_option == 'recipient' else '',
         )
         
-        # Collect email
-        EmailCollection.objects.get_or_create(
+        # Collect email (only if not already archived)
+        EmailCollection.collect_email(
             email=purchaser_email,
-            defaults={'source': 'Gift Voucher Form'}
+            source='Gift Voucher Form',
+            first_name=purchaser_first_name,
+            last_name=purchaser_last_name,
+            mobile=purchaser_mobile,
         )
         
         # Send emails

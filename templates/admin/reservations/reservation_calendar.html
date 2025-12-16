@@ -252,6 +252,7 @@ function loadDayReservations(dateStr) {
                     item.innerHTML = `
                         <h4>${reservation.treatment}</h4>
                         <p><strong>{% trans "Client" %}:</strong> ${reservation.user} (${reservation.user_email})</p>
+                        ${reservation.user_mobile ? `<p><strong>{% trans "Mobile" %}:</strong> ${reservation.user_mobile}</p>` : ''}
                         <p><strong>{% trans "Time" %}:</strong> ${reservation.start_time} - ${reservation.end_time}</p>
                         <p><strong>{% trans "Status" %}:</strong> ${reservation.status}</p>
                         ${reservation.notes ? `<p><strong>{% trans "Notes" %}:</strong> ${reservation.notes}</p>` : ''}

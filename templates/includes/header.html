@@ -76,11 +76,11 @@
                     <!-- Login/Signup -->
                     <div class="flex items-center gap-2">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'reservations:my_reservations' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "My Reservations" %}</a>
+                            <a href="{% url 'core:account' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "My Account" %}</a>
                             <a href="{% url 'admin:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
                         {% else %}
-                            <a href="{% url 'admin:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
-                            <a href="{% url 'admin:login' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
+                            <a href="{% url 'core:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
+                            <a href="{% url 'core:signup' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
                         {% endif %}
                     </div>
                 </div>
@@ -150,17 +150,17 @@
             <!-- Login/Signup -->
             <div class="space-y-2">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'reservations:my_reservations' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
-                        {% trans "My Reservations" %}
+                    <a href="{% url 'core:account' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                        {% trans "My Account" %}
                     </a>
                     <a href="{% url 'admin:logout' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Logout" %}
                     </a>
                 {% else %}
-                    <a href="{% url 'admin:login' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:login' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Login" %}
                     </a>
-                    <a href="{% url 'admin:login' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:signup' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Sign Up" %}
                     </a>
                 {% endif %}

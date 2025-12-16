@@ -45,10 +45,13 @@ def contact_form(request):
             message=message_text,
         )
         
-        # Collect email
-        EmailCollection.objects.get_or_create(
+        # Collect email (only if not already archived)
+        EmailCollection.collect_email(
             email=email,
-            defaults={'source': 'Contact Form'}
+            source='Contact Form',
+            first_name=first_name,
+            last_name=last_name,
+            mobile=mobile,
         )
         
         # Send email to admin

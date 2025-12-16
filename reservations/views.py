@@ -239,10 +239,16 @@ def create_reservation(request):
         start_time=start_time,
     )
     
-    # Collect email
-    EmailCollection.objects.get_or_create(
+    # Collect email with user details (only if not already archived)
+    profile = getattr(request.user, 'profile', None)
+    EmailCollection.collect_email(
         email=request.user.email,
-        defaults={'source': 'Reservation', 'user': request.user}
+        source='Reservation',
+        first_name=request.user.first_name or (profile.first_name if profile else ''),
+        last_name=request.user.last_name or (profile.last_name if profile else ''),
+        mobile=profile.mobile if profile else '',
+        user=request.user,
+        update_user_info=False,  # Don't update if email already exists
     )
     
     # Send email notifications
