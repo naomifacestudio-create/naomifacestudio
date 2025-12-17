@@ -213,3 +213,4 @@ def cleanup_orphaned_uploads_on_save(sender, instance, **kwargs):
     # Clean up orphaned uploads that are not used in any blog, treatment, or education
     cleanup_orphaned_ckeditor_uploads()
 
+

@@ -67,3 +67,4 @@ class Education(models.Model):
         """Get meta description in specified language"""
         return getattr(self, f'meta_description_{language_code}', self.meta_description_hr) or self.get_short_description(language_code)
 
+

@@ -10,3 +10,4 @@ class EducationConfig(AppConfig):
     def ready(self):
         import education.signals  # noqa
 
+

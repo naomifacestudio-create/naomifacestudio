@@ -36,3 +36,4 @@ def education_detail(request, slug):
     }
     return render(request, 'education/detail.html', context)
 
+
