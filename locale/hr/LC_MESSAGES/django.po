@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 18:51+0100\n"
+"POT-Creation-Date: 2025-12-17 19:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,10 +93,8 @@ msgid "Blog"
 msgstr "Blog"
 
 #: .\contacts\apps.py:8
-#, fuzzy
-#| msgid "Contact"
 msgid "Contacts"
-msgstr "Kontakt"
+msgstr "Kontakti"
 
 #: .\contacts\models.py:6 .\gift_vouchers\models.py:24
 #: .\templates\contacts\form.html:30 .\templates\core\account.html:18
@@ -151,8 +149,6 @@ msgid "Core"
 msgstr "Osnovno"
 
 #: .\core\models.py:51
-#, fuzzy
-#| msgid "Email Collections"
 msgid "Email Collection"
 msgstr "Zbirka emailova"
 
@@ -187,10 +183,8 @@ msgid "You have been logged out successfully."
 msgstr "Uspješno ste odjavljeni."
 
 #: .\education\admin.py:52
-#, fuzzy
-#| msgid "Education"
 msgid "Education Details"
-msgstr "Edukacija"
+msgstr "Detalji edukacije"
 
 #: .\education\apps.py:8 .\education\models.py:36 .\education\models.py:37
 #: .\templates\education\list.html:4 .\templates\education\list.html:12
@@ -248,6 +242,21 @@ msgstr "Poklon vaučer"
 msgid "Gift voucher order submitted successfully!"
 msgstr "Narudžba poklon vaučera je uspješno poslana!"
 
+#: .\gift_vouchers\views.py:113
+#, python-format
+msgid "New Gift Voucher Order - %(name)s"
+msgstr "Nova narudžba poklon vaučera - %(name)s"
+
+#: .\gift_vouchers\views.py:126
+#, python-format
+msgid "Gift Voucher Order Confirmation - %(treatment)s"
+msgstr "Potvrda narudžbe poklon vaučera - %(treatment)s"
+
+#: .\gift_vouchers\views.py:140
+#, python-format
+msgid "You received a Gift Voucher! - %(treatment)s"
+msgstr "Primili ste poklon vaučer! - %(treatment)s"
+
 #: .\naomi_face_studio\urls.py:15
 msgid "Site Administration"
 msgstr "Administracija stranice"
@@ -299,6 +308,21 @@ msgstr "Napomene"
 #: .\reservations\models.py:29 .\templates\treatments\detail.html:23
 msgid "Reservation"
 msgstr "Rezervacija"
+
+#: .\reservations\views.py:44
+#, python-format
+msgid "Reservation Confirmation - %(treatment)s"
+msgstr "Potvrda rezervacije - %(treatment)s"
+
+#: .\reservations\views.py:57
+#, python-format
+msgid "New Reservation - %(treatment)s"
+msgstr "Nova rezervacija - %(treatment)s"
+
+#: .\reservations\views.py:99
+#, python-format
+msgid "Reservation Cancelled - %(treatment)s"
+msgstr "Rezervacija otkazana - %(treatment)s"
 
 # Admin navigation filter placeholder
 #: .\templates\admin\index.html:11
@@ -589,16 +613,24 @@ msgid "Upcoming Reservations"
 msgstr "Predstojeće rezervacije"
 
 #: .\templates\core\account.html:50 .\templates\core\account.html:86
+#: .\templates\reservations\emails\admin_notification.html:22
+#: .\templates\reservations\emails\cancellation_notification.html:22
+#: .\templates\reservations\emails\user_confirmation.html:24
 #: .\templates\reservations\my_reservations.html:18
 msgid "Date:"
 msgstr "Datum:"
 
 #: .\templates\core\account.html:51 .\templates\core\account.html:87
+#: .\templates\reservations\emails\admin_notification.html:23
+#: .\templates\reservations\emails\cancellation_notification.html:23
+#: .\templates\reservations\emails\user_confirmation.html:25
 #: .\templates\reservations\my_reservations.html:19
 msgid "Time:"
 msgstr "Vrijeme:"
 
 #: .\templates\core\account.html:52 .\templates\education\detail.html:19
+#: .\templates\reservations\emails\admin_notification.html:24
+#: .\templates\reservations\emails\user_confirmation.html:26
 #: .\templates\reservations\my_reservations.html:20
 #: .\templates\treatments\detail.html:20
 msgid "Price:"
@@ -808,12 +840,121 @@ msgstr "Istražite naše obrazovne tečajeve i programe edukacije."
 msgid "No education courses available at the moment."
 msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
 
+#: .\templates\gift_vouchers\emails\admin_notification.html:17
+msgid "New Gift Voucher Order"
+msgstr "Nova narudžba poklon vaučera"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:20
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:21
+msgid "Order Details"
+msgstr "Detalji narudžbe"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:21
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:22
+#: .\templates\gift_vouchers\emails\recipient_notification.html:23
+#: .\templates\reservations\emails\admin_notification.html:21
+#: .\templates\reservations\emails\cancellation_notification.html:21
+#: .\templates\reservations\emails\user_confirmation.html:23
+msgid "Treatment:"
+msgstr "Tretman:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:22
+msgid "Recipient Name:"
+msgstr "Ime primatelja:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:23
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:24
+#: .\templates\gift_vouchers\emails\recipient_notification.html:24
+msgid "From:"
+msgstr "Od:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:24
+msgid "Personalised Message:"
+msgstr "Personalizirana poruka:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:24
+msgid "N/A"
+msgstr "N/A"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:26
+msgid "Purchaser Details"
+msgstr "Detalji kupca"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:27
+#: .\templates\reservations\emails\admin_notification.html:28
+#: .\templates\reservations\emails\cancellation_notification.html:26
+msgid "Name:"
+msgstr "Ime:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:28
+#: .\templates\reservations\emails\admin_notification.html:29
+#: .\templates\reservations\emails\cancellation_notification.html:27
+msgid "Email:"
+msgstr "Email:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:29
+#: .\templates\reservations\emails\admin_notification.html:31
+#: .\templates\reservations\emails\admin_notification.html:33
+#: .\templates\reservations\emails\cancellation_notification.html:29
+#: .\templates\reservations\emails\cancellation_notification.html:31
+msgid "Mobile:"
+msgstr "Mobitel:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:31
+msgid "Email Delivery:"
+msgstr "Isporuka emaila:"
+
+#: .\templates\gift_vouchers\emails\admin_notification.html:33
+msgid "Recipient Email:"
+msgstr "Email primatelja:"
+
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:17
+msgid "Gift Voucher Order Confirmation"
+msgstr "Potvrda narudžbe poklon vaučera"
+
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:20
+msgid "Thank you for your gift voucher order!"
+msgstr "Hvala vam na narudžbi poklon vaučera!"
+
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:23
+msgid "Recipient:"
+msgstr "Primatelj:"
+
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:26
+#: .\templates\gift_vouchers\emails\recipient_notification.html:26
+msgid "Message:"
+msgstr "Poruka:"
+
+#: .\templates\gift_vouchers\emails\recipient_notification.html:17
+msgid "You Received a Gift Voucher!"
+msgstr "Primili ste poklon vaučer!"
+
+#: .\templates\gift_vouchers\emails\recipient_notification.html:20
+#: .\templates\reservations\emails\user_confirmation.html:20
+msgid "Dear"
+msgstr "Poštovani"
+
+#: .\templates\gift_vouchers\emails\recipient_notification.html:21
+msgid ""
+"You have received a gift voucher for a facial treatment at Naomi Face Studio!"
+msgstr ""
+"Primili ste poklon vaučer za tretman lica u Naomi Face Studio!"
+
+#: .\templates\gift_vouchers\emails\recipient_notification.html:22
+msgid "Gift Voucher Details"
+msgstr "Detalji poklon vaučera"
+
+#: .\templates\gift_vouchers\emails\recipient_notification.html:28
+msgid "Please contact us to book your treatment."
+msgstr "Molimo kontaktirajte nas za rezervaciju vašeg tretmana."
+
 #: .\templates\gift_vouchers\form.html:7
 msgid ""
 "Purchase a gift voucher for a loved one. Choose from our range of facial "
 "treatments."
 msgstr ""
-"Kupite poklon vaučer za voljenu osobu. Odaberite iz naše ponude tretmana lica."
+"Kupite poklon vaučer za voljenu osobu. Odaberite iz naše ponude tretmana "
+"lica."
 
 #: .\templates\gift_vouchers\form.html:20
 msgid "Select a treatment"
@@ -977,6 +1118,51 @@ msgstr "Rezervacija je uspješno kreirana!"
 msgid "Error creating reservation"
 msgstr "Greška pri kreiranju rezervacije"
 
+#: .\templates\reservations\emails\admin_notification.html:17
+msgid "New Reservation"
+msgstr "Nova rezervacija"
+
+#: .\templates\reservations\emails\admin_notification.html:20
+#: .\templates\reservations\emails\user_confirmation.html:22
+msgid "Reservation Details"
+msgstr "Detalji rezervacije"
+
+#: .\templates\reservations\emails\admin_notification.html:25
+#: .\templates\reservations\emails\user_confirmation.html:27
+#: .\templates\treatments\detail.html:19
+msgid "Duration:"
+msgstr "Trajanje:"
+
+#: .\templates\reservations\emails\admin_notification.html:27
+#: .\templates\reservations\emails\cancellation_notification.html:25
+msgid "Customer Information"
+msgstr "Podaci o klijentu"
+
+#: .\templates\reservations\emails\admin_notification.html:33
+#: .\templates\reservations\emails\cancellation_notification.html:31
+msgid "Not provided"
+msgstr "Nije navedeno"
+
+#: .\templates\reservations\emails\cancellation_notification.html:17
+msgid "Reservation Cancelled"
+msgstr "Rezervacija otkazana"
+
+#: .\templates\reservations\emails\cancellation_notification.html:20
+msgid "Cancelled Reservation Details"
+msgstr "Detalji otkazane rezervacije"
+
+#: .\templates\reservations\emails\user_confirmation.html:17
+msgid "Reservation Confirmation"
+msgstr "Potvrda rezervacije"
+
+#: .\templates\reservations\emails\user_confirmation.html:21
+msgid "Your reservation has been confirmed!"
+msgstr "Vaša rezervacija je potvrđena!"
+
+#: .\templates\reservations\emails\user_confirmation.html:28
+msgid "We look forward to seeing you!"
+msgstr "Radujemo se što ćemo vas vidjeti!"
+
 #: .\templates\reservations\my_reservations.html:4
 #: .\templates\reservations\my_reservations.html:8
 msgid "My Reservations"
@@ -985,10 +1171,6 @@ msgstr "Moje rezervacije"
 #: .\templates\reservations\my_reservations.html:34
 msgid "You have no reservations."
 msgstr "Nemate rezervacija."
-
-#: .\templates\treatments\detail.html:19
-msgid "Duration:"
-msgstr "Trajanje:"
 
 #: .\templates\treatments\list.html:6
 msgid "Explore our range of premium facial treatments at Naomi Face Studio."

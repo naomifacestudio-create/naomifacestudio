@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,23 +14,23 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>New Gift Voucher Order</h1>
+            <h1>{% trans "New Gift Voucher Order" %}</h1>
         </div>
         <div class="content">
-            <h2>Order Details</h2>
-            <p><strong>Treatment:</strong> {{ gift_voucher.treatment.get_title }}</p>
-            <p><strong>Recipient Name:</strong> {{ gift_voucher.recipient_name }}</p>
-            <p><strong>From:</strong> {{ gift_voucher.from_name }}</p>
-            <p><strong>Personalised Message:</strong> {{ gift_voucher.personalised_message|default:"N/A" }}</p>
+            <h2>{% trans "Order Details" %}</h2>
+            <p><strong>{% trans "Treatment:" %}</strong> {{ treatment_title }}</p>
+            <p><strong>{% trans "Recipient Name:" %}</strong> {{ gift_voucher.recipient_name }}</p>
+            <p><strong>{% trans "From:" %}</strong> {{ gift_voucher.from_name }}</p>
+            <p><strong>{% trans "Personalised Message:" %}</strong> {{ gift_voucher.personalised_message|default:_("N/A") }}</p>
             
-            <h3>Purchaser Details</h3>
-            <p><strong>Name:</strong> {{ gift_voucher.purchaser_first_name }} {{ gift_voucher.purchaser_last_name }}</p>
-            <p><strong>Email:</strong> {{ gift_voucher.purchaser_email }}</p>
-            <p><strong>Mobile:</strong> {{ gift_voucher.purchaser_mobile }}</p>
+            <h3>{% trans "Purchaser Details" %}</h3>
+            <p><strong>{% trans "Name:" %}</strong> {{ gift_voucher.purchaser_first_name }} {{ gift_voucher.purchaser_last_name }}</p>
+            <p><strong>{% trans "Email:" %}</strong> {{ gift_voucher.purchaser_email }}</p>
+            <p><strong>{% trans "Mobile:" %}</strong> {{ gift_voucher.purchaser_mobile }}</p>
             
-            <p><strong>Email Delivery:</strong> {{ gift_voucher.get_email_option_display }}</p>
+            <p><strong>{% trans "Email Delivery:" %}</strong> {{ gift_voucher.get_email_option_display }}</p>
             {% if gift_voucher.recipient_email %}
-            <p><strong>Recipient Email:</strong> {{ gift_voucher.recipient_email }}</p>
+            <p><strong>{% trans "Recipient Email:" %}</strong> {{ gift_voucher.recipient_email }}</p>
             {% endif %}
         </div>
         <div class="footer">
@@ -38,4 +39,3 @@
     </div>
 </body>
 </html>
-

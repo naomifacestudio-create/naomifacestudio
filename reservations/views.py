@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.utils.translation import get_language, activate
+from django.utils.translation import get_language, activate, gettext as _
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
@@ -28,16 +28,20 @@ def send_reservation_emails(reservation, language_code='hr'):
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
+        # Get translated treatment title
+        treatment_title = reservation.treatment.get_title(language_code)
+        
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
             'user_profile': profile,
             'language_code': language_code,
+            'treatment_title': treatment_title,
         }
         
-        # User email
-        user_subject = f'Reservation Confirmation - {reservation.treatment.get_title(language_code)}'
+        # User email - translate subject
+        user_subject = _('Reservation Confirmation - %(treatment)s') % {'treatment': treatment_title}
         user_message = render_to_string('reservations/emails/user_confirmation.html', context)
         send_mail(
             user_subject,
@@ -49,8 +53,8 @@ def send_reservation_emails(reservation, language_code='hr'):
         )
         logger.info(f"Reservation confirmation email sent to user: {reservation.user.email} for reservation ID: {reservation.id}")
         
-        # Admin email
-        admin_subject = f'New Reservation - {reservation.treatment.get_title(language_code)}'
+        # Admin email - translate subject
+        admin_subject = _('New Reservation - %(treatment)s') % {'treatment': treatment_title}
         admin_message = render_to_string('reservations/emails/admin_notification.html', context)
         send_mail(
             admin_subject,
@@ -79,15 +83,20 @@ def send_cancellation_email(reservation, language_code='hr'):
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
+        # Get translated treatment title
+        treatment_title = reservation.treatment.get_title(language_code)
+        
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
             'user_profile': profile,
             'language_code': language_code,
+            'treatment_title': treatment_title,
         }
         
-        admin_subject = f'Reservation Cancelled - {reservation.treatment.get_title(language_code)}'
+        # Translate subject
+        admin_subject = _('Reservation Cancelled - %(treatment)s') % {'treatment': treatment_title}
         admin_message = render_to_string('reservations/emails/cancellation_notification.html', context)
         send_mail(
             admin_subject,

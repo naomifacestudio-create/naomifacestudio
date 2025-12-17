@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,18 +14,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>You Received a Gift Voucher!</h1>
+            <h1>{% trans "You Received a Gift Voucher!" %}</h1>
         </div>
         <div class="content">
-            <p>Dear {{ gift_voucher.recipient_name }},</p>
-            <p>You have received a gift voucher for a facial treatment at Naomi Face Studio!</p>
-            <h2>Gift Voucher Details</h2>
-            <p><strong>Treatment:</strong> {{ gift_voucher.treatment.get_title }}</p>
-            <p><strong>From:</strong> {{ gift_voucher.from_name }}</p>
+            <p>{% trans "Dear" %} {{ gift_voucher.recipient_name }},</p>
+            <p>{% trans "You have received a gift voucher for a facial treatment at Naomi Face Studio!" %}</p>
+            <h2>{% trans "Gift Voucher Details" %}</h2>
+            <p><strong>{% trans "Treatment:" %}</strong> {{ treatment_title }}</p>
+            <p><strong>{% trans "From:" %}</strong> {{ gift_voucher.from_name }}</p>
             {% if gift_voucher.personalised_message %}
-            <p><strong>Message:</strong> {{ gift_voucher.personalised_message }}</p>
+            <p><strong>{% trans "Message:" %}</strong> {{ gift_voucher.personalised_message }}</p>
             {% endif %}
-            <p>Please contact us to book your treatment.</p>
+            <p>{% trans "Please contact us to book your treatment." %}</p>
         </div>
         <div class="footer">
             <p>Naomi Face Studio</p>
@@ -34,4 +35,3 @@
     </div>
 </body>
 </html>
-

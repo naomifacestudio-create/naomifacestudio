@@ -100,13 +100,17 @@ def send_gift_voucher_emails(gift_voucher, language_code='hr'):
     try:
         activate(language_code)
         
+        # Get translated treatment title
+        treatment_title = gift_voucher.treatment.get_title(language_code)
+        
         context = {
             'gift_voucher': gift_voucher,
             'language_code': language_code,
+            'treatment_title': treatment_title,
         }
         
-        # Admin email
-        admin_subject = f'New Gift Voucher Order - {gift_voucher.recipient_name}'
+        # Admin email - translate subject
+        admin_subject = _('New Gift Voucher Order - %(name)s') % {'name': gift_voucher.recipient_name}
         admin_message = render_to_string('gift_vouchers/emails/admin_notification.html', context)
         send_mail(
             admin_subject,
@@ -118,8 +122,8 @@ def send_gift_voucher_emails(gift_voucher, language_code='hr'):
         )
         logger.info(f"Gift voucher admin notification sent for voucher ID: {gift_voucher.id}")
         
-        # Purchaser email
-        purchaser_subject = f'Gift Voucher Order Confirmation - {gift_voucher.treatment.get_title(language_code)}'
+        # Purchaser email - translate subject
+        purchaser_subject = _('Gift Voucher Order Confirmation - %(treatment)s') % {'treatment': treatment_title}
         purchaser_message = render_to_string('gift_vouchers/emails/purchaser_confirmation.html', context)
         send_mail(
             purchaser_subject,
@@ -131,9 +135,9 @@ def send_gift_voucher_emails(gift_voucher, language_code='hr'):
         )
         logger.info(f"Gift voucher confirmation email sent to purchaser: {gift_voucher.purchaser_email} for voucher ID: {gift_voucher.id}")
         
-        # Recipient email (if different)
+        # Recipient email (if different) - translate subject
         if gift_voucher.email_option == 'recipient' and gift_voucher.recipient_email:
-            recipient_subject = f'You received a Gift Voucher! - {gift_voucher.treatment.get_title(language_code)}'
+            recipient_subject = _('You received a Gift Voucher! - %(treatment)s') % {'treatment': treatment_title}
             recipient_message = render_to_string('gift_vouchers/emails/recipient_notification.html', context)
             send_mail(
                 recipient_subject,
