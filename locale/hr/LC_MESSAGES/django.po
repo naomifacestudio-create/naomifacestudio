@@ -1,0 +1,1030 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-17 11:37+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: .\blogs\admin.py:46 .\treatments\admin.py:49
+msgid "Croatian Content"
+msgstr "Hrvatski sadržaj"
+
+#: .\blogs\admin.py:49 .\treatments\admin.py:52
+msgid "English Content"
+msgstr "Engleski sadržaj"
+
+#: .\blogs\admin.py:52
+msgid "Blog Details"
+msgstr "Detalji bloga"
+
+#: .\blogs\models.py:14 .\treatments\models.py:16
+msgid "Title (Croatian)"
+msgstr "Naslov (hrvatski)"
+
+#: .\blogs\models.py:15 .\treatments\models.py:17
+msgid "Slug (Croatian)"
+msgstr "Slug (hrvatski)"
+
+#: .\blogs\models.py:16 .\treatments\models.py:18
+msgid "Short Description (Croatian)"
+msgstr "Kratak opis (hrvatski)"
+
+#: .\blogs\models.py:17 .\treatments\models.py:19
+msgid "Full Description (Croatian)"
+msgstr "Puni opis (hrvatski)"
+
+#: .\blogs\models.py:20 .\treatments\models.py:23
+msgid "Title (English)"
+msgstr "Naslov (engleski)"
+
+#: .\blogs\models.py:21 .\treatments\models.py:24
+msgid "Slug (English)"
+msgstr "Slug (engleski)"
+
+#: .\blogs\models.py:22 .\treatments\models.py:25
+msgid "Short Description (English)"
+msgstr "Kratak opis (engleski)"
+
+#: .\blogs\models.py:23 .\treatments\models.py:26
+msgid "Full Description (English)"
+msgstr "Puni opis (engleski)"
+
+#: .\blogs\models.py:26 .\treatments\models.py:33
+msgid "Thumbnail Image"
+msgstr "Sličica"
+
+#: .\blogs\models.py:26 .\treatments\models.py:33
+msgid "Supports WebP format"
+msgstr "Podržava WebP format"
+
+#: .\blogs\models.py:29 .\treatments\models.py:36
+msgid "Active"
+msgstr "Aktivno"
+
+#: .\blogs\models.py:33
+msgid "Blog"
+msgstr "Blog"
+
+#: .\blogs\models.py:34 .\templates\blogs\list.html:4
+#: .\templates\includes\header.html:50 .\templates\includes\header.html:127
+msgid "Blogs"
+msgstr "Blogovi"
+
+#: .\contacts\models.py:6 .\gift_vouchers\models.py:24
+#: .\templates\contacts\form.html:30 .\templates\core\account.html:18
+#: .\templates\core\signup.html:33
+msgid "First Name"
+msgstr "Ime"
+
+#: .\contacts\models.py:7 .\gift_vouchers\models.py:25
+#: .\templates\contacts\form.html:34 .\templates\core\account.html:22
+#: .\templates\core\signup.html:41
+msgid "Last Name"
+msgstr "Prezime"
+
+#: .\contacts\models.py:8 .\gift_vouchers\models.py:27
+#: .\templates\contacts\form.html:41 .\templates\core\account.html:30
+#: .\templates\core\signup.html:57
+msgid "Mobile Number"
+msgstr "Broj mobitela"
+
+#: .\contacts\models.py:9 .\gift_vouchers\models.py:26
+#: .\templates\contacts\form.html:45
+msgid "Email Address"
+msgstr "Email adresa"
+
+#: .\contacts\models.py:10 .\templates\contacts\form.html:51
+msgid "Message"
+msgstr "Poruka"
+
+#: .\contacts\models.py:12
+msgid "Read"
+msgstr "Pročitano"
+
+#: .\contacts\models.py:16
+msgid "Contact Submission"
+msgstr "Kontakt forma"
+
+#: .\contacts\models.py:17
+msgid "Contact Submissions"
+msgstr "Kontakt forme"
+
+#: .\core\views.py:15 .\templates\core\home.html:4 .\templates\core\home.html:5
+#: .\templates\core\home.html:6 .\templates\includes\header.html:47
+#: .\templates\includes\header.html:112
+msgid "Home"
+msgstr "Početna"
+
+#: .\core\views.py:23 .\templates\core\about_us.html:4
+msgid "About Us"
+msgstr "O nama"
+
+#: .\core\views.py:58
+msgid "Account created successfully!"
+msgstr "Račun je uspješno kreiran!"
+
+#: .\core\views.py:86
+msgid "Welcome back!"
+msgstr "Dobrodošli natrag!"
+
+#: .\core\views.py:90
+msgid "Invalid username or password."
+msgstr "Nevažeće korisničko ime ili lozinka."
+
+#: .\core\views.py:133
+msgid "You have been logged out successfully."
+msgstr "Uspješno ste odjavljeni."
+
+#: .\gift_vouchers\models.py:8 .\templates\gift_vouchers\form.html:35
+msgid "Send the gift voucher to my email address"
+msgstr "Pošalji poklon bon na moju email adresu"
+
+#: .\gift_vouchers\models.py:9 .\templates\gift_vouchers\form.html:39
+msgid "Send the gift voucher to recipient's email address"
+msgstr "Pošalji poklon bon na email adresu primatelja"
+
+#: .\gift_vouchers\models.py:16
+msgid "Email Delivery Option"
+msgstr "Opcija isporuke emaila"
+
+#: .\gift_vouchers\models.py:19
+msgid "Recipient Name"
+msgstr "Ime primatelja"
+
+#: .\gift_vouchers\models.py:20
+msgid "Personalised Message"
+msgstr "Personalizirana poruka"
+
+#: .\gift_vouchers\models.py:21 .\templates\gift_vouchers\form.html:57
+msgid "Who is this gift from?"
+msgstr "Tko šalje ovaj poklon?"
+
+#: .\gift_vouchers\models.py:30
+msgid "Recipient Email Address"
+msgstr "Email adresa primatelja"
+
+#: .\gift_vouchers\models.py:33
+msgid "Email Sent"
+msgstr "Email poslan"
+
+#: .\gift_vouchers\models.py:37 .\templates\gift_vouchers\form.html:5
+#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:49
+#: .\templates\includes\header.html:122
+msgid "Gift Voucher"
+msgstr "Poklon bon"
+
+#: .\gift_vouchers\models.py:38
+msgid "Gift Vouchers"
+msgstr "Poklon bonovi"
+
+#: .\reservations\models.py:11
+msgid "Pending"
+msgstr "Na čekanju"
+
+#: .\reservations\models.py:12
+msgid "Confirmed"
+msgstr "Potvrđeno"
+
+#: .\reservations\models.py:13
+msgid "Cancelled"
+msgstr "Otkazano"
+
+#: .\reservations\models.py:14
+msgid "Completed"
+msgstr "Završeno"
+
+#: .\reservations\models.py:19
+msgid "Date"
+msgstr "Datum"
+
+#: .\reservations\models.py:20
+msgid "Start Time"
+msgstr "Vrijeme početka"
+
+#: .\reservations\models.py:21
+msgid "End Time"
+msgstr "Vrijeme završetka"
+
+#: .\reservations\models.py:22
+#: .\templates\admin\reservations\reservation_calendar.html:268
+msgid "Status"
+msgstr "Status"
+
+#: .\reservations\models.py:23
+#: .\templates\admin\reservations\reservation_calendar.html:269
+msgid "Notes"
+msgstr "Napomene"
+
+#: .\reservations\models.py:29 .\templates\treatments\detail.html:23
+msgid "Reservation"
+msgstr "Rezervacija"
+
+#: .\reservations\models.py:30 .\templates\includes\header.html:73
+#: .\templates\includes\header.html:147
+#: .\templates\reservations\calendar.html:4
+msgid "Reservations"
+msgstr "Rezervacije"
+
+#: .\templates\admin\reservations\reservation\change_list.html:8
+msgid "View Calendar"
+msgstr "Prikaži kalendar"
+
+#: .\templates\admin\reservations\reservation_calendar.html:101
+msgid "Reservation Calendar"
+msgstr "Kalendar rezervacija"
+
+#: .\templates\admin\reservations\reservation_calendar.html:105
+#: .\templates\blogs\list.html:42 .\templates\treatments\list.html:45
+msgid "Previous"
+msgstr "Prethodno"
+
+#: .\templates\admin\reservations\reservation_calendar.html:107
+#: .\templates\blogs\list.html:64 .\templates\treatments\list.html:67
+msgid "Next"
+msgstr "Sljedeće"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "January"
+msgstr "Siječanj"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "February"
+msgstr "Veljača"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "March"
+msgstr "Ožujak"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "April"
+msgstr "Travanj"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "May"
+msgstr "Svibanj"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "June"
+msgstr "Lipanj"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "July"
+msgstr "Srpanj"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "August"
+msgstr "Kolovoz"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "September"
+msgstr "Rujan"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "October"
+msgstr "Listopad"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "November"
+msgstr "Studeni"
+
+#: .\templates\admin\reservations\reservation_calendar.html:126
+#: .\templates\reservations\calendar.html:120
+msgid "December"
+msgstr "Prosinac"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Mon"
+msgstr "Pon"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Tue"
+msgstr "Uto"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Wed"
+msgstr "Sri"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Thu"
+msgstr "Čet"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Fri"
+msgstr "Pet"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Sat"
+msgstr "Sub"
+
+#: .\templates\admin\reservations\reservation_calendar.html:127
+#: .\templates\reservations\calendar.html:121
+msgid "Sun"
+msgstr "Ned"
+
+#: .\templates\admin\reservations\reservation_calendar.html:257
+msgid "Reservations for"
+msgstr "Rezervacije za"
+
+#: .\templates\admin\reservations\reservation_calendar.html:265
+msgid "Client"
+msgstr "Klijent"
+
+#: .\templates\admin\reservations\reservation_calendar.html:266
+msgid "Mobile"
+msgstr "Mobitel"
+
+#: .\templates\admin\reservations\reservation_calendar.html:267
+msgid "Time"
+msgstr "Vrijeme"
+
+#: .\templates\admin\reservations\reservation_calendar.html:270
+msgid "View/Edit"
+msgstr "Prikaži/Uredi"
+
+#: .\templates\admin\reservations\reservation_calendar.html:277
+msgid "No reservations for"
+msgstr "Nema rezervacija za"
+
+#: .\templates\admin\reservations\reservation_calendar.html:278
+msgid "No reservations scheduled for this date."
+msgstr "Nema zakazanih rezervacija za ovaj datum."
+
+#: .\templates\admin\reservations\reservation_calendar.html:284
+msgid "Error loading reservations"
+msgstr "Greška pri učitavanju rezervacija"
+
+#: .\templates\blogs\list.html:6
+msgid ""
+"Read our latest blog posts about skincare, beauty tips, and facial "
+"treatments."
+msgstr ""
+"Pročitajte naše najnovije blog objave o njezi kože, savjetima za ljepotu i "
+"tretmanima lica."
+
+#: .\templates\blogs\list.html:12
+msgid "Our Blog"
+msgstr "Naš blog"
+
+#: .\templates\blogs\list.html:24 .\templates\treatments\list.html:26
+msgid "See more"
+msgstr "Vidi više"
+
+#: .\templates\blogs\list.html:30
+msgid "No blog posts available at the moment."
+msgstr "Trenutno nema dostupnih blog objava."
+
+#: .\templates\contacts\form.html:5 .\templates\includes\footer.html:8
+#: .\templates\includes\header.html:51 .\templates\includes\header.html:132
+msgid "Contact"
+msgstr "Kontakt"
+
+#: .\templates\contacts\form.html:7
+msgid ""
+"Get in touch with Naomi Face Studio. Contact us via email, phone, or fill "
+"out our contact form."
+msgstr ""
+"Kontaktirajte Naomi Face Studio. Javite nam se putem emaila, telefona ili "
+"popunite naš kontakt obrazac."
+
+#: .\templates\contacts\form.html:12
+msgid "Contact Us"
+msgstr "Kontaktirajte nas"
+
+#: .\templates\contacts\form.html:56
+msgid "Send Message"
+msgstr "Pošalji poruku"
+
+#: .\templates\core\about_us.html:6
+msgid ""
+"Learn more about Maja Divjaković, medical cosmetologist and certified "
+"therapist specializing in Forlle'd professional treatments and Face Gym "
+"techniques."
+msgstr ""
+"Saznajte više o Maji Divjaković, medicinskoj kozmetičarki i certificiranoj "
+"terapeutkinji specijaliziranoj za Forlle'd profesionalne tretmane i Face Gym "
+"tehnike."
+
+#: .\templates\core\about_us.html:11
+msgid "About Me"
+msgstr "O meni"
+
+#: .\templates\core\about_us.html:15
+msgid ""
+"My name is Maja Divjaković and I am a medical cosmetologist with years of "
+"experience working in wellness centers and aesthetic clinics."
+msgstr ""
+"Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "
+"iskustvom rada u wellnesima i estetskim centrima."
+
+#: .\templates\core\about_us.html:18
+msgid ""
+"Over the years, I have developed a unique approach that combines expertise "
+"and luxury with an emphasis on results that are visible immediately, but "
+"also on the feeling of complete relaxation and harmony."
+msgstr ""
+"Kroz godine rada razvila sam poseban pristup koji spaja stručnost "
+"i luksuz s naglaskom na rezultate koji se vide odmah, ali "
+"i na osjećaj potpune opuštenosti i harmonije."
+
+#: .\templates\core\about_us.html:21
+msgid ""
+"I specialize in Forlle'd professional treatments – exclusive Japanese "
+"cosmetics for anti-age care – and I am a certified therapist. In addition to "
+"ritual treatments, I am dedicated to Face Gym techniques that naturally "
+"shape and firm the face, activating more than 40 muscles and restoring the "
+"skin's tone and freshness."
+msgstr ""
+"Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu japansku "
+"kozmetiku za anti-age njegu – te sam certificirani terapeut. Osim "
+"ritualnih tretmana, posvećena sam i Face Gym tehnikama koje prirodnim "
+"putem oblikuju i učvršćuju lice, aktivirajući više od 40 mišića te vraćajući "
+"koži tonus i svježinu."
+
+#: .\templates\core\about_us.html:24
+msgid ""
+"My vision is to raise awareness about the importance of quality and "
+"personalized facial care and to bring clients an experience that goes beyond "
+"classic treatments."
+msgstr ""
+"Moja vizija je podići svijest o važnosti kvalitetne i "
+"personalizirane njege lica te približiti klijentima iskustvo koje nadilazi "
+"klasične tretmane."
+
+#: .\templates\core\about_us.html:27
+msgid ""
+"At Naomi Face Studio, I want to offer each client more than just care – a "
+"space where beauty and skin health meet with ritual, luxury, and inner "
+"balance."
+msgstr ""
+"U Naomi Face Studiju želim svakom klijentu pružiti više od njege – prostor "
+"gdje se ljepota i zdravlje kože susreću s ritualom, luksuzom i unutarnjim "
+"balansom."
+
+#: .\templates\core\account.html:4 .\templates\core\account.html:11
+#: .\templates\includes\header.html:79 .\templates\includes\header.html:154
+msgid "My Account"
+msgstr "Moj račun"
+
+#: .\templates\core\account.html:6
+msgid "View and manage your account information and reservations."
+msgstr "Pregledajte i upravljajte informacijama o svom računu i rezervacijama."
+
+#: .\templates\core\account.html:15
+msgid "Personal Information"
+msgstr "Osobni podaci"
+
+#: .\templates\core\account.html:26 .\templates\core\signup.html:49
+msgid "Email"
+msgstr "Email"
+
+#: .\templates\core\account.html:34 .\templates\core\signup.html:25
+msgid "Username"
+msgstr "Korisničko ime"
+
+#: .\templates\core\account.html:42
+msgid "Upcoming Reservations"
+msgstr "Predstojeće rezervacije"
+
+#: .\templates\core\account.html:50 .\templates\core\account.html:86
+#: .\templates\reservations\my_reservations.html:18
+msgid "Date:"
+msgstr "Datum:"
+
+#: .\templates\core\account.html:51 .\templates\core\account.html:87
+#: .\templates\reservations\my_reservations.html:19
+msgid "Time:"
+msgstr "Vrijeme:"
+
+#: .\templates\core\account.html:52
+#: .\templates\reservations\my_reservations.html:20
+#: .\templates\treatments\detail.html:20
+msgid "Price:"
+msgstr "Cijena:"
+
+#: .\templates\core\account.html:53 .\templates\core\account.html:88
+#: .\templates\reservations\my_reservations.html:21
+msgid "Status:"
+msgstr "Status:"
+
+#: .\templates\core\account.html:61
+#: .\templates\reservations\my_reservations.html:25
+msgid "Cancel"
+msgstr "Otkaži"
+
+#: .\templates\core\account.html:69
+msgid "You have no upcoming reservations."
+msgstr "Nemate predstojećih rezervacija."
+
+#: .\templates\core\account.html:72
+#: .\templates\reservations\my_reservations.html:36
+msgid "Book a Treatment"
+msgstr "Rezerviraj tretman"
+
+#: .\templates\core\account.html:81
+msgid "Past Reservations"
+msgstr "Prošle rezervacije"
+
+#: .\templates\core\account.html:98
+msgid "View all past reservations"
+msgstr "Prikaži sve prošle rezervacije"
+
+#: .\templates\core\account.html:108
+#: .\templates\reservations\my_reservations.html:45
+msgid "Are you sure you want to cancel this reservation?"
+msgstr "Jeste li sigurni da želite otkazati ovu rezervaciju?"
+
+#: .\templates\core\account.html:122
+#: .\templates\reservations\my_reservations.html:59
+msgid "Reservation cancelled successfully"
+msgstr "Rezervacija je uspješno otkazana"
+
+#: .\templates\core\account.html:125 .\templates\core\account.html:130
+#: .\templates\reservations\my_reservations.html:62
+#: .\templates\reservations\my_reservations.html:67
+msgid "Error cancelling reservation"
+msgstr "Greška pri otkazivanju rezervacije"
+
+#: .\templates\core\home.html:8 .\templates\core\home.html:9
+#: .\templates\core\home.html:10
+msgid ""
+"Naomi Face Studio - Premium facial treatments combining ritual care, modern "
+"anti-age methods, and luxury Japanese cosmetics."
+msgstr ""
+"Naomi Face Studio - Premium tretmani lica koji spajaju ritualnu njegu, "
+"suvremene anti-age metode i luksuznu japansku kozmetiku."
+
+#: .\templates\core\home.html:17
+msgid ""
+"Naomi Face Studio is a place where facial treatments are elevated to a "
+"higher level – a combination of ritual care, modern anti-age methods, and "
+"luxury Japanese cosmetics."
+msgstr ""
+"Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – spoj "
+"ritualne njege, suvremenih anti-age metoda i "
+"luksuzne japanske kozmetike."
+
+#: .\templates\core\home.html:20
+msgid ""
+"In a space dedicated to peace and harmony, every treatment becomes a special "
+"experience of shaping and renewing the skin, but also a moment of deep "
+"relaxation."
+msgstr ""
+"U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
+"iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog "
+"opuštanja."
+
+#: .\templates\core\home.html:23
+msgid ""
+"Through a combination of precise massage techniques, premium preparations, "
+"and an individual approach, we restore the face's natural vitality, "
+"radiance, and youthful freshness."
+msgstr ""
+"Kombinacijom preciznih tehnika masaže, vrhunskih preparata "
+"i individualnog pristupa vraćamo licu prirodnu vitalnost, "
+"sjaj i mladenačku svježinu."
+
+#: .\templates\core\home.html:26
+msgid ""
+"Naomi is a place where beauty comes from within – and the results are "
+"visible immediately."
+msgstr ""
+"Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se "
+"vide odmah."
+
+#: .\templates\core\home.html:32
+msgid "Frequently Asked Questions"
+msgstr "Često postavljana pitanja"
+
+#: .\templates\core\home.html:36 .\templates\core\home.html:60
+msgid "How do I book a treatment?"
+msgstr "Kako mogu rezervirati tretman?"
+
+#: .\templates\core\home.html:37
+msgid ""
+"You can book a treatment by clicking on the 'Reservations' button in the "
+"navigation menu or directly from a treatment page. You'll need to create an "
+"account first if you don't have one."
+msgstr ""
+"Možete rezervirati tretman klikom na gumb 'Rezervacije' u navigacijskom "
+"izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
+"račun ako ga nemate."
+
+#: .\templates\core\home.html:40 .\templates\core\home.html:68
+msgid "What are your working hours?"
+msgstr "Koje su vaše radno vrijeme?"
+
+#: .\templates\core\home.html:41 .\templates\core\home.html:71
+msgid ""
+"Monday: 12:00 - 20:00, Tuesday - Friday: 09:00 - 17:00, Saturday - Sunday: "
+"Closed"
+msgstr ""
+"Ponedjeljak: 12:00 - 20:00, Utorak - Petak: 09:00 - 17:00, Subota - "
+"Nedjelja: Zatvoreno"
+
+#: .\templates\core\home.html:44 .\templates\core\home.html:76
+msgid "Can I cancel my reservation?"
+msgstr "Mogu li otkazati rezervaciju?"
+
+#: .\templates\core\home.html:45
+msgid ""
+"Yes, you can cancel your reservation from your account's 'My Reservations' "
+"page."
+msgstr ""
+"Da, možete otkazati rezervaciju s stranice 'Moje rezervacije' na vašem "
+"računu."
+
+#: .\templates\core\home.html:63
+msgid ""
+"You can book a treatment by clicking on the Reservations button in the "
+"navigation menu or directly from a treatment page. You will need to create "
+"an account first if you do not have one."
+msgstr ""
+"Možete rezervirati tretman klikom na gumb Rezervacije u navigacijskom "
+"izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
+"račun ako ga nemate."
+
+#: .\templates\core\home.html:79
+msgid ""
+"Yes, you can cancel your reservation from your accounts My Reservations page."
+msgstr ""
+"Da, možete otkazati rezervaciju s stranice Moje rezervacije na vašem računu."
+
+#: .\templates\core\login.html:4 .\templates\core\login.html:11
+#: .\templates\core\login.html:47 .\templates\includes\header.html:82
+#: .\templates\includes\header.html:161
+msgid "Login"
+msgstr "Prijava"
+
+#: .\templates\core\login.html:6
+msgid "Login to your account at Naomi Face Studio."
+msgstr "Prijavite se na svoj račun u Naomi Face Studio."
+
+#: .\templates\core\login.html:25
+msgid "Username or Email"
+msgstr "Korisničko ime ili Email"
+
+#: .\templates\core\login.html:33 .\templates\core\signup.html:65
+msgid "Password"
+msgstr "Lozinka"
+
+#: .\templates\core\login.html:53
+msgid "Don't have an account?"
+msgstr "Nemate račun?"
+
+#: .\templates\core\login.html:55
+msgid "Sign up here"
+msgstr "Registrirajte se ovdje"
+
+#: .\templates\core\signup.html:4 .\templates\core\signup.html:90
+#: .\templates\includes\header.html:83 .\templates\includes\header.html:164
+msgid "Sign Up"
+msgstr "Registracija"
+
+#: .\templates\core\signup.html:6
+msgid "Create an account to book treatments at Naomi Face Studio."
+msgstr "Kreirajte račun za rezervaciju tretmana u Naomi Face Studio."
+
+#: .\templates\core\signup.html:11
+msgid "Create Account"
+msgstr "Kreiraj račun"
+
+#: .\templates\core\signup.html:76
+msgid "Confirm Password"
+msgstr "Potvrdite lozinku"
+
+#: .\templates\core\signup.html:96
+msgid "Already have an account?"
+msgstr "Već imate račun?"
+
+#: .\templates\core\signup.html:98
+msgid "Login here"
+msgstr "Prijavite se ovdje"
+
+#: .\templates\gift_vouchers\form.html:7
+msgid ""
+"Purchase a gift voucher for a loved one. Choose from our range of facial "
+"treatments."
+msgstr ""
+"Kupite poklon bon za voljenu osobu. Odaberite iz naše ponude tretmana lica."
+
+#: .\templates\gift_vouchers\form.html:20
+msgid "Select a treatment"
+msgstr "Odaberite tretman"
+
+#: .\templates\gift_vouchers\form.html:22
+#: .\templates\reservations\calendar.html:26
+msgid "-- Select Treatment --"
+msgstr "-- Odaberite tretman --"
+
+#: .\templates\gift_vouchers\form.html:31
+msgid "Confirmation of purchase will be sent to this email address"
+msgstr "Potvrda kupnje bit će poslana na ovu email adresu"
+
+#: .\templates\gift_vouchers\form.html:46
+msgid "Gift voucher details"
+msgstr "Detalji poklon bona"
+
+#: .\templates\gift_vouchers\form.html:49
+msgid "Recipient name"
+msgstr "Ime primatelja"
+
+#: .\templates\gift_vouchers\form.html:53
+msgid "Personalised message"
+msgstr "Personalizirana poruka"
+
+#: .\templates\gift_vouchers\form.html:61
+msgid "Recipient email address"
+msgstr "Email adresa primatelja"
+
+#: .\templates\gift_vouchers\form.html:69
+msgid "Purchaser details"
+msgstr "Detalji kupca"
+
+#: .\templates\gift_vouchers\form.html:72
+msgid "First name"
+msgstr "Ime"
+
+#: .\templates\gift_vouchers\form.html:76
+msgid "Last name"
+msgstr "Prezime"
+
+#: .\templates\gift_vouchers\form.html:82
+msgid "Email address"
+msgstr "Email adresa"
+
+#: .\templates\gift_vouchers\form.html:86
+msgid "Mobile number"
+msgstr "Broj mobitela"
+
+#: .\templates\gift_vouchers\form.html:93
+msgid "Submit Order"
+msgstr "Pošalji narudžbu"
+
+#: .\templates\includes\cookie_banner.html:5
+msgid ""
+"We use cookies to enhance your browsing experience. By continuing to use "
+"this site, you consent to our use of cookies."
+msgstr ""
+"Koristimo kolačiće za poboljšanje vašeg iskustva pregledavanja. Nastavkom "
+"korištenja ove stranice pristajete na korištenje kolačića."
+
+#: .\templates\includes\cookie_banner.html:8
+msgid "Accept"
+msgstr "Prihvati"
+
+#: .\templates\includes\footer.html:20
+msgid "Website by"
+msgstr "Web stranica"
+
+#: .\templates\includes\footer.html:24
+msgid "Tesla Development"
+msgstr "Tesla Development"
+
+#: .\templates\includes\footer.html:31
+msgid "All rights reserved."
+msgstr "Sva prava pridržana."
+
+#: .\templates\includes\header.html:48 .\templates\includes\header.html:117
+#: .\templates\treatments\list.html:4 .\treatments\models.py:41
+msgid "Treatments"
+msgstr "Tretmani"
+
+#: .\templates\includes\header.html:52 .\templates\includes\header.html:137
+msgid "About us"
+msgstr "O nama"
+
+#: .\templates\includes\header.html:80 .\templates\includes\header.html:157
+msgid "Logout"
+msgstr "Odjava"
+
+#: .\templates\reservations\calendar.html:6
+msgid "Book your facial treatment appointment at Naomi Face Studio."
+msgstr "Rezervirajte termin za tretman lica u Naomi Face Studio."
+
+#: .\templates\reservations\calendar.html:10
+msgid "Book Your Treatment"
+msgstr "Rezervirajte vaš tretman"
+
+#: .\templates\reservations\calendar.html:14
+msgid "You need to create an account to make a reservation."
+msgstr "Morate kreirati račun za izradu rezervacije."
+
+#: .\templates\reservations\calendar.html:16
+msgid "Create Account / Login"
+msgstr "Kreiraj račun / Prijava"
+
+#: .\templates\reservations\calendar.html:24
+msgid "Select Treatment"
+msgstr "Odaberite tretman"
+
+#: .\templates\reservations\calendar.html:56
+msgid "Selected Time:"
+msgstr "Odabrano vrijeme:"
+
+#: .\templates\reservations\calendar.html:59
+msgid "Message (optional)"
+msgstr "Poruka (opcionalno)"
+
+#: .\templates\reservations\calendar.html:60
+msgid "Add any special requests or notes..."
+msgstr "Dodajte posebne zahtjeve ili napomene..."
+
+#: .\templates\reservations\calendar.html:63
+msgid "Submit Reservation"
+msgstr "Pošalji rezervaciju"
+
+#: .\templates\reservations\calendar.html:206
+msgid "Please select a treatment first"
+msgstr "Molimo prvo odaberite tretman"
+
+#: .\templates\reservations\calendar.html:219
+msgid "Error loading available slots. Please try again."
+msgstr "Greška pri učitavanju dostupnih termina. Molimo pokušajte ponovno."
+
+#: .\templates\reservations\calendar.html:232
+msgid "No available slots for this date"
+msgstr "Nema dostupnih termina za ovaj datum"
+
+#: .\templates\reservations\calendar.html:234
+msgid "This day is closed (Saturday or Sunday)"
+msgstr "Ovaj dan je zatvoren (subota ili nedjelja)"
+
+#: .\templates\reservations\calendar.html:236
+msgid "No available time slots for this date. All slots may be booked."
+msgstr ""
+"Nema dostupnih vremenskih termina za ovaj datum. Svi termini mogu biti "
+"rezervirani."
+
+#: .\templates\reservations\calendar.html:267
+msgid "Please select a date, treatment, and time"
+msgstr "Molimo odaberite datum, tretman i vrijeme"
+
+#: .\templates\reservations\calendar.html:289
+msgid "Reservation created successfully!"
+msgstr "Rezervacija je uspješno kreirana!"
+
+#: .\templates\reservations\calendar.html:292
+#: .\templates\reservations\calendar.html:297
+msgid "Error creating reservation"
+msgstr "Greška pri kreiranju rezervacije"
+
+#: .\templates\reservations\my_reservations.html:4
+#: .\templates\reservations\my_reservations.html:8
+msgid "My Reservations"
+msgstr "Moje rezervacije"
+
+#: .\templates\reservations\my_reservations.html:34
+msgid "You have no reservations."
+msgstr "Nemate rezervacija."
+
+#: .\templates\treatments\detail.html:19
+msgid "Duration:"
+msgstr "Trajanje:"
+
+#: .\templates\treatments\list.html:6
+msgid "Explore our range of premium facial treatments at Naomi Face Studio."
+msgstr "Istražite našu ponudu premium tretmana lica u Naomi Face Studio."
+
+#: .\templates\treatments\list.html:12
+msgid "Our Treatments"
+msgstr "Naši tretmani"
+
+#: .\templates\treatments\list.html:33
+msgid "No treatments available at the moment."
+msgstr "Trenutno nema dostupnih tretmana."
+
+#: .\treatments\admin.py:55
+msgid "Treatment Details"
+msgstr "Detalji tretmana"
+
+#: .\treatments\models.py:20
+msgid "Meta Description (Croatian)"
+msgstr "Meta opis (hrvatski)"
+
+#: .\treatments\models.py:27
+msgid "Meta Description (English)"
+msgstr "Meta opis (engleski)"
+
+#: .\treatments\models.py:30
+msgid "Duration (Hours)"
+msgstr "Trajanje (sati)"
+
+#: .\treatments\models.py:31
+msgid "Duration (Minutes)"
+msgstr "Trajanje (minute)"
+
+#: .\treatments\models.py:32
+msgid "Price"
+msgstr "Cijena"
+
+#: .\treatments\models.py:40
+msgid "Treatment"
+msgstr "Tretman"
+
+#~ msgid ""
+#~ "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "
+#~ "iskustvom rada u wellnesima i estetskim centrima."
+#~ msgstr ""
+#~ "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "
+#~ "iskustvom rada u wellnesima i estetskim centrima."
+
+#~ msgid ""
+#~ "Kroz godine rada razvila sam poseban pristup koji spaja stručnost i "
+#~ "luksuz s naglaskom na rezultate koji se vide odmah, ali i na osjećaj "
+#~ "potpune opuštenosti i harmonije."
+#~ msgstr ""
+#~ "Kroz godine rada razvila sam poseban pristup koji spaja stručnost i "
+#~ "luksuz s naglaskom na rezultate koji se vide odmah, ali i na osjećaj "
+#~ "potpune opuštenosti i harmonije."
+
+#~ msgid ""
+#~ "Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu "
+#~ "japansku kozmetiku za anti-age njegu – te sam certificirani terapeut. "
+#~ "Osim ritualnih tretmana, posvećena sam i Face Gym tehnikama koje "
+#~ "prirodnim putem oblikuju i učvršćuju lice, aktivirajući više od 40 mišića "
+#~ "te vraćajući koži tonus i svježinu."
+#~ msgstr ""
+#~ "Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu "
+#~ "japansku kozmetiku za anti-age njegu – te sam certificirani terapeut. "
+#~ "Osim ritualnih tretmana, posvećena sam i Face Gym tehnikama koje "
+#~ "prirodnim putem oblikuju i učvršćuju lice, aktivirajući više od 40 mišića "
+#~ "te vraćajući koži tonus i svježinu."
+
+#~ msgid ""
+#~ "Moja vizija je podići svijest o važnosti kvalitetne i personalizirane "
+#~ "njege lica te približiti klijentima iskustvo koje nadilazi klasične "
+#~ "tretmane."
+#~ msgstr ""
+#~ "Moja vizija je podići svijest o važnosti kvalitetne i personalizirane "
+#~ "njege lica te približiti klijentima iskustvo koje nadilazi klasične "
+#~ "tretmane."
+
+#~ msgid ""
+#~ "U Naomi Face Studiju želim svakom klijentu pružiti više od njege – "
+#~ "prostor gdje se ljepota i zdravlje kože susreću s ritualom, luksuzom i "
+#~ "unutarnjim balansom."
+#~ msgstr ""
+#~ "U Naomi Face Studiju želim svakom klijentu pružiti više od njege – "
+#~ "prostor gdje se ljepota i zdravlje kože susreću s ritualom, luksuzom i "
+#~ "unutarnjim balansom."
+
+#~ msgid ""
+#~ "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
+#~ "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
+#~ "kozmetike."
+#~ msgstr ""
+#~ "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
+#~ "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
+#~ "kozmetike."
+
+#~ msgid ""
+#~ "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
+#~ "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
+#~ msgstr ""
+#~ "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
+#~ "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
+
+#~ msgid ""
+#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
+#~ "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku "
+#~ "svježinu."
+#~ msgstr ""
+#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
+#~ "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku "
+#~ "svježinu."
+
+#~ msgid ""
+#~ "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
+#~ msgstr ""
+#~ "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."

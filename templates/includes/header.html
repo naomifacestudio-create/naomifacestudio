@@ -13,7 +13,7 @@
             
             <!-- Logo (Centered) -->
             <a href="{% url 'core:home' %}" class="flex-1 flex justify-center">
-                <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-16">
+                <img src="{% static 'images/logo.webp' %}" alt="Naomi Face Studio Logo" class="h-16">
             </a>
             
             <!-- Language Switcher (Mobile) -->
@@ -22,10 +22,10 @@
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
-                        <img src="{% static 'images/croatia-flag.png' %}" alt="Croatian" class="w-5 h-3">
+                        <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-5 h-3">
                     </button>
                     <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
-                        <img src="{% static 'images/uk-flag.png' %}" alt="English" class="w-5 h-3">
+                        <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-5 h-3">
                     </button>
                 </form>
             </div>
@@ -36,7 +36,7 @@
             <!-- Logo -->
             <div class="flex justify-center py-4">
                 <a href="{% url 'core:home' %}">
-                    <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-24">
+                    <img src="{% static 'images/logo.webp' %}" alt="Naomi Face Studio Logo" class="h-24">
                 </a>
             </div>
             
@@ -60,10 +60,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
-                                <img src="{% static 'images/croatia-flag.png' %}" alt="Croatian" class="w-6 h-4">
+                                <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-6 h-4">
                             </button>
                             <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
-                                <img src="{% static 'images/uk-flag.png' %}" alt="English" class="w-6 h-4">
+                                <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-6 h-4">
                             </button>
                         </form>
                     </div>
@@ -95,7 +95,7 @@
         <!-- Header with Logo and Close Button -->
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
             <a href="{% url 'core:home' %}" class="flex items-center">
-                <img src="{% static 'images/logo.png' %}" alt="Naomi Face Studio Logo" class="h-12">
+                <img src="{% static 'images/logo.webp' %}" alt="Naomi Face Studio Logo" class="h-12">
             </a>
             <button type="button" data-drawer-hide="mobile-menu" aria-controls="mobile-menu" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-2 transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

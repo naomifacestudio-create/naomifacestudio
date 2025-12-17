@@ -136,6 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
+# Admin interface will use this language (Croatian)
 LANGUAGE_CODE = 'hr'
 TIME_ZONE = 'Europe/Zagreb'
 USE_I18N = True

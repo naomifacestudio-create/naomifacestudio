@@ -2,9 +2,9 @@
 {% load i18n %}
 <footer class="bg-gray-100 mt-auto py-8">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
             <!-- Contact Information -->
-            <div class="text-center">
+            <div class="md:w-1/2 md:text-center">
                 <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Contact" %}</h3>
                 <p class="mb-2">
                     <a href="mailto:info@naomifacestudio.com" class="text-[#593d09] hover:text-[#4a3207]">info@naomifacestudio.com</a>
@@ -16,16 +16,18 @@
             </div>
             
             <!-- Company Credit -->
-            <div class="text-center">
+            <div class="md:w-1/2 md:text-center">
                 <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Website by" %}</h3>
-                <a href="https://yourcompany.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 justify-center">
-                    <img src="{% static 'images/company-logo.png' %}" alt="Company Logo" class="h-8">
-                    <span class="text-[#593d09] hover:text-[#4a3207]">{% trans "Company Name" %}</span>
-                </a>
+                <div class="flex items-center justify-center">
+                    <a href="https://tesla-development.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2">
+                        <img src="{% static 'images/company-logo.webp' %}" alt="Company Logo" class="h-8">
+                        <span class="text-[#593d09] hover:text-[#4a3207]">{% trans "Tesla Development" %}</span>
+                    </a>
+                </div>
             </div>
         </div>
         
-        <div class="mt-8 pt-8 border-t border-gray-300 text-center text-sm text-gray-600">
+        <div class="mt-8 pt-8 border-t border-gray-300 text-center text-sm text-black">
             <p>&copy; {% now "Y" %} Naomi Face Studio. {% trans "All rights reserved." %}</p>
         </div>
     </div>

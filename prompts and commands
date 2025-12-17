@@ -13,9 +13,9 @@ python manage.py migrate
 
 Prevodjenje:
 
-django-admin makemessages -l hr
-django-admin makemessages -l en
-django-admin compilemessages
+# Only Croatian translation needed - source strings are in English
+python manage.py makemessages -l hr --ignore=venv --ignore=env --ignore=.venv
+python manage.py compilemessages
 
 
 Git commit and push commands(puštati jednu po jednu):
