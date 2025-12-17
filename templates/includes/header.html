@@ -22,10 +22,10 @@
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
-                        <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-5 h-3">
+                        <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-7 h-7 object-contain">
                     </button>
                     <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity p-1">
-                        <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-5 h-3">
+                        <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-7 h-7 object-contain">
                     </button>
                 </form>
             </div>
@@ -60,10 +60,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
-                                <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-6 h-4">
+                                <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-8 h-8 object-contain">
                             </button>
                             <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
-                                <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-6 h-4">
+                                <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-8 h-8 object-contain">
                             </button>
                         </form>
                     </div>
