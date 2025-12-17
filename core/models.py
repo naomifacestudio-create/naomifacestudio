@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 
 class UserProfile(models.Model):
@@ -47,8 +48,8 @@ class EmailCollection(models.Model):
     
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'Email Collection'
-        verbose_name_plural = 'Email Collections'
+        verbose_name = _('Email Collection')
+        verbose_name_plural = _('Email Collections')
     
     def __str__(self):
         return self.email

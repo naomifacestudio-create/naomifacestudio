@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 11:37+0100\n"
+"POT-Creation-Date: 2025-12-17 18:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: .\blogs\admin.py:46 .\treatments\admin.py:49
+#: .\blogs\admin.py:46 .\education\admin.py:46 .\treatments\admin.py:49
 msgid "Croatian Content"
 msgstr "Hrvatski sadržaj"
 
-#: .\blogs\admin.py:49 .\treatments\admin.py:52
+#: .\blogs\admin.py:49 .\education\admin.py:49 .\treatments\admin.py:52
 msgid "English Content"
 msgstr "Engleski sadržaj"
 
@@ -31,58 +31,72 @@ msgstr "Engleski sadržaj"
 msgid "Blog Details"
 msgstr "Detalji bloga"
 
-#: .\blogs\models.py:14 .\treatments\models.py:16
+#: .\blogs\apps.py:8 .\blogs\models.py:36 .\templates\blogs\list.html:4
+#: .\templates\includes\header.html:51 .\templates\includes\header.html:128
+msgid "Blogs"
+msgstr "Blogovi"
+
+#: .\blogs\models.py:14 .\education\models.py:14 .\treatments\models.py:16
 msgid "Title (Croatian)"
 msgstr "Naslov (hrvatski)"
 
-#: .\blogs\models.py:15 .\treatments\models.py:17
+#: .\blogs\models.py:15 .\education\models.py:15 .\treatments\models.py:17
 msgid "Slug (Croatian)"
 msgstr "Slug (hrvatski)"
 
-#: .\blogs\models.py:16 .\treatments\models.py:18
+#: .\blogs\models.py:16 .\education\models.py:16 .\treatments\models.py:18
 msgid "Short Description (Croatian)"
 msgstr "Kratak opis (hrvatski)"
 
-#: .\blogs\models.py:17 .\treatments\models.py:19
+#: .\blogs\models.py:17 .\education\models.py:17 .\treatments\models.py:19
 msgid "Full Description (Croatian)"
 msgstr "Puni opis (hrvatski)"
 
-#: .\blogs\models.py:20 .\treatments\models.py:23
+#: .\blogs\models.py:18 .\education\models.py:18 .\treatments\models.py:20
+msgid "Meta Description (Croatian)"
+msgstr "Meta opis (hrvatski)"
+
+#: .\blogs\models.py:21 .\education\models.py:21 .\treatments\models.py:23
 msgid "Title (English)"
 msgstr "Naslov (engleski)"
 
-#: .\blogs\models.py:21 .\treatments\models.py:24
+#: .\blogs\models.py:22 .\education\models.py:22 .\treatments\models.py:24
 msgid "Slug (English)"
 msgstr "Slug (engleski)"
 
-#: .\blogs\models.py:22 .\treatments\models.py:25
+#: .\blogs\models.py:23 .\education\models.py:23 .\treatments\models.py:25
 msgid "Short Description (English)"
 msgstr "Kratak opis (engleski)"
 
-#: .\blogs\models.py:23 .\treatments\models.py:26
+#: .\blogs\models.py:24 .\education\models.py:24 .\treatments\models.py:26
 msgid "Full Description (English)"
 msgstr "Puni opis (engleski)"
 
-#: .\blogs\models.py:26 .\treatments\models.py:33
+#: .\blogs\models.py:25 .\education\models.py:25 .\treatments\models.py:27
+msgid "Meta Description (English)"
+msgstr "Meta opis (engleski)"
+
+#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:33
 msgid "Thumbnail Image"
 msgstr "Sličica"
 
-#: .\blogs\models.py:26 .\treatments\models.py:33
+#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:33
 msgid "Supports WebP format"
 msgstr "Podržava WebP format"
 
-#: .\blogs\models.py:29 .\treatments\models.py:36
+#: .\blogs\models.py:31 .\education\models.py:32 .\treatments\models.py:36
 msgid "Active"
 msgstr "Aktivno"
 
-#: .\blogs\models.py:33
+#: .\blogs\models.py:35
 msgid "Blog"
 msgstr "Blog"
 
-#: .\blogs\models.py:34 .\templates\blogs\list.html:4
-#: .\templates\includes\header.html:50 .\templates\includes\header.html:127
-msgid "Blogs"
-msgstr "Blogovi"
+#: .\contacts\apps.py:8
+#, fuzzy
+#| msgid "Contact"
+msgid "Contacts"
+msgstr "Kontakt"
 
 #: .\contacts\models.py:6 .\gift_vouchers\models.py:24
 #: .\templates\contacts\form.html:30 .\templates\core\account.html:18
@@ -123,9 +137,32 @@ msgstr "Kontakt forma"
 msgid "Contact Submissions"
 msgstr "Kontakt forme"
 
+#: .\core\admin.py:29
+msgid "Export selected emails as CSV"
+msgstr "Izvezi odabrane emailove kao CSV"
+
+#: .\core\admin.py:37
+msgid "Export selected emails as text (one per line)"
+msgstr "Izvezi odabrane emailove kao tekst (jedan po redu)"
+
+# App names for admin interface
+#: .\core\apps.py:8
+msgid "Core"
+msgstr "Osnovno"
+
+#: .\core\models.py:51
+#, fuzzy
+#| msgid "Email Collections"
+msgid "Email Collection"
+msgstr "Zbirka emailova"
+
+#: .\core\models.py:52
+msgid "Email Collections"
+msgstr "Zbirka emailova"
+
 #: .\core\views.py:15 .\templates\core\home.html:4 .\templates\core\home.html:5
 #: .\templates\core\home.html:6 .\templates\includes\header.html:47
-#: .\templates\includes\header.html:112
+#: .\templates\includes\header.html:113
 msgid "Home"
 msgstr "Početna"
 
@@ -149,13 +186,33 @@ msgstr "Nevažeće korisničko ime ili lozinka."
 msgid "You have been logged out successfully."
 msgstr "Uspješno ste odjavljeni."
 
+#: .\education\admin.py:52
+#, fuzzy
+#| msgid "Education"
+msgid "Education Details"
+msgstr "Edukacija"
+
+#: .\education\apps.py:8 .\education\models.py:36 .\education\models.py:37
+#: .\templates\education\list.html:4 .\templates\education\list.html:12
+#: .\templates\includes\header.html:49
+msgid "Education"
+msgstr "Edukacija"
+
+#: .\education\models.py:28 .\treatments\models.py:32
+msgid "Price"
+msgstr "Cijena"
+
+#: .\gift_vouchers\apps.py:8 .\gift_vouchers\models.py:38
+msgid "Gift Vouchers"
+msgstr "Poklon vaučeri"
+
 #: .\gift_vouchers\models.py:8 .\templates\gift_vouchers\form.html:35
 msgid "Send the gift voucher to my email address"
-msgstr "Pošalji poklon bon na moju email adresu"
+msgstr "Pošalji poklon vaučer na moju email adresu"
 
 #: .\gift_vouchers\models.py:9 .\templates\gift_vouchers\form.html:39
 msgid "Send the gift voucher to recipient's email address"
-msgstr "Pošalji poklon bon na email adresu primatelja"
+msgstr "Pošalji poklon vaučer na email adresu primatelja"
 
 #: .\gift_vouchers\models.py:16
 msgid "Email Delivery Option"
@@ -182,14 +239,24 @@ msgid "Email Sent"
 msgstr "Email poslan"
 
 #: .\gift_vouchers\models.py:37 .\templates\gift_vouchers\form.html:5
-#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:49
-#: .\templates\includes\header.html:122
+#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:50
+#: .\templates\includes\header.html:123
 msgid "Gift Voucher"
-msgstr "Poklon bon"
+msgstr "Poklon vaučer"
 
-#: .\gift_vouchers\models.py:38
-msgid "Gift Vouchers"
-msgstr "Poklon bonovi"
+#: .\gift_vouchers\views.py:86
+msgid "Gift voucher order submitted successfully!"
+msgstr "Narudžba poklon vaučera je uspješno poslana!"
+
+#: .\naomi_face_studio\urls.py:15
+msgid "Site Administration"
+msgstr "Administracija stranice"
+
+#: .\reservations\apps.py:8 .\reservations\models.py:30
+#: .\templates\includes\header.html:60 .\templates\includes\header.html:148
+#: .\templates\reservations\calendar.html:4
+msgid "Reservations"
+msgstr "Rezervacije"
 
 #: .\reservations\models.py:11
 msgid "Pending"
@@ -233,11 +300,14 @@ msgstr "Napomene"
 msgid "Reservation"
 msgstr "Rezervacija"
 
-#: .\reservations\models.py:30 .\templates\includes\header.html:73
-#: .\templates\includes\header.html:147
-#: .\templates\reservations\calendar.html:4
-msgid "Reservations"
-msgstr "Rezervacije"
+# Admin navigation filter placeholder
+#: .\templates\admin\index.html:11
+msgid "Start typing to filter…"
+msgstr "Počnite tipkati za filtriranje…"
+
+#: .\templates\admin\index.html:12
+msgid "Filter navigation items"
+msgstr "Filtriraj stavke navigacije"
 
 #: .\templates\admin\reservations\reservation\change_list.html:8
 msgid "View Calendar"
@@ -248,12 +318,14 @@ msgid "Reservation Calendar"
 msgstr "Kalendar rezervacija"
 
 #: .\templates\admin\reservations\reservation_calendar.html:105
-#: .\templates\blogs\list.html:42 .\templates\treatments\list.html:45
+#: .\templates\blogs\list.html:42 .\templates\education\list.html:45
+#: .\templates\treatments\list.html:45
 msgid "Previous"
 msgstr "Prethodno"
 
 #: .\templates\admin\reservations\reservation_calendar.html:107
-#: .\templates\blogs\list.html:64 .\templates\treatments\list.html:67
+#: .\templates\blogs\list.html:64 .\templates\education\list.html:67
+#: .\templates\treatments\list.html:67
 msgid "Next"
 msgstr "Sljedeće"
 
@@ -396,7 +468,8 @@ msgstr ""
 msgid "Our Blog"
 msgstr "Naš blog"
 
-#: .\templates\blogs\list.html:24 .\templates\treatments\list.html:26
+#: .\templates\blogs\list.html:24 .\templates\education\list.html:26
+#: .\templates\treatments\list.html:26
 msgid "See more"
 msgstr "Vidi više"
 
@@ -405,7 +478,7 @@ msgid "No blog posts available at the moment."
 msgstr "Trenutno nema dostupnih blog objava."
 
 #: .\templates\contacts\form.html:5 .\templates\includes\footer.html:8
-#: .\templates\includes\header.html:51 .\templates\includes\header.html:132
+#: .\templates\includes\header.html:52 .\templates\includes\header.html:133
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -453,9 +526,9 @@ msgid ""
 "and luxury with an emphasis on results that are visible immediately, but "
 "also on the feeling of complete relaxation and harmony."
 msgstr ""
-"Kroz godine rada razvila sam poseban pristup koji spaja stručnost "
-"i luksuz s naglaskom na rezultate koji se vide odmah, ali "
-"i na osjećaj potpune opuštenosti i harmonije."
+"Kroz godine rada razvila sam poseban pristup koji spaja stručnost i luksuz s "
+"naglaskom na rezultate koji se vide odmah, ali i na osjećaj potpune "
+"opuštenosti i harmonije."
 
 #: .\templates\core\about_us.html:21
 msgid ""
@@ -465,11 +538,11 @@ msgid ""
 "shape and firm the face, activating more than 40 muscles and restoring the "
 "skin's tone and freshness."
 msgstr ""
-"Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu japansku "
-"kozmetiku za anti-age njegu – te sam certificirani terapeut. Osim "
-"ritualnih tretmana, posvećena sam i Face Gym tehnikama koje prirodnim "
-"putem oblikuju i učvršćuju lice, aktivirajući više od 40 mišića te vraćajući "
-"koži tonus i svježinu."
+"Specijalizirala sam se za Forlle'd profesionalne tretmane – ekskluzivnu "
+"japansku kozmetiku za anti-age njegu – te sam certificirani terapeut. Osim "
+"ritualnih tretmana, posvećena sam i Face Gym tehnikama koje prirodnim putem "
+"oblikuju i učvršćuju lice, aktivirajući više od 40 mišića te vraćajući koži "
+"tonus i svježinu."
 
 #: .\templates\core\about_us.html:24
 msgid ""
@@ -477,9 +550,8 @@ msgid ""
 "personalized facial care and to bring clients an experience that goes beyond "
 "classic treatments."
 msgstr ""
-"Moja vizija je podići svijest o važnosti kvalitetne i "
-"personalizirane njege lica te približiti klijentima iskustvo koje nadilazi "
-"klasične tretmane."
+"Moja vizija je podići svijest o važnosti kvalitetne i personalizirane njege "
+"lica te približiti klijentima iskustvo koje nadilazi klasične tretmane."
 
 #: .\templates\core\about_us.html:27
 msgid ""
@@ -492,7 +564,7 @@ msgstr ""
 "balansom."
 
 #: .\templates\core\account.html:4 .\templates\core\account.html:11
-#: .\templates\includes\header.html:79 .\templates\includes\header.html:154
+#: .\templates\includes\header.html:66 .\templates\includes\header.html:155
 msgid "My Account"
 msgstr "Moj račun"
 
@@ -526,7 +598,7 @@ msgstr "Datum:"
 msgid "Time:"
 msgstr "Vrijeme:"
 
-#: .\templates\core\account.html:52
+#: .\templates\core\account.html:52 .\templates\education\detail.html:19
 #: .\templates\reservations\my_reservations.html:20
 #: .\templates\treatments\detail.html:20
 msgid "Price:"
@@ -590,9 +662,9 @@ msgid ""
 "higher level – a combination of ritual care, modern anti-age methods, and "
 "luxury Japanese cosmetics."
 msgstr ""
-"Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – spoj "
-"ritualne njege, suvremenih anti-age metoda i "
-"luksuzne japanske kozmetike."
+"Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
+"spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
+"kozmetike."
 
 #: .\templates\core\home.html:20
 msgid ""
@@ -601,8 +673,7 @@ msgid ""
 "relaxation."
 msgstr ""
 "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
-"iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog "
-"opuštanja."
+"iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
 
 #: .\templates\core\home.html:23
 msgid ""
@@ -610,17 +681,15 @@ msgid ""
 "and an individual approach, we restore the face's natural vitality, "
 "radiance, and youthful freshness."
 msgstr ""
-"Kombinacijom preciznih tehnika masaže, vrhunskih preparata "
-"i individualnog pristupa vraćamo licu prirodnu vitalnost, "
-"sjaj i mladenačku svježinu."
+"Kombinacijom preciznih tehnika masaže, vrhunskih preparata i individualnog "
+"pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku svježinu."
 
 #: .\templates\core\home.html:26
 msgid ""
 "Naomi is a place where beauty comes from within – and the results are "
 "visible immediately."
 msgstr ""
-"Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se "
-"vide odmah."
+"Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
 
 #: .\templates\core\home.html:32
 msgid "Frequently Asked Questions"
@@ -681,8 +750,8 @@ msgstr ""
 "Da, možete otkazati rezervaciju s stranice Moje rezervacije na vašem računu."
 
 #: .\templates\core\login.html:4 .\templates\core\login.html:11
-#: .\templates\core\login.html:47 .\templates\includes\header.html:82
-#: .\templates\includes\header.html:161
+#: .\templates\core\login.html:47 .\templates\includes\header.html:69
+#: .\templates\includes\header.html:162
 msgid "Login"
 msgstr "Prijava"
 
@@ -707,7 +776,7 @@ msgid "Sign up here"
 msgstr "Registrirajte se ovdje"
 
 #: .\templates\core\signup.html:4 .\templates\core\signup.html:90
-#: .\templates\includes\header.html:83 .\templates\includes\header.html:164
+#: .\templates\includes\header.html:70 .\templates\includes\header.html:165
 msgid "Sign Up"
 msgstr "Registracija"
 
@@ -731,12 +800,20 @@ msgstr "Već imate račun?"
 msgid "Login here"
 msgstr "Prijavite se ovdje"
 
+#: .\templates\education\list.html:6
+msgid "Explore our educational courses and training programs."
+msgstr "Istražite naše obrazovne tečajeve i programe edukacije."
+
+#: .\templates\education\list.html:33
+msgid "No education courses available at the moment."
+msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
+
 #: .\templates\gift_vouchers\form.html:7
 msgid ""
 "Purchase a gift voucher for a loved one. Choose from our range of facial "
 "treatments."
 msgstr ""
-"Kupite poklon bon za voljenu osobu. Odaberite iz naše ponude tretmana lica."
+"Kupite poklon vaučer za voljenu osobu. Odaberite iz naše ponude tretmana lica."
 
 #: .\templates\gift_vouchers\form.html:20
 msgid "Select a treatment"
@@ -753,7 +830,7 @@ msgstr "Potvrda kupnje bit će poslana na ovu email adresu"
 
 #: .\templates\gift_vouchers\form.html:46
 msgid "Gift voucher details"
-msgstr "Detalji poklon bona"
+msgstr "Detalji poklon vaučera"
 
 #: .\templates\gift_vouchers\form.html:49
 msgid "Recipient name"
@@ -804,9 +881,6 @@ msgid "Accept"
 msgstr "Prihvati"
 
 #: .\templates\includes\footer.html:20
-msgid "Website by"
-msgstr "Web stranica"
-
 msgid "Powered by"
 msgstr "Powered by"
 
@@ -818,16 +892,17 @@ msgstr "Tesla Development"
 msgid "All rights reserved."
 msgstr "Sva prava pridržana."
 
-#: .\templates\includes\header.html:48 .\templates\includes\header.html:117
-#: .\templates\treatments\list.html:4 .\treatments\models.py:41
+#: .\templates\includes\header.html:48 .\templates\includes\header.html:118
+#: .\templates\treatments\list.html:4 .\treatments\apps.py:8
+#: .\treatments\models.py:41
 msgid "Treatments"
 msgstr "Tretmani"
 
-#: .\templates\includes\header.html:52 .\templates\includes\header.html:137
+#: .\templates\includes\header.html:53 .\templates\includes\header.html:138
 msgid "About us"
 msgstr "O nama"
 
-#: .\templates\includes\header.html:80 .\templates\includes\header.html:157
+#: .\templates\includes\header.html:67 .\templates\includes\header.html:158
 msgid "Logout"
 msgstr "Odjava"
 
@@ -931,14 +1006,6 @@ msgstr "Trenutno nema dostupnih tretmana."
 msgid "Treatment Details"
 msgstr "Detalji tretmana"
 
-#: .\treatments\models.py:20
-msgid "Meta Description (Croatian)"
-msgstr "Meta opis (hrvatski)"
-
-#: .\treatments\models.py:27
-msgid "Meta Description (English)"
-msgstr "Meta opis (engleski)"
-
 #: .\treatments\models.py:30
 msgid "Duration (Hours)"
 msgstr "Trajanje (sati)"
@@ -947,32 +1014,15 @@ msgstr "Trajanje (sati)"
 msgid "Duration (Minutes)"
 msgstr "Trajanje (minute)"
 
-#: .\treatments\models.py:32
-msgid "Price"
-msgstr "Cijena"
-
 #: .\treatments\models.py:40
 msgid "Treatment"
 msgstr "Tretman"
 
-# App names for admin interface
-msgid "Core"
-msgstr "Osnovno"
+#~ msgid "Website by"
+#~ msgstr "Web stranica"
 
-msgid "Education"
-msgstr "Edukacija"
-
-msgid "Explore our educational courses and training programs."
-msgstr "Istražite naše obrazovne tečajeve i programe edukacije."
-
-msgid "No education courses available at the moment."
-msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
-
-msgid "Authentication and Authorization"
-msgstr "Autentifikacija i autorizacija"
-
-msgid "Site Administration"
-msgstr "Administracija stranice"
+#~ msgid "Authentication and Authorization"
+#~ msgstr "Autentifikacija i autorizacija"
 
 #~ msgid ""
 #~ "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "

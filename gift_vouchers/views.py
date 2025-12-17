@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.utils.translation import get_language
+from django.utils.translation import get_language, activate, gettext as _
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
@@ -83,7 +83,7 @@ def gift_voucher_form(request):
         # Send emails
         send_gift_voucher_emails(gift_voucher, language_code)
         
-        messages.success(request, 'Gift voucher order submitted successfully!')
+        messages.success(request, _('Gift voucher order submitted successfully!'))
         return redirect('gift_vouchers:form')
     
     context = {
@@ -95,7 +95,11 @@ def gift_voucher_form(request):
 
 def send_gift_voucher_emails(gift_voucher, language_code='hr'):
     """Send gift voucher emails to purchaser, recipient, and admin"""
+    # Activate the language for email rendering
+    current_language = get_language()
     try:
+        activate(language_code)
+        
         context = {
             'gift_voucher': gift_voucher,
             'language_code': language_code,
@@ -147,4 +151,7 @@ def send_gift_voucher_emails(gift_voucher, language_code='hr'):
     except Exception as e:
         logger.error(f"Failed to send gift voucher emails for voucher ID: {gift_voucher.id}. Error: {str(e)}", exc_info=True)
         raise
+    finally:
+        # Restore previous language
+        activate(current_language)
 

@@ -1,0 +1,17 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Translate admin navigation filter placeholder
+    const navFilter = document.getElementById('nav-filter');
+    if (navFilter) {
+        navFilter.placeholder = "{% trans 'Start typing to filter…' %}";
+        navFilter.setAttribute('aria-label', "{% trans 'Filter navigation items' %}");
+    }
+});
+</script>
+{% endblock %}
+

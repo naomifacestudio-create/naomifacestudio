@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.utils.translation import get_language
+from django.utils.translation import get_language, activate
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
@@ -20,7 +20,11 @@ logger = logging.getLogger('reservations')
 
 def send_reservation_emails(reservation, language_code='hr'):
     """Send reservation confirmation emails to user and admin"""
+    # Activate the language for email rendering
+    current_language = get_language()
     try:
+        activate(language_code)
+        
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
@@ -60,11 +64,18 @@ def send_reservation_emails(reservation, language_code='hr'):
     except Exception as e:
         logger.error(f"Failed to send reservation emails for reservation ID: {reservation.id}. Error: {str(e)}", exc_info=True)
         raise
+    finally:
+        # Restore previous language
+        activate(current_language)
 
 
 def send_cancellation_email(reservation, language_code='hr'):
     """Send cancellation email to admin"""
+    # Activate the language for email rendering
+    current_language = get_language()
     try:
+        activate(language_code)
+        
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
@@ -90,6 +101,9 @@ def send_cancellation_email(reservation, language_code='hr'):
     except Exception as e:
         logger.error(f"Failed to send cancellation email for reservation ID: {reservation.id}. Error: {str(e)}", exc_info=True)
         raise
+    finally:
+        # Restore previous language
+        activate(current_language)
 
 
 def reservation_calendar(request, treatment_slug=None):

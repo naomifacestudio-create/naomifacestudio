@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
+from django.utils.translation import gettext_lazy as _
 from .models import EmailCollection
 import csv
 
@@ -25,7 +26,7 @@ class EmailCollectionAdmin(admin.ModelAdmin):
         for obj in queryset:
             writer.writerow([obj.email, obj.first_name, obj.last_name, obj.mobile, obj.source, obj.created_at, obj.user])
         return response
-    export_as_csv.short_description = "Export selected emails as CSV"
+    export_as_csv.short_description = _("Export selected emails as CSV")
     
     def export_as_text(self, request, queryset):
         response = HttpResponse(content_type='text/plain')
@@ -33,5 +34,5 @@ class EmailCollectionAdmin(admin.ModelAdmin):
         emails = '\n'.join([obj.email for obj in queryset])
         response.write(emails)
         return response
-    export_as_text.short_description = "Export selected emails as text (one per line)"
+    export_as_text.short_description = _("Export selected emails as text (one per line)")
 
