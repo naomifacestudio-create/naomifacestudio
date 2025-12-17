@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Education" %}{% endblock %}
+
+{% block meta_description %}{% trans "Explore our educational courses and training programs." %}{% endblock %}
+
+{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{% url 'education:list' %}{% if page_obj.has_other_pages %}?page={{ page_obj.number }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Education" %}</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {% for education in education_items %}
+        <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {% if education.thumbnail %}
+            <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-3 text-[#593d09]">{{ education.get_title }}</h2>
+                <p class="text-[#593d09] mb-4">{{ education.get_short_description }}</p>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xl font-bold text-[#593d09]">{{ education.price }} €</span>
+                    <a href="{{ education.get_absolute_url }}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+                        {% trans "See more" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-12">
+            <p class="text-[#593d09] text-lg">{% trans "No education courses available at the moment." %}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav class="flex justify-center">
+        <ul class="flex gap-2">
+            {% if page_obj.has_previous %}
+            <li>
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                    {% trans "Previous" %}
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li>
+                <span class="px-4 py-2 bg-[#593d09] text-white rounded">{{ num }}</span>
+            </li>
+            {% else %}
+            <li>
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-[#593d09] rounded hover:bg-gray-300">
+                    {{ num }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li>
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                    {% trans "Next" %}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
+

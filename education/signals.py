@@ -4,9 +4,9 @@ from django.conf import settings
 import boto3
 import re
 import logging
-from .models import Blog
+from .models import Education
 
-logger = logging.getLogger('blogs')
+logger = logging.getLogger('education')
 
 
 def delete_file_from_r2(file_path):
@@ -44,12 +44,7 @@ def extract_file_path_from_url(url):
     if not url:
         return None
     
-    # Handle different URL formats:
-    # - https://media.naomifacestudio.com/media/uploads/image.jpg
-    # - https://naomifacestudio.com/media/uploads/image.jpg
-    # - /media/uploads/image.jpg
-    
-    # Extract path after /media/ - this works for all formats
+    # Extract path after /media/
     if '/media/' in url:
         path = url.split('/media/')[1]
         # Remove query parameters if any
@@ -106,7 +101,7 @@ def get_all_used_image_paths():
 
 
 def cleanup_orphaned_ckeditor_uploads():
-    """Clean up orphaned images from CKEditor uploads folder that are not used in any blog or treatment"""
+    """Clean up orphaned images from CKEditor uploads folder that are not used in any blog, treatment, or education"""
     if not settings.USE_R2:
         return
     
@@ -163,9 +158,9 @@ def cleanup_orphaned_ckeditor_uploads():
         logger.error(f"Error cleaning up orphaned CKEditor uploads: {str(e)}", exc_info=True)
 
 
-@receiver(pre_delete, sender=Blog)
-def delete_blog_files(sender, instance, **kwargs):
-    """Delete blog files from R2 when blog is deleted"""
+@receiver(pre_delete, sender=Education)
+def delete_education_files(sender, instance, **kwargs):
+    """Delete education files from R2 when education is deleted"""
     if settings.USE_R2:
         # Delete thumbnail
         if instance.thumbnail:
@@ -183,12 +178,12 @@ def delete_blog_files(sender, instance, **kwargs):
                         delete_file_from_r2(path)
 
 
-@receiver(pre_save, sender=Blog)
-def cleanup_old_blog_files(sender, instance, **kwargs):
-    """Delete old files when blog is updated"""
+@receiver(pre_save, sender=Education)
+def cleanup_old_education_files(sender, instance, **kwargs):
+    """Delete old files when education is updated"""
     if settings.USE_R2 and instance.pk:
         try:
-            old_instance = Blog.objects.get(pk=instance.pk)
+            old_instance = Education.objects.get(pk=instance.pk)
             
             # Delete old thumbnail if changed
             if old_instance.thumbnail and old_instance.thumbnail != instance.thumbnail:
@@ -208,13 +203,13 @@ def cleanup_old_blog_files(sender, instance, **kwargs):
                         if '/media/' in url:
                             path = url.split('/media/')[1]
                             delete_file_from_r2(path)
-        except Blog.DoesNotExist:
+        except Education.DoesNotExist:
             pass
 
 
-@receiver(post_save, sender=Blog)
+@receiver(post_save, sender=Education)
 def cleanup_orphaned_uploads_on_save(sender, instance, **kwargs):
-    """Clean up orphaned CKEditor uploads after blog is saved"""
-    # Clean up orphaned uploads that are not used in any blog or treatment
+    """Clean up orphaned CKEditor uploads after education is saved"""
+    # Clean up orphaned uploads that are not used in any blog, treatment, or education
     cleanup_orphaned_ckeditor_uploads()
 

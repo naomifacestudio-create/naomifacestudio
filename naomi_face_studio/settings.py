@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'core',
     'treatments',
     'blogs',
+    'education',
     'reservations',
     'gift_vouchers',
     'contacts',

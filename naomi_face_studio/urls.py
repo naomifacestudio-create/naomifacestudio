@@ -7,6 +7,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import set_language
+from django.utils.translation import gettext_lazy as _
+
+# Customize admin site header and title
+admin.site.site_header = 'Naomi Face Studio'
+admin.site.site_title = 'Naomi Face Studio'
+admin.site.index_title = _('Site Administration')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +23,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('core.urls')),
     path('treatments/', include('treatments.urls')),
+    path('education/', include('education.urls')),
     path('blogs/', include('blogs.urls')),
     path('reservations/', include('reservations.urls')),
     path('gift-vouchers/', include('gift_vouchers.urls')),

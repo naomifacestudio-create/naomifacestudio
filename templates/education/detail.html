@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ education.get_title }}{% endblock %}
+
+{% block meta_description %}{{ education.get_meta_description }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-6 text-[#593d09]">{{ education.get_title }}</h1>
+        
+        {% if education.thumbnail %}
+        <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="w-full h-96 object-cover rounded-lg mb-8">
+        {% endif %}
+        
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
+            <div>
+                <p class="text-lg text-[#593d09]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
+            </div>
+        </div>
+        
+        <div class="prose prose-lg max-w-none text-[#593d09]">
+            {{ education.get_full_description|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

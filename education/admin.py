@@ -2,21 +2,21 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .models import Blog
+from .models import Education
 from django.conf import settings
 import boto3
 import logging
 
-logger = logging.getLogger('blogs')
+logger = logging.getLogger('education')
 
 
-class BlogResource(resources.ModelResource):
+class EducationResource(resources.ModelResource):
     class Meta:
-        model = Blog
+        model = Education
         fields = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr', 
-                  'short_description_en', 'is_active')
+                  'short_description_en', 'price', 'is_active')
         export_order = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr', 
-                       'short_description_en', 'is_active')
+                       'short_description_en', 'price', 'is_active')
 
 
 def delete_media_files_from_r2(file_path):
@@ -38,9 +38,9 @@ def delete_media_files_from_r2(file_path):
             logger.error(f"Error deleting media file from R2: {file_path}. Error: {str(e)}", exc_info=True)
 
 
-@admin.register(Blog)
-class BlogAdmin(ImportExportModelAdmin):
-    resource_class = BlogResource
+@admin.register(Education)
+class EducationAdmin(ImportExportModelAdmin):
+    resource_class = EducationResource
     
     fieldsets = (
         (_('Croatian Content'), {
@@ -49,12 +49,12 @@ class BlogAdmin(ImportExportModelAdmin):
         (_('English Content'), {
             'fields': ('title_en', 'slug_en', 'short_description_en', 'full_description_en', 'meta_description_en')
         }),
-        (_('Blog Details'), {
-            'fields': ('thumbnail', 'is_active')
+        (_('Education Details'), {
+            'fields': ('price', 'thumbnail', 'is_active')
         }),
     )
     
-    list_display = ['title_hr', 'is_active', 'created_at']
+    list_display = ['title_hr', 'price', 'is_active', 'created_at']
     list_filter = ['is_active', 'created_at']
     search_fields = ['title_hr', 'title_en', 'slug_hr', 'slug_en']
     prepopulated_fields = {'slug_hr': ('title_hr',), 'slug_en': ('title_en',)}
@@ -63,7 +63,7 @@ class BlogAdmin(ImportExportModelAdmin):
     def save_model(self, request, obj, form, change):
         """Override save to handle file deletion from R2"""
         if change:
-            old_obj = Blog.objects.get(pk=obj.pk)
+            old_obj = Education.objects.get(pk=obj.pk)
             if old_obj.thumbnail and old_obj.thumbnail != obj.thumbnail:
                 delete_media_files_from_r2(old_obj.thumbnail.name)
         super().save_model(request, obj, form, change)

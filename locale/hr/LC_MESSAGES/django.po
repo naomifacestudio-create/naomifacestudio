@@ -952,6 +952,13 @@ msgstr "Cijena"
 msgid "Treatment"
 msgstr "Tretman"
 
+# App names for admin interface
+msgid "Core"
+msgstr "Osnovno"
+
+msgid "Site Administration"
+msgstr "Administracija stranice"
+
 #~ msgid ""
 #~ "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "
 #~ "iskustvom rada u wellnesima i estetskim centrima."

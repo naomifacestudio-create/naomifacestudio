@@ -43,9 +43,10 @@
             <!-- Navbar and Login/Signup -->
             <nav class="flex flex-row justify-between items-center py-4 border-t border-gray-200">
                 <!-- Navbar Items -->
-                <ul class="flex justify-center gap-6">
+                <ul class="flex justify-center gap-8">
                     <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Home" %}</a></li>
                     <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Treatments" %}</a></li>
+                    <li><a href="{% url 'education:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Education" %}</a></li>
                     <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
                     <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Blogs" %}</a></li>
                     <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Contact" %}</a></li>
