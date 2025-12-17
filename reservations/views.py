@@ -21,10 +21,14 @@ logger = logging.getLogger('reservations')
 def send_reservation_emails(reservation, language_code='hr'):
     """Send reservation confirmation emails to user and admin"""
     try:
+        # Get user profile for mobile phone
+        profile = getattr(reservation.user, 'profile', None)
+        
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
+            'user_profile': profile,
             'language_code': language_code,
         }
         
@@ -61,10 +65,14 @@ def send_reservation_emails(reservation, language_code='hr'):
 def send_cancellation_email(reservation, language_code='hr'):
     """Send cancellation email to admin"""
     try:
+        # Get user profile for mobile phone
+        profile = getattr(reservation.user, 'profile', None)
+        
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
+            'user_profile': profile,
             'language_code': language_code,
         }
         
