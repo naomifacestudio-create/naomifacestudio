@@ -807,6 +807,9 @@ msgstr "Prihvati"
 msgid "Website by"
 msgstr "Web stranica"
 
+msgid "Powered by"
+msgstr "Powered by"
+
 #: .\templates\includes\footer.html:24
 msgid "Tesla Development"
 msgstr "Tesla Development"
@@ -955,6 +958,18 @@ msgstr "Tretman"
 # App names for admin interface
 msgid "Core"
 msgstr "Osnovno"
+
+msgid "Education"
+msgstr "Edukacija"
+
+msgid "Explore our educational courses and training programs."
+msgstr "Istražite naše obrazovne tečajeve i programe edukacije."
+
+msgid "No education courses available at the moment."
+msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
+
+msgid "Authentication and Authorization"
+msgstr "Autentifikacija i autorizacija"
 
 msgid "Site Administration"
 msgstr "Administracija stranice"

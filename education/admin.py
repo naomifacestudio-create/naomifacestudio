@@ -55,7 +55,7 @@ class EducationAdmin(ImportExportModelAdmin):
     )
     
     list_display = ['title_hr', 'price', 'is_active', 'created_at']
-    list_filter = ['is_active', 'created_at']
+    list_filter = []  # Filters disabled
     search_fields = ['title_hr', 'title_en', 'slug_hr', 'slug_en']
     prepopulated_fields = {'slug_hr': ('title_hr',), 'slug_en': ('title_en',)}
     readonly_fields = ['created_at', 'updated_at']

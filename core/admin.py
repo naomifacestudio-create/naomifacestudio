@@ -11,7 +11,7 @@ admin.site.unregister(Group)
 @admin.register(EmailCollection)
 class EmailCollectionAdmin(admin.ModelAdmin):
     list_display = ['email', 'first_name', 'last_name', 'mobile', 'source', 'created_at', 'user']
-    list_filter = ['source', 'created_at']
+    list_filter = []  # Filters disabled
     search_fields = ['email', 'first_name', 'last_name', 'mobile', 'source']
     readonly_fields = ['created_at']
     

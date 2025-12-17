@@ -53,24 +53,10 @@
                     <li><a href="{% url 'core:about_us' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About us" %}</a></li>
                 </ul>
                 
-                <!-- Language Switcher and Reservations Button -->
+                <!-- Reservations Button, Login/Signup, and Language Switcher -->
                 <div class="flex items-center gap-4">
-                    <!-- Language Switcher -->
-                    <div class="flex items-center gap-2">
-                        <form action="{% url 'set_language' %}" method="post" class="inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
-                                <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-8 h-8 object-contain">
-                            </button>
-                            <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
-                                <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-8 h-8 object-contain">
-                            </button>
-                        </form>
-                    </div>
-                    
                     <!-- Reservations Button -->
-                    <a href="{% url 'treatments:list' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                    <a href="{% url 'reservations:calendar' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">
                         {% trans "Reservations" %}
                     </a>
                     
@@ -83,6 +69,20 @@
                             <a href="{% url 'core:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
                             <a href="{% url 'core:signup' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
                         {% endif %}
+                    </div>
+                    
+                    <!-- Language Switcher -->
+                    <div class="flex items-center gap-2">
+                        <form action="{% url 'set_language' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button type="submit" name="language" value="hr" class="{% if LANGUAGE_CODE == 'hr' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity">
+                                <img src="{% static 'images/croatia-flag.webp' %}" alt="Croatian" class="w-8 h-8 object-contain">
+                            </button>
+                            <button type="submit" name="language" value="en" class="{% if LANGUAGE_CODE == 'en' %}opacity-100{% else %}opacity-50 hover:opacity-75{% endif %} transition-opacity ml-2">
+                                <img src="{% static 'images/uk-flag.webp' %}" alt="English" class="w-8 h-8 object-contain">
+                            </button>
+                        </form>
                     </div>
                 </div>
             </nav>
