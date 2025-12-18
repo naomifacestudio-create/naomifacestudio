@@ -2,22 +2,22 @@
 {% load i18n %}
 <footer class="bg-white mt-auto py-8 border-t border-gray-200">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
             <!-- Image Placeholder -->
-            <div class="w-full md:w-auto flex justify-center items-center">
-                <img src="{% static 'images/naomi_footer.webp' %}" alt="" class="max-w-full h-auto">
+            <div class="w-full md:w-1/3 flex justify-center items-center">
+                <img src="{% static 'images/naomi_footer.webp' %}" alt="" class="max-w-[200px] h-auto">
             </div>
             
             <!-- Contact Information -->
-            <div class="w-full md:w-auto text-center">
-                <h3 class="font-bold mb-4 text-[#593d09] text-center">{% trans "Contact" %}</h3>
-                <p class="mb-2 text-center">
+            <div class="w-full md:w-1/3 text-center">
+                <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Contact" %}</h3>
+                <p class="mb-2">
                     <a href="mailto:info@naomifacestudio.com" class="text-[#593d09] hover:text-[#4a3207]">info@naomifacestudio.com</a>
                 </p>
-                <p class="mb-2 text-center">
+                <p class="mb-2">
                     <a href="tel:+385955551282" class="text-[#593d09] hover:text-[#4a3207]">0955551282</a>
                 </p>
-                <p class="mb-4 text-[#593d09] text-center">Korzo 35, Rijeka</p>
+                <p class="mb-4 text-[#593d09]">Korzo 35, Rijeka</p>
                 
                 <!-- Social Media Links -->
                 <div class="flex justify-center gap-4">
@@ -35,8 +35,8 @@
             </div>
             
             <!-- Company Credit -->
-            <div class="w-full md:w-auto text-center">
-                <h3 class="font-bold mb-4 text-[#593d09] text-center">{% trans "Powered by" %}</h3>
+            <div class="w-full md:w-1/3 text-center">
+                <h3 class="font-bold mb-4 text-[#593d09]">{% trans "Powered by" %}</h3>
                 <div class="flex items-center justify-center">
                     <a href="https://tesla-development.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2">
                         <img src="{% static 'images/company-logo.webp' %}" alt="Company Logo" class="h-12">
