@@ -227,6 +227,7 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
+        'removePlugins': 'image',
         'filebrowserWindowHeight': 725,
         'filebrowserWindowWidth': 940,
         'toolbarCanCollapse': True,
@@ -236,6 +237,7 @@ CKEDITOR_CONFIGS = {
         'image2_alignClasses': ['align-left', 'align-center', 'align-right'],
         'image2_disableResizer': False,
         'image2_captionedClass': 'image-captioned',
+        'allowedContent': True,
     },
 }
 

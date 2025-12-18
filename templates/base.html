@@ -62,20 +62,29 @@
         p {
             font-weight: normal;
         }
-        /* CKEditor image alignment classes */
-        .align-left {
-            float: left;
+        /* CKEditor image alignment classes and inline styles */
+        .align-left,
+        img[style*="float: left"],
+        img[style*="float:left"] {
+            float: left !important;
             margin-right: 1em;
             margin-bottom: 1em;
         }
-        .align-center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        .align-center,
+        img[style*="display: block"][style*="margin-left: auto"],
+        img[style*="display:block"][style*="margin-left:auto"],
+        img[style*="margin-left: auto"][style*="margin-right: auto"],
+        img[style*="margin-left:auto"][style*="margin-right:auto"] {
+            display: block !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
             margin-bottom: 1em;
+            float: none !important;
         }
-        .align-right {
-            float: right;
+        .align-right,
+        img[style*="float: right"],
+        img[style*="float:right"] {
+            float: right !important;
             margin-left: 1em;
             margin-bottom: 1em;
         }
@@ -83,6 +92,14 @@
         img {
             max-width: 100%;
             height: auto;
+        }
+        /* Additional fix for center-aligned images in prose content */
+        .prose img.align-center,
+        .prose img[class*="align-center"] {
+            display: block !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            float: none !important;
         }
     </style>
     

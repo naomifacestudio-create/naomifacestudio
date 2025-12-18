@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 20:11+0100\n"
+"POT-Creation-Date: 2025-12-18 21:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgid "Blog Details"
 msgstr "Detalji bloga"
 
 #: .\blogs\apps.py:8 .\blogs\models.py:36 .\templates\blogs\list.html:4
-#: .\templates\includes\header.html:52 .\templates\includes\header.html:128
+#: .\templates\includes\header.html:52 .\templates\includes\header.html:138
 msgid "Blogs"
 msgstr "Blogovi"
 
@@ -210,7 +210,7 @@ msgstr "Detalji edukacije"
 
 #: .\education\apps.py:8 .\education\models.py:36 .\education\models.py:37
 #: .\templates\education\list.html:4 .\templates\education\list.html:12
-#: .\templates\includes\header.html:50
+#: .\templates\includes\header.html:51 .\templates\includes\header.html:133
 msgid "Education"
 msgstr "Edukacija"
 
@@ -255,8 +255,8 @@ msgid "Email Sent"
 msgstr "Email poslan"
 
 #: .\gift_vouchers\models.py:37 .\templates\gift_vouchers\form.html:5
-#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:51
-#: .\templates\includes\header.html:123
+#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:50
+#: .\templates\includes\header.html:128
 msgid "Gift Voucher"
 msgstr "Poklon vaučer"
 
@@ -284,7 +284,7 @@ msgid "Site Administration"
 msgstr "Administracija stranice"
 
 #: .\reservations\apps.py:8 .\reservations\models.py:30
-#: .\templates\includes\header.html:60 .\templates\includes\header.html:148
+#: .\templates\includes\header.html:60 .\templates\includes\header.html:153
 #: .\templates\reservations\calendar.html:4
 msgid "Reservations"
 msgstr "Rezervacije"
@@ -364,14 +364,14 @@ msgid "Reservation Calendar"
 msgstr "Kalendar rezervacija"
 
 #: .\templates\admin\reservations\reservation_calendar.html:105
-#: .\templates\blogs\list.html:42 .\templates\education\list.html:45
-#: .\templates\treatments\list.html:45
+#: .\templates\blogs\list.html:44 .\templates\education\list.html:47
+#: .\templates\treatments\list.html:47
 msgid "Previous"
 msgstr "Prethodno"
 
 #: .\templates\admin\reservations\reservation_calendar.html:107
-#: .\templates\blogs\list.html:64 .\templates\education\list.html:67
-#: .\templates\treatments\list.html:67
+#: .\templates\blogs\list.html:66 .\templates\education\list.html:69
+#: .\templates\treatments\list.html:69
 msgid "Next"
 msgstr "Sljedeće"
 
@@ -514,12 +514,12 @@ msgstr ""
 msgid "Our Blog"
 msgstr "Naš blog"
 
-#: .\templates\blogs\list.html:24 .\templates\education\list.html:26
-#: .\templates\treatments\list.html:26
+#: .\templates\blogs\list.html:26 .\templates\education\list.html:28
+#: .\templates\treatments\list.html:28
 msgid "See more"
 msgstr "Vidi više"
 
-#: .\templates\blogs\list.html:30
+#: .\templates\blogs\list.html:32
 msgid "No blog posts available at the moment."
 msgstr "Trenutno nema dostupnih blog objava."
 
@@ -557,7 +557,7 @@ msgid "Message:"
 msgstr "Poruka:"
 
 #: .\templates\contacts\form.html:5 .\templates\includes\footer.html:13
-#: .\templates\includes\header.html:53 .\templates\includes\header.html:138
+#: .\templates\includes\header.html:53 .\templates\includes\header.html:143
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -639,7 +639,7 @@ msgstr ""
 "balansom."
 
 #: .\templates\core\account.html:4 .\templates\core\account.html:11
-#: .\templates\includes\header.html:66 .\templates\includes\header.html:155
+#: .\templates\includes\header.html:66 .\templates\includes\header.html:160
 msgid "My Account"
 msgstr "Moj račun"
 
@@ -679,7 +679,7 @@ msgstr "Datum:"
 msgid "Time:"
 msgstr "Vrijeme:"
 
-#: .\templates\core\account.html:52 .\templates\education\detail.html:19
+#: .\templates\core\account.html:52 .\templates\education\detail.html:21
 #: .\templates\reservations\emails\admin_notification.html:24
 #: .\templates\reservations\emails\user_confirmation.html:26
 #: .\templates\reservations\my_reservations.html:20
@@ -741,48 +741,82 @@ msgstr ""
 
 #: .\templates\core\home.html:18
 msgid ""
-"Naomi Face Studio is a place where facial treatments are elevated to a "
-"higher level – a combination of ritual care, modern anti-age methods, and "
-"luxury Japanese cosmetics."
+"Naomi Face Studio is a place where facial treatments are taken to the next "
+"level – through a combination of a holistic approach, contemporary natural "
+"lifting techniques and premium Japanese cosmetics."
 msgstr ""
-"Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
-"spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
-"kozmetike."
+"Naomi Face Studio mjesto je gdje se tretmani lica podižu na višu razinu – "
+"kroz spoj holističkog pristupa, suvremenih tehnika prirodnog liftinga i "
+"vrhunske japanske kozmetike."
 
 #: .\templates\core\home.html:21
 msgid ""
-"In a space dedicated to peace and harmony, every treatment becomes a special "
-"experience of shaping and renewing the skin, but also a moment of deep "
-"relaxation."
+"In a space dedicated to peace, balance and harmony, each treatment becomes a "
+"unique experience of skin care, sculpting and regeneration, as well as a "
+"moment of deep relaxation. Particular emphasis is placed on an individual "
+"approach, listening to the skin's needs and creating a feeling of complete "
+"dedication to each client."
 msgstr ""
-"U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
-"iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
+"U prostoru posvećenom miru, ravnoteži i harmoniji, svaki tretman postaje "
+"jedinstveno iskustvo njege, oblikovanja i regeneracije kože, ali i trenutak "
+"dubokog opuštanja. Poseban naglasak stavlja se na individualni pristup, "
+"osluškivanje potreba kože te stvaranje osjećaja potpune posvećenosti svakom "
+"klijentu."
 
 #: .\templates\core\home.html:24
 msgid ""
-"Through a combination of precise massage techniques, premium preparations, "
-"and an individual approach, we restore the face's natural vitality, "
-"radiance, and youthful freshness."
+"At Naomi Face Studio, the Face Gym technique is applied – a modern form of "
+"natural lifting that uses targeted and precise manual techniques to activate "
+"facial muscles, stimulate circulation, improve tone and define contours. "
+"This method provides a visibly smoother appearance, a fresher look and a "
+"natural lift without invasive procedures."
 msgstr ""
-"Kombinacijom preciznih tehnika masaže, vrhunskih preparata i individualnog "
-"pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku svježinu."
+"U Naomi Face Studiju primjenjuje se Face Gym tehnika – suvremeni oblik "
+"prirodnog liftinga koji kroz ciljane i precizne manualne tehnike aktivira "
+"mišiće lica, potiče cirkulaciju, poboljšava tonus i oblikuje konture. Ova "
+"metoda omogućuje vidljivo zaglađivanje crta lica, svježiji izgled i prirodan "
+"lifting bez invazivnih zahvata."
 
 #: .\templates\core\home.html:27
 msgid ""
-"Naomi is a place where beauty comes from within – and the results are "
-"visible immediately."
+"The treatments are complemented by professional Forlle'd treatments, based "
+"on advanced Japanese low-molecular weight hyaluronic acid technology. These "
+"luxurious products work on the deeper layers of the skin, providing "
+"intensive hydration, regeneration, and instantly visible results, while "
+"improving the skin's quality in the long term."
 msgstr ""
-"Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
+"Tretmani se nadopunjuju profesionalnim Forlle'd tretmanima, temeljenima na "
+"naprednoj japanskoj tehnologiji niskomolekularne hijaluronske kiseline. Ovi "
+"luksuzni preparati djeluju na dublje slojeve kože, osiguravaju intenzivnu "
+"hidrataciju, regeneraciju i trenutačno vidljive rezultate, uz dugoročno "
+"poboljšanje kvalitete kože."
 
-#: .\templates\core\home.html:39
+#: .\templates\core\home.html:30
+msgid ""
+"By combining precise massage techniques, premium products and a holistic "
+"approach, at Naomi Face Studio we restore the face's natural vitality, "
+"radiance and youthful freshness."
+msgstr ""
+"Kombinacijom preciznih tehnika masaže, vrhunskih preparata i holističkog "
+"pristupa, u Naomi Face Studiju vraćamo licu prirodnu vitalnost, sjaj i "
+"mladenačku svježinu."
+
+#: .\templates\core\home.html:33
+msgid ""
+"Naomi is a place where beauty comes from within — and the results are "
+"immediately visible."
+msgstr ""
+"Naomi je mjesto gdje ljepota dolazi iznutra — a rezultati se vide odmah."
+
+#: .\templates\core\home.html:45
 msgid "Frequently Asked Questions"
 msgstr "Često postavljana pitanja"
 
-#: .\templates\core\home.html:43 .\templates\core\home.html:67
+#: .\templates\core\home.html:49 .\templates\core\home.html:73
 msgid "How do I book a treatment?"
 msgstr "Kako mogu rezervirati tretman?"
 
-#: .\templates\core\home.html:44
+#: .\templates\core\home.html:50
 msgid ""
 "You can book a treatment by clicking on the 'Reservations' button in the "
 "navigation menu or directly from a treatment page. You'll need to create an "
@@ -792,11 +826,11 @@ msgstr ""
 "izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
 "račun ako ga nemate."
 
-#: .\templates\core\home.html:47 .\templates\core\home.html:75
+#: .\templates\core\home.html:53 .\templates\core\home.html:81
 msgid "What are your working hours?"
 msgstr "Koje su vaše radno vrijeme?"
 
-#: .\templates\core\home.html:48 .\templates\core\home.html:78
+#: .\templates\core\home.html:54 .\templates\core\home.html:84
 msgid ""
 "Monday: 12:00 - 20:00, Tuesday - Friday: 09:00 - 17:00, Saturday - Sunday: "
 "Closed"
@@ -804,11 +838,11 @@ msgstr ""
 "Ponedjeljak: 12:00 - 20:00, Utorak - Petak: 09:00 - 17:00, Subota - "
 "Nedjelja: Zatvoreno"
 
-#: .\templates\core\home.html:51 .\templates\core\home.html:83
+#: .\templates\core\home.html:57 .\templates\core\home.html:89
 msgid "Can I cancel my reservation?"
 msgstr "Mogu li otkazati rezervaciju?"
 
-#: .\templates\core\home.html:52
+#: .\templates\core\home.html:58
 msgid ""
 "Yes, you can cancel your reservation from your account's 'My Reservations' "
 "page."
@@ -816,7 +850,7 @@ msgstr ""
 "Da, možete otkazati rezervaciju s stranice 'Moje rezervacije' na vašem "
 "računu."
 
-#: .\templates\core\home.html:70
+#: .\templates\core\home.html:76
 msgid ""
 "You can book a treatment by clicking on the Reservations button in the "
 "navigation menu or directly from a treatment page. You will need to create "
@@ -826,7 +860,7 @@ msgstr ""
 "izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
 "račun ako ga nemate."
 
-#: .\templates\core\home.html:86
+#: .\templates\core\home.html:92
 msgid ""
 "Yes, you can cancel your reservation from your accounts My Reservations page."
 msgstr ""
@@ -834,7 +868,7 @@ msgstr ""
 
 #: .\templates\core\login.html:4 .\templates\core\login.html:11
 #: .\templates\core\login.html:47 .\templates\includes\header.html:69
-#: .\templates\includes\header.html:162
+#: .\templates\includes\header.html:167
 msgid "Login"
 msgstr "Prijava"
 
@@ -859,7 +893,7 @@ msgid "Sign up here"
 msgstr "Registrirajte se ovdje"
 
 #: .\templates\core\signup.html:4 .\templates\core\signup.html:90
-#: .\templates\includes\header.html:70 .\templates\includes\header.html:165
+#: .\templates\includes\header.html:70 .\templates\includes\header.html:170
 msgid "Sign Up"
 msgstr "Registracija"
 
@@ -887,7 +921,7 @@ msgstr "Prijavite se ovdje"
 msgid "Explore our educational courses and training programs."
 msgstr "Istražite naše obrazovne tečajeve i programe edukacije."
 
-#: .\templates\education\list.html:33
+#: .\templates\education\list.html:35
 msgid "No education courses available at the moment."
 msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
 
@@ -1058,17 +1092,17 @@ msgstr "Tesla Development"
 msgid "All rights reserved."
 msgstr "Sva prava pridržana."
 
-#: .\templates\includes\header.html:48 .\templates\includes\header.html:133
+#: .\templates\includes\header.html:48 .\templates\includes\header.html:118
 msgid "About me"
 msgstr "O meni"
 
-#: .\templates\includes\header.html:49 .\templates\includes\header.html:118
+#: .\templates\includes\header.html:49 .\templates\includes\header.html:123
 #: .\templates\treatments\list.html:4 .\treatments\apps.py:8
 #: .\treatments\models.py:43
 msgid "Treatments"
 msgstr "Tretmani"
 
-#: .\templates\includes\header.html:67 .\templates\includes\header.html:158
+#: .\templates\includes\header.html:67 .\templates\includes\header.html:163
 msgid "Logout"
 msgstr "Odjava"
 
@@ -1205,7 +1239,7 @@ msgstr "Istražite našu ponudu premium tretmana lica u Naomi Face Studio."
 msgid "Our Treatments"
 msgstr "Naši tretmani"
 
-#: .\templates\treatments\list.html:33
+#: .\templates\treatments\list.html:35
 msgid "No treatments available at the moment."
 msgstr "Trenutno nema dostupnih tretmana."
 
@@ -1240,6 +1274,50 @@ msgstr "Trajanje (minute)"
 #: .\treatments\models.py:42
 msgid "Treatment"
 msgstr "Tretman"
+
+#, fuzzy
+#~| msgid ""
+#~| "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu "
+#~| "– spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
+#~| "kozmetike."
+#~ msgid ""
+#~ "Naomi Face Studio mjesto je gdje se tretmani lica podižu na višu razinu – "
+#~ "kroz spoj holističkog pristupa, suvremenih tehnika prirodnog liftinga i "
+#~ "vrhunske japanske kozmetike."
+#~ msgstr ""
+#~ "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
+#~ "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
+#~ "kozmetike."
+
+#, fuzzy
+#~| msgid ""
+#~| "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
+#~| "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i "
+#~| "mladenačku svježinu."
+#~ msgid ""
+#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i holističkog "
+#~ "pristupa, u Naomi Face Studiju vraćamo licu prirodnu vitalnost, sjaj i "
+#~ "mladenačku svježinu."
+#~ msgstr ""
+#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
+#~ "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku "
+#~ "svježinu."
+
+#, fuzzy
+#~| msgid ""
+#~| "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
+#~ msgid ""
+#~ "Naomi je mjesto gdje ljepota dolazi iznutra — a rezultati se vide odmah."
+#~ msgstr ""
+#~ "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
+
+#~ msgid ""
+#~ "In a space dedicated to peace and harmony, every treatment becomes a "
+#~ "special experience of shaping and renewing the skin, but also a moment of "
+#~ "deep relaxation."
+#~ msgstr ""
+#~ "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
+#~ "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
 
 #~ msgid "About Us"
 #~ msgstr "O nama"
@@ -1301,31 +1379,8 @@ msgstr "Tretman"
 #~ "unutarnjim balansom."
 
 #~ msgid ""
-#~ "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
-#~ "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
-#~ "kozmetike."
-#~ msgstr ""
-#~ "Naomi Face Studio je mjesto gdje se tretmani lica podižu na višu razinu – "
-#~ "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
-#~ "kozmetike."
-
-#~ msgid ""
 #~ "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
 #~ "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
 #~ msgstr ""
 #~ "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
 #~ "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
-
-#~ msgid ""
-#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
-#~ "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku "
-#~ "svježinu."
-#~ msgstr ""
-#~ "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i "
-#~ "individualnog pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku "
-#~ "svježinu."
-
-#~ msgid ""
-#~ "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
-#~ msgstr ""
-#~ "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
