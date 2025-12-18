@@ -47,8 +47,8 @@
                     <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Home" %}</a></li>
                     <li><a href="{% url 'core:about_me' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About me" %}</a></li>
                     <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Treatments" %}</a></li>
-                    <li><a href="{% url 'education:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Education" %}</a></li>
                     <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
+                    <li><a href="{% url 'education:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Education" %}</a></li>
                     <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Blogs" %}</a></li>
                     <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Contact" %}</a></li>
                 </ul>
@@ -67,7 +67,7 @@
                             <a href="{% url 'core:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
                         {% else %}
                             <a href="{% url 'core:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
-                            <a href="{% url 'core:signup' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
+                            <a href="{% url 'core:signup' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
                         {% endif %}
                     </div>
                     
@@ -124,13 +124,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'education:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
-                        {% trans "Education" %}
+                    <a href="{% url 'gift_vouchers:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Gift Voucher" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'gift_vouchers:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
-                        {% trans "Gift Voucher" %}
+                    <a href="{% url 'education:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Education" %}
                     </a>
                 </li>
                 <li>
@@ -166,7 +166,7 @@
                     <a href="{% url 'core:login' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Login" %}
                     </a>
-                    <a href="{% url 'core:signup' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:signup' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Sign Up" %}
                     </a>
                 {% endif %}
