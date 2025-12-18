@@ -214,6 +214,7 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
         'extraPlugins': ','.join([
             'uploadimage',
+            'image2',
             'div',
             'autolink',
             'autoembed',
@@ -231,10 +232,10 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': True,
         'mathJaxLib': '//cdn.ckeditor.com/4.6.1/standard/plugins/mathjax/lib/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
-        'extraPlugins': ','.join([
-            'uploadimage',
-            'image2',
-        ]),
+        # Image2 plugin configuration for alignment support
+        'image2_alignClasses': ['align-left', 'align-center', 'align-right'],
+        'image2_disableResizer': False,
+        'image2_captionedClass': 'image-captioned',
     },
 }
 

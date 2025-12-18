@@ -45,12 +45,12 @@
                 <!-- Navbar Items -->
                 <ul class="flex justify-center gap-8">
                     <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'core:about_me' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About me" %}</a></li>
                     <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Treatments" %}</a></li>
                     <li><a href="{% url 'education:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Education" %}</a></li>
                     <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
                     <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Blogs" %}</a></li>
                     <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Contact" %}</a></li>
-                    <li><a href="{% url 'core:about_us' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About us" %}</a></li>
                 </ul>
                 
                 <!-- Reservations Button, Login/Signup, and Language Switcher -->
@@ -129,13 +129,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'contacts:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
-                        {% trans "Contact" %}
+                    <a href="{% url 'core:about_me' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "About me" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'core:about_us' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
-                        {% trans "About us" %}
+                    <a href="{% url 'contacts:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Contact" %}
                     </a>
                 </li>
             </ul>
@@ -144,7 +144,7 @@
         <!-- Bottom Section: Actions -->
         <div class="pt-6 border-t border-gray-200 space-y-4">
             <!-- Reservations Button -->
-            <a href="{% url 'treatments:list' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+            <a href="{% url 'reservations:calendar' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
                 {% trans "Reservations" %}
             </a>
             

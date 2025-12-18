@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 19:31+0100\n"
+"POT-Creation-Date: 2025-12-18 20:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: .\blogs\admin.py:46 .\education\admin.py:46 .\treatments\admin.py:49
+#: .\blogs\admin.py:46 .\education\admin.py:46 .\treatments\admin.py:51
 msgid "Croatian Content"
 msgstr "Hrvatski sadržaj"
 
-#: .\blogs\admin.py:49 .\education\admin.py:49 .\treatments\admin.py:52
+#: .\blogs\admin.py:49 .\education\admin.py:49 .\treatments\admin.py:54
 msgid "English Content"
 msgstr "Engleski sadržaj"
 
@@ -32,7 +32,7 @@ msgid "Blog Details"
 msgstr "Detalji bloga"
 
 #: .\blogs\apps.py:8 .\blogs\models.py:36 .\templates\blogs\list.html:4
-#: .\templates\includes\header.html:51 .\templates\includes\header.html:128
+#: .\templates\includes\header.html:52 .\templates\includes\header.html:128
 msgid "Blogs"
 msgstr "Blogovi"
 
@@ -76,15 +76,15 @@ msgstr "Puni opis (engleski)"
 msgid "Meta Description (English)"
 msgstr "Meta opis (engleski)"
 
-#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:33
+#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:35
 msgid "Thumbnail Image"
 msgstr "Sličica"
 
-#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:33
+#: .\blogs\models.py:28 .\education\models.py:29 .\treatments\models.py:35
 msgid "Supports WebP format"
 msgstr "Podržava WebP format"
 
-#: .\blogs\models.py:31 .\education\models.py:32 .\treatments\models.py:36
+#: .\blogs\models.py:31 .\education\models.py:32 .\treatments\models.py:38
 msgid "Active"
 msgstr "Aktivno"
 
@@ -97,29 +97,29 @@ msgid "Contacts"
 msgstr "Kontakti"
 
 #: .\contacts\models.py:6 .\gift_vouchers\models.py:24
-#: .\templates\contacts\form.html:30 .\templates\core\account.html:18
+#: .\templates\contacts\form.html:32 .\templates\core\account.html:18
 #: .\templates\core\signup.html:33
 msgid "First Name"
 msgstr "Ime"
 
 #: .\contacts\models.py:7 .\gift_vouchers\models.py:25
-#: .\templates\contacts\form.html:34 .\templates\core\account.html:22
+#: .\templates\contacts\form.html:36 .\templates\core\account.html:22
 #: .\templates\core\signup.html:41
 msgid "Last Name"
 msgstr "Prezime"
 
 #: .\contacts\models.py:8 .\gift_vouchers\models.py:27
-#: .\templates\contacts\form.html:41 .\templates\core\account.html:30
+#: .\templates\contacts\form.html:43 .\templates\core\account.html:30
 #: .\templates\core\signup.html:57
 msgid "Mobile Number"
 msgstr "Broj mobitela"
 
 #: .\contacts\models.py:9 .\gift_vouchers\models.py:26
-#: .\templates\contacts\form.html:45
+#: .\templates\contacts\form.html:47
 msgid "Email Address"
 msgstr "Email adresa"
 
-#: .\contacts\models.py:10 .\templates\contacts\form.html:51
+#: .\contacts\models.py:10 .\templates\contacts\form.html:53
 msgid "Message"
 msgstr "Poruka"
 
@@ -135,11 +135,32 @@ msgstr "Kontakt forma"
 msgid "Contact Submissions"
 msgstr "Kontakt forme"
 
-#: .\core\admin.py:29
+#: .\contacts\views.py:26
+msgid "Too many requests. Please try again later."
+msgstr "Previše zahtjeva. Molimo pokušajte ponovno kasnije."
+
+#: .\contacts\views.py:36
+msgid "Please fill in all required fields."
+msgstr "Molimo ispunite sva obavezna polja."
+
+#: .\contacts\views.py:60
+msgid "Thank you for your message! We will get back to you soon."
+msgstr "Hvala vam na poruci! Javit ćemo vam se uskoro."
+
+#: .\contacts\views.py:82
+#, python-format
+msgid "New Contact Form Submission from %(name)s"
+msgstr "Nova poruka iz kontakt forme od %(name)s"
+
+#: .\core\admin.py:17 .\core\admin.py:24
+msgid "Cannot delete superuser accounts."
+msgstr ""
+
+#: .\core\admin.py:54
 msgid "Export selected emails as CSV"
 msgstr "Izvezi odabrane emailove kao CSV"
 
-#: .\core\admin.py:37
+#: .\core\admin.py:62
 msgid "Export selected emails as text (one per line)"
 msgstr "Izvezi odabrane emailove kao tekst (jedan po redu)"
 
@@ -162,9 +183,10 @@ msgstr "Zbirka emailova"
 msgid "Home"
 msgstr "Početna"
 
-#: .\core\views.py:23 .\templates\core\about_us.html:4
-msgid "About Us"
-msgstr "O nama"
+#: .\core\views.py:23 .\templates\core\about_me.html:4
+#: .\templates\core\about_me.html:12
+msgid "About Me"
+msgstr "O meni"
 
 #: .\core\views.py:58
 msgid "Account created successfully!"
@@ -188,11 +210,11 @@ msgstr "Detalji edukacije"
 
 #: .\education\apps.py:8 .\education\models.py:36 .\education\models.py:37
 #: .\templates\education\list.html:4 .\templates\education\list.html:12
-#: .\templates\includes\header.html:49
+#: .\templates\includes\header.html:50
 msgid "Education"
 msgstr "Edukacija"
 
-#: .\education\models.py:28 .\treatments\models.py:32
+#: .\education\models.py:28 .\treatments\models.py:34
 msgid "Price"
 msgstr "Cijena"
 
@@ -233,7 +255,7 @@ msgid "Email Sent"
 msgstr "Email poslan"
 
 #: .\gift_vouchers\models.py:37 .\templates\gift_vouchers\form.html:5
-#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:50
+#: .\templates\gift_vouchers\form.html:12 .\templates\includes\header.html:51
 #: .\templates\includes\header.html:123
 msgid "Gift Voucher"
 msgstr "Poklon vaučer"
@@ -501,8 +523,41 @@ msgstr "Vidi više"
 msgid "No blog posts available at the moment."
 msgstr "Trenutno nema dostupnih blog objava."
 
-#: .\templates\contacts\form.html:5 .\templates\includes\footer.html:8
-#: .\templates\includes\header.html:52 .\templates\includes\header.html:133
+#: .\templates\contacts\emails\admin_notification.html:17
+msgid "New Contact Form Submission"
+msgstr "Nova poruka iz kontakt forme"
+
+#: .\templates\contacts\emails\admin_notification.html:20
+#: .\templates\gift_vouchers\emails\admin_notification.html:27
+#: .\templates\reservations\emails\admin_notification.html:28
+#: .\templates\reservations\emails\cancellation_notification.html:26
+msgid "Name:"
+msgstr "Ime:"
+
+#: .\templates\contacts\emails\admin_notification.html:21
+#: .\templates\gift_vouchers\emails\admin_notification.html:28
+#: .\templates\reservations\emails\admin_notification.html:29
+#: .\templates\reservations\emails\cancellation_notification.html:27
+msgid "Email:"
+msgstr "Email:"
+
+#: .\templates\contacts\emails\admin_notification.html:22
+#: .\templates\gift_vouchers\emails\admin_notification.html:29
+#: .\templates\reservations\emails\admin_notification.html:31
+#: .\templates\reservations\emails\admin_notification.html:33
+#: .\templates\reservations\emails\cancellation_notification.html:29
+#: .\templates\reservations\emails\cancellation_notification.html:31
+msgid "Mobile:"
+msgstr "Mobitel:"
+
+#: .\templates\contacts\emails\admin_notification.html:23
+#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:26
+#: .\templates\gift_vouchers\emails\recipient_notification.html:26
+msgid "Message:"
+msgstr "Poruka:"
+
+#: .\templates\contacts\form.html:5 .\templates\includes\footer.html:13
+#: .\templates\includes\header.html:53 .\templates\includes\header.html:138
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -514,15 +569,15 @@ msgstr ""
 "Kontaktirajte Naomi Face Studio. Javite nam se putem emaila, telefona ili "
 "popunite naš kontakt obrazac."
 
-#: .\templates\contacts\form.html:12
+#: .\templates\contacts\form.html:11
 msgid "Contact Us"
 msgstr "Kontaktirajte nas"
 
-#: .\templates\contacts\form.html:56
+#: .\templates\contacts\form.html:58
 msgid "Send Message"
 msgstr "Pošalji poruku"
 
-#: .\templates\core\about_us.html:6
+#: .\templates\core\about_me.html:6
 msgid ""
 "Learn more about Maja Divjaković, medical cosmetologist and certified "
 "therapist specializing in Forlle'd professional treatments and Face Gym "
@@ -532,11 +587,7 @@ msgstr ""
 "terapeutkinji specijaliziranoj za Forlle'd profesionalne tretmane i Face Gym "
 "tehnike."
 
-#: .\templates\core\about_us.html:11
-msgid "About Me"
-msgstr "O meni"
-
-#: .\templates\core\about_us.html:15
+#: .\templates\core\about_me.html:18 .\templates\core\about_me.html:45
 msgid ""
 "My name is Maja Divjaković and I am a medical cosmetologist with years of "
 "experience working in wellness centers and aesthetic clinics."
@@ -544,7 +595,7 @@ msgstr ""
 "Moje ime je Maja Divjaković i medicinski sam kozmetičar s višegodišnjim "
 "iskustvom rada u wellnesima i estetskim centrima."
 
-#: .\templates\core\about_us.html:18
+#: .\templates\core\about_me.html:21 .\templates\core\about_me.html:48
 msgid ""
 "Over the years, I have developed a unique approach that combines expertise "
 "and luxury with an emphasis on results that are visible immediately, but "
@@ -554,7 +605,7 @@ msgstr ""
 "naglaskom na rezultate koji se vide odmah, ali i na osjećaj potpune "
 "opuštenosti i harmonije."
 
-#: .\templates\core\about_us.html:21
+#: .\templates\core\about_me.html:24 .\templates\core\about_me.html:51
 msgid ""
 "I specialize in Forlle'd professional treatments – exclusive Japanese "
 "cosmetics for anti-age care – and I am a certified therapist. In addition to "
@@ -568,7 +619,7 @@ msgstr ""
 "oblikuju i učvršćuju lice, aktivirajući više od 40 mišića te vraćajući koži "
 "tonus i svježinu."
 
-#: .\templates\core\about_us.html:24
+#: .\templates\core\about_me.html:27 .\templates\core\about_me.html:54
 msgid ""
 "My vision is to raise awareness about the importance of quality and "
 "personalized facial care and to bring clients an experience that goes beyond "
@@ -577,7 +628,7 @@ msgstr ""
 "Moja vizija je podići svijest o važnosti kvalitetne i personalizirane njege "
 "lica te približiti klijentima iskustvo koje nadilazi klasične tretmane."
 
-#: .\templates\core\about_us.html:27
+#: .\templates\core\about_me.html:30 .\templates\core\about_me.html:57
 msgid ""
 "At Naomi Face Studio, I want to offer each client more than just care – a "
 "space where beauty and skin health meet with ritual, luxury, and inner "
@@ -688,7 +739,7 @@ msgstr ""
 "Naomi Face Studio - Premium tretmani lica koji spajaju ritualnu njegu, "
 "suvremene anti-age metode i luksuznu japansku kozmetiku."
 
-#: .\templates\core\home.html:17
+#: .\templates\core\home.html:18
 msgid ""
 "Naomi Face Studio is a place where facial treatments are elevated to a "
 "higher level – a combination of ritual care, modern anti-age methods, and "
@@ -698,7 +749,7 @@ msgstr ""
 "spoj ritualne njege, suvremenih anti-age metoda i luksuzne japanske "
 "kozmetike."
 
-#: .\templates\core\home.html:20
+#: .\templates\core\home.html:21
 msgid ""
 "In a space dedicated to peace and harmony, every treatment becomes a special "
 "experience of shaping and renewing the skin, but also a moment of deep "
@@ -707,7 +758,7 @@ msgstr ""
 "U prostoru posvećenom miru i harmoniji, svaki tretman postaje posebno "
 "iskustvo oblikovanja i obnavljanja kože, ali i trenutak dubokog opuštanja."
 
-#: .\templates\core\home.html:23
+#: .\templates\core\home.html:24
 msgid ""
 "Through a combination of precise massage techniques, premium preparations, "
 "and an individual approach, we restore the face's natural vitality, "
@@ -716,22 +767,22 @@ msgstr ""
 "Kombinacijom preciznih tehnika masaže, vrhunskih preparata i individualnog "
 "pristupa vraćamo licu prirodnu vitalnost, sjaj i mladenačku svježinu."
 
-#: .\templates\core\home.html:26
+#: .\templates\core\home.html:27
 msgid ""
 "Naomi is a place where beauty comes from within – and the results are "
 "visible immediately."
 msgstr ""
 "Naomi je mjesto gdje ljepota dolazi iznutra – a rezultati se vide odmah."
 
-#: .\templates\core\home.html:32
+#: .\templates\core\home.html:39
 msgid "Frequently Asked Questions"
 msgstr "Često postavljana pitanja"
 
-#: .\templates\core\home.html:36 .\templates\core\home.html:60
+#: .\templates\core\home.html:43 .\templates\core\home.html:67
 msgid "How do I book a treatment?"
 msgstr "Kako mogu rezervirati tretman?"
 
-#: .\templates\core\home.html:37
+#: .\templates\core\home.html:44
 msgid ""
 "You can book a treatment by clicking on the 'Reservations' button in the "
 "navigation menu or directly from a treatment page. You'll need to create an "
@@ -741,11 +792,11 @@ msgstr ""
 "izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
 "račun ako ga nemate."
 
-#: .\templates\core\home.html:40 .\templates\core\home.html:68
+#: .\templates\core\home.html:47 .\templates\core\home.html:75
 msgid "What are your working hours?"
 msgstr "Koje su vaše radno vrijeme?"
 
-#: .\templates\core\home.html:41 .\templates\core\home.html:71
+#: .\templates\core\home.html:48 .\templates\core\home.html:78
 msgid ""
 "Monday: 12:00 - 20:00, Tuesday - Friday: 09:00 - 17:00, Saturday - Sunday: "
 "Closed"
@@ -753,11 +804,11 @@ msgstr ""
 "Ponedjeljak: 12:00 - 20:00, Utorak - Petak: 09:00 - 17:00, Subota - "
 "Nedjelja: Zatvoreno"
 
-#: .\templates\core\home.html:44 .\templates\core\home.html:76
+#: .\templates\core\home.html:51 .\templates\core\home.html:83
 msgid "Can I cancel my reservation?"
 msgstr "Mogu li otkazati rezervaciju?"
 
-#: .\templates\core\home.html:45
+#: .\templates\core\home.html:52
 msgid ""
 "Yes, you can cancel your reservation from your account's 'My Reservations' "
 "page."
@@ -765,7 +816,7 @@ msgstr ""
 "Da, možete otkazati rezervaciju s stranice 'Moje rezervacije' na vašem "
 "računu."
 
-#: .\templates\core\home.html:63
+#: .\templates\core\home.html:70
 msgid ""
 "You can book a treatment by clicking on the Reservations button in the "
 "navigation menu or directly from a treatment page. You will need to create "
@@ -775,7 +826,7 @@ msgstr ""
 "izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
 "račun ako ga nemate."
 
-#: .\templates\core\home.html:79
+#: .\templates\core\home.html:86
 msgid ""
 "Yes, you can cancel your reservation from your accounts My Reservations page."
 msgstr ""
@@ -880,26 +931,6 @@ msgstr "N/A"
 msgid "Purchaser Details"
 msgstr "Detalji kupca"
 
-#: .\templates\gift_vouchers\emails\admin_notification.html:27
-#: .\templates\reservations\emails\admin_notification.html:28
-#: .\templates\reservations\emails\cancellation_notification.html:26
-msgid "Name:"
-msgstr "Ime:"
-
-#: .\templates\gift_vouchers\emails\admin_notification.html:28
-#: .\templates\reservations\emails\admin_notification.html:29
-#: .\templates\reservations\emails\cancellation_notification.html:27
-msgid "Email:"
-msgstr "Email:"
-
-#: .\templates\gift_vouchers\emails\admin_notification.html:29
-#: .\templates\reservations\emails\admin_notification.html:31
-#: .\templates\reservations\emails\admin_notification.html:33
-#: .\templates\reservations\emails\cancellation_notification.html:29
-#: .\templates\reservations\emails\cancellation_notification.html:31
-msgid "Mobile:"
-msgstr "Mobitel:"
-
 #: .\templates\gift_vouchers\emails\admin_notification.html:31
 msgid "Email Delivery:"
 msgstr "Isporuka emaila:"
@@ -920,11 +951,6 @@ msgstr "Hvala vam na narudžbi poklon vaučera!"
 msgid "Recipient:"
 msgstr "Primatelj:"
 
-#: .\templates\gift_vouchers\emails\purchaser_confirmation.html:26
-#: .\templates\gift_vouchers\emails\recipient_notification.html:26
-msgid "Message:"
-msgstr "Poruka:"
-
 #: .\templates\gift_vouchers\emails\recipient_notification.html:17
 msgid "You Received a Gift Voucher!"
 msgstr "Primili ste poklon vaučer!"
@@ -937,8 +963,7 @@ msgstr "Poštovani"
 #: .\templates\gift_vouchers\emails\recipient_notification.html:21
 msgid ""
 "You have received a gift voucher for a facial treatment at Naomi Face Studio!"
-msgstr ""
-"Primili ste poklon vaučer za tretman lica u Naomi Face Studio!"
+msgstr "Primili ste poklon vaučer za tretman lica u Naomi Face Studio!"
 
 #: .\templates\gift_vouchers\emails\recipient_notification.html:22
 msgid "Gift Voucher Details"
@@ -1021,27 +1046,29 @@ msgstr ""
 msgid "Accept"
 msgstr "Prihvati"
 
-#: .\templates\includes\footer.html:20
+#: .\templates\includes\footer.html:39
 msgid "Powered by"
 msgstr "Powered by"
 
-#: .\templates\includes\footer.html:24
+#: .\templates\includes\footer.html:43
 msgid "Tesla Development"
 msgstr "Tesla Development"
 
-#: .\templates\includes\footer.html:31
+#: .\templates\includes\footer.html:50
 msgid "All rights reserved."
 msgstr "Sva prava pridržana."
 
-#: .\templates\includes\header.html:48 .\templates\includes\header.html:118
+#: .\templates\includes\header.html:48 .\templates\includes\header.html:133
+#, fuzzy
+#| msgid "About Me"
+msgid "About me"
+msgstr "O meni"
+
+#: .\templates\includes\header.html:49 .\templates\includes\header.html:118
 #: .\templates\treatments\list.html:4 .\treatments\apps.py:8
-#: .\treatments\models.py:41
+#: .\treatments\models.py:43
 msgid "Treatments"
 msgstr "Tretmani"
-
-#: .\templates\includes\header.html:53 .\templates\includes\header.html:138
-msgid "About us"
-msgstr "O nama"
 
 #: .\templates\includes\header.html:67 .\templates\includes\header.html:158
 msgid "Logout"
@@ -1184,7 +1211,7 @@ msgstr "Naši tretmani"
 msgid "No treatments available at the moment."
 msgstr "Trenutno nema dostupnih tretmana."
 
-#: .\treatments\admin.py:55
+#: .\treatments\admin.py:57
 msgid "Treatment Details"
 msgstr "Detalji tretmana"
 
@@ -1196,9 +1223,31 @@ msgstr "Trajanje (sati)"
 msgid "Duration (Minutes)"
 msgstr "Trajanje (minute)"
 
-#: .\treatments\models.py:40
+#: .\treatments\models.py:32
+#, fuzzy
+#| msgid "Our Treatments"
+msgid "Pause After Treatment (Hours)"
+msgstr "Naši tretmani"
+
+#: .\treatments\models.py:32 .\treatments\models.py:33
+msgid "Rest time needed after this treatment (not visible to users)"
+msgstr ""
+
+#: .\treatments\models.py:33
+#, fuzzy
+#| msgid "Duration (Minutes)"
+msgid "Pause After Treatment (Minutes)"
+msgstr "Trajanje (minute)"
+
+#: .\treatments\models.py:42
 msgid "Treatment"
 msgstr "Tretman"
+
+#~ msgid "About Us"
+#~ msgstr "O nama"
+
+#~ msgid "About us"
+#~ msgstr "O nama"
 
 #~ msgid "Website by"
 #~ msgstr "Web stranica"

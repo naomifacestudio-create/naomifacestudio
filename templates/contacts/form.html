@@ -8,54 +8,62 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12">
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Contact Us" %}</h1>
-        
-        <div class="mb-8 text-center text-[#593d09]">
-            <p class="mb-2">
-                <a href="mailto:info@naomifacestudio.com" class="hover:text-[#4a3207]">info@naomifacestudio.com</a>
-            </p>
-            <p class="mb-2">
-                <a href="tel:+385955551282" class="hover:text-[#4a3207]">0955551282</a>
-            </p>
-            <p>Korzo 35, Rijeka</p>
+    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Contact Us" %}</h1>
+    
+    <div class="mb-8 text-center text-[#593d09]">
+        <p class="mb-2">
+            <a href="mailto:info@naomifacestudio.com" class="hover:text-[#4a3207]">info@naomifacestudio.com</a>
+        </p>
+        <p class="mb-2">
+            <a href="tel:+385955551282" class="hover:text-[#4a3207]">0955551282</a>
+        </p>
+        <p>Korzo 35, Rijeka</p>
+    </div>
+    
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Contact Form (Left on desktop, First on mobile) -->
+        <div>
+            <form method="post" class="bg-white p-8 rounded-lg shadow-md">
+                {% csrf_token %}
+                {% render_honeypot_field %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="first_name" class="block mb-2 font-bold text-[#593d09]">{% trans "First Name" %} *</label>
+                        <input type="text" id="first_name" name="first_name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+                    </div>
+                    <div>
+                        <label for="last_name" class="block mb-2 font-bold text-[#593d09]">{% trans "Last Name" %} *</label>
+                        <input type="text" id="last_name" name="last_name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="mobile" class="block mb-2 font-bold text-[#593d09]">{% trans "Mobile Number" %} *</label>
+                        <input type="tel" id="mobile" name="mobile" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2 font-bold text-[#593d09]">{% trans "Email Address" %} *</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="message" class="block mb-2 font-bold text-[#593d09]">{% trans "Message" %} *</label>
+                    <textarea id="message" name="message" rows="6" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-bold">
+                    {% trans "Send Message" %}
+                </button>
+            </form>
         </div>
         
-        <form method="post" class="bg-white p-8 rounded-lg shadow-md">
-            {% csrf_token %}
-            {% render_honeypot_field %}
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="first_name" class="block mb-2 font-bold text-[#593d09]">{% trans "First Name" %} *</label>
-                    <input type="text" id="first_name" name="first_name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
-                </div>
-                <div>
-                    <label for="last_name" class="block mb-2 font-bold text-[#593d09]">{% trans "Last Name" %} *</label>
-                    <input type="text" id="last_name" name="last_name" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                    <label for="mobile" class="block mb-2 font-bold text-[#593d09]">{% trans "Mobile Number" %} *</label>
-                    <input type="tel" id="mobile" name="mobile" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
-                </div>
-                <div>
-                    <label for="email" class="block mb-2 font-bold text-[#593d09]">{% trans "Email Address" %} *</label>
-                    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <label for="message" class="block mb-2 font-bold text-[#593d09]">{% trans "Message" %} *</label>
-                <textarea id="message" name="message" rows="6" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]"></textarea>
-            </div>
-            
-            <button type="submit" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-bold">
-                {% trans "Send Message" %}
-            </button>
-        </form>
+        <!-- Google Maps (Right on desktop, Below form on mobile) -->
+        <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.070961083371!2d14.440610399999997!3d45.327189499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4764a0e1edcf0d49%3A0x2bfd08ed81b3959c!2sKorzo%2035%2C%2051000%2C%20Rijeka%2C%20Croatia!5e0!3m2!1sen!2srs!4v1766083651699!5m2!1sen!2srs" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg"></iframe>
+        </div>
     </div>
 </div>
 {% endblock %}

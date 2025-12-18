@@ -17,12 +17,12 @@ def home(request):
     return render(request, 'core/home.html', context)
 
 
-def about_us(request):
-    """About Us page view"""
+def about_me(request):
+    """About Me page view"""
     context = {
-        'page_title': _('About Us'),
+        'page_title': _('About Me'),
     }
-    return render(request, 'core/about_us.html', context)
+    return render(request, 'core/about_me.html', context)
 
 
 def signup_view(request):

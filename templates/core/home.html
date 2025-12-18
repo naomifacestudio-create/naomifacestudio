@@ -9,6 +9,7 @@
 {% block og_description %}{% trans "Naomi Face Studio - Premium facial treatments combining ritual care, modern anti-age methods, and luxury Japanese cosmetics." %}{% endblock og_description %}
 {% block twitter_description %}{% trans "Naomi Face Studio - Premium facial treatments combining ritual care, modern anti-age methods, and luxury Japanese cosmetics." %}{% endblock twitter_description %}
 
+{% load static %}
 {% block content %}
 <div class="w-full px-4 md:px-8 lg:px-12 py-12">
     <div class="max-w-full">
@@ -25,6 +26,12 @@
             <p class="text-lg leading-relaxed mb-12">
                 {% trans "Naomi is a place where beauty comes from within – and the results are visible immediately." %}
             </p>
+        </div>
+        
+        <!-- Images Section -->
+        <div class="flex justify-center items-center gap-4 my-12">
+            <img src="{% static 'images/naomi_first_image_home.webp' %}" alt="" class="max-w-full h-auto">
+            <img src="{% static 'images/naomi_second_image_home.webp' %}" alt="" class="max-w-full h-auto">
         </div>
         
         <!-- FAQ Section -->

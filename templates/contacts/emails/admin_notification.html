@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +14,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>New Contact Form Submission</h1>
+            <h1>{% trans "New Contact Form Submission" %}</h1>
         </div>
         <div class="content">
-            <p><strong>Name:</strong> {{ submission.first_name }} {{ submission.last_name }}</p>
-            <p><strong>Email:</strong> {{ submission.email }}</p>
-            <p><strong>Mobile:</strong> {{ submission.mobile }}</p>
-            <p><strong>Message:</strong></p>
+            <p><strong>{% trans "Name:" %}</strong> {{ submission.first_name }} {{ submission.last_name }}</p>
+            <p><strong>{% trans "Email:" %}</strong> {{ submission.email }}</p>
+            <p><strong>{% trans "Mobile:" %}</strong> {{ submission.mobile }}</p>
+            <p><strong>{% trans "Message:" %}</strong></p>
             <p>{{ submission.message }}</p>
         </div>
         <div class="footer">

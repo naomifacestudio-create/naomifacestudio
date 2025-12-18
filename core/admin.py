@@ -1,12 +1,37 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
 from .models import EmailCollection
 import csv
 
 # Unregister Groups from admin
 admin.site.unregister(Group)
+
+
+# Prevent superuser deletion
+class UserAdmin(admin.ModelAdmin):
+    def delete_model(self, request, obj):
+        if obj.is_superuser:
+            messages.error(request, _('Cannot delete superuser accounts.'))
+            return
+        super().delete_model(request, obj)
+    
+    def delete_queryset(self, request, queryset):
+        superusers = queryset.filter(is_superuser=True)
+        if superusers.exists():
+            messages.error(request, _('Cannot delete superuser accounts.'))
+            queryset = queryset.exclude(is_superuser=True)
+        super().delete_queryset(request, queryset)
+
+
+# Unregister default User admin and register custom one
+try:
+    admin.site.unregister(User)
+except admin.sites.NotRegistered:
+    pass
+admin.site.register(User, UserAdmin)
 
 
 @admin.register(EmailCollection)

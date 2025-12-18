@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.utils.translation import get_language, activate
+from django.utils.translation import get_language, activate, gettext as _
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
@@ -23,7 +23,7 @@ def contact_form(request):
     if request.method == 'POST':
         was_limited = getattr(request, 'limited', False)
         if was_limited:
-            messages.error(request, 'Too many requests. Please try again later.')
+            messages.error(request, _('Too many requests. Please try again later.'))
             return redirect('contacts:form')
         
         first_name = request.POST.get('first_name')
@@ -33,7 +33,7 @@ def contact_form(request):
         message_text = request.POST.get('message')
         
         if not all([first_name, last_name, mobile, email, message_text]):
-            messages.error(request, 'Please fill in all required fields.')
+            messages.error(request, _('Please fill in all required fields.'))
             return render(request, 'contacts/form.html', {'language_code': language_code})
         
         # Create contact submission
@@ -57,7 +57,7 @@ def contact_form(request):
         # Send email to admin
         send_contact_email(submission, language_code)
         
-        messages.success(request, 'Thank you for your message! We will get back to you soon.')
+        messages.success(request, _('Thank you for your message! We will get back to you soon.'))
         return redirect('contacts:form')
     
     context = {
@@ -78,7 +78,8 @@ def send_contact_email(submission, language_code='hr'):
             'language_code': language_code,
         }
         
-        subject = f'New Contact Form Submission from {submission.first_name} {submission.last_name}'
+        # Translate subject line
+        subject = _('New Contact Form Submission from %(name)s') % {'name': f'{submission.first_name} {submission.last_name}'}
         message = render_to_string('contacts/emails/admin_notification.html', context)
         
         send_mail(
