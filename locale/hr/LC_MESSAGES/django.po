@@ -1059,8 +1059,6 @@ msgid "All rights reserved."
 msgstr "Sva prava pridržana."
 
 #: .\templates\includes\header.html:48 .\templates\includes\header.html:133
-#, fuzzy
-#| msgid "About Me"
 msgid "About me"
 msgstr "O meni"
 

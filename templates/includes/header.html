@@ -114,8 +114,18 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'core:about_me' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "About me" %}
+                    </a>
+                </li>
+                <li>
                     <a href="{% url 'treatments:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Treatments" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'education:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Education" %}
                     </a>
                 </li>
                 <li>
@@ -126,11 +136,6 @@
                 <li>
                     <a href="{% url 'blogs:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Blogs" %}
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'core:about_me' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
-                        {% trans "About me" %}
                     </a>
                 </li>
                 <li>
