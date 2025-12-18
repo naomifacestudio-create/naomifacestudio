@@ -221,9 +221,13 @@ def get_available_slots(request):
         for reservation in existing_reservations:
             res_start = datetime.combine(selected_date, reservation.start_time)
             res_end = datetime.combine(selected_date, reservation.end_time)
+            # Add pause period after reservation
+            pause_minutes = reservation.treatment.get_total_pause_minutes()
+            res_end_with_pause = res_end + timedelta(minutes=pause_minutes)
             
-            # Check for overlap
-            if not (current_time + treatment_duration <= res_start or current_time >= res_end):
+            # Check for overlap (including pause period)
+            # Slot is available if it starts after reservation+pause ends OR ends before reservation starts
+            if not (current_time >= res_end_with_pause or current_time + treatment_duration <= res_start):
                 is_available = False
                 break
         

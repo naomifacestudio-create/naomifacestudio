@@ -79,15 +79,27 @@ class Reservation(models.Model):
         if end_time > working_hours[1]:
             return False
         
-        # Check for overlapping reservations
-        overlapping = Reservation.objects.filter(
+        # Check for overlapping reservations (including pause periods)
+        existing_reservations = Reservation.objects.filter(
             date=date,
             status__in=['pending', 'confirmed'],
         ).exclude(
             id=exclude_reservation.id if exclude_reservation else None
-        ).filter(
-            models.Q(start_time__lt=end_time, end_time__gt=start_time)
         )
         
-        return not overlapping.exists()
+        for reservation in existing_reservations:
+            res_start = datetime.combine(date, reservation.start_time)
+            res_end = datetime.combine(date, reservation.end_time)
+            # Add pause period after reservation
+            pause_minutes = reservation.treatment.get_total_pause_minutes()
+            res_end_with_pause = res_end + timedelta(minutes=pause_minutes)
+            
+            # Check if the new slot overlaps with reservation + pause
+            # The new slot overlaps if:
+            # - It starts before the reservation+pause ends AND
+            # - It ends after the reservation starts
+            if not (start_datetime >= res_end_with_pause or end_datetime <= res_start):
+                return False
+        
+        return True
 

@@ -16,9 +16,11 @@ class TreatmentResource(resources.ModelResource):
     class Meta:
         model = Treatment
         fields = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr', 
-                  'short_description_en', 'price', 'duration_hours', 'duration_minutes', 'is_active')
+                  'short_description_en', 'price', 'duration_hours', 'duration_minutes', 
+                  'pause_hours', 'pause_minutes', 'is_active')
         export_order = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr', 
-                       'short_description_en', 'price', 'duration_hours', 'duration_minutes', 'is_active')
+                       'short_description_en', 'price', 'duration_hours', 'duration_minutes', 
+                       'pause_hours', 'pause_minutes', 'is_active')
 
 
 def delete_media_files_from_r2(file_path):
@@ -53,7 +55,7 @@ class TreatmentAdmin(ImportExportModelAdmin):
             'fields': ('title_en', 'slug_en', 'short_description_en', 'full_description_en', 'meta_description_en')
         }),
         (_('Treatment Details'), {
-            'fields': ('duration_hours', 'duration_minutes', 'price', 'thumbnail', 'is_active')
+            'fields': ('duration_hours', 'duration_minutes', 'pause_hours', 'pause_minutes', 'price', 'thumbnail', 'is_active')
         }),
     )
     

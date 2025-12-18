@@ -29,6 +29,8 @@ class Treatment(models.Model):
     # Common fields
     duration_hours = models.PositiveIntegerField(_('Duration (Hours)'), default=0, validators=[MinValueValidator(0)])
     duration_minutes = models.PositiveIntegerField(_('Duration (Minutes)'), default=0, validators=[MinValueValidator(0)])
+    pause_hours = models.PositiveIntegerField(_('Pause After Treatment (Hours)'), default=0, validators=[MinValueValidator(0)], help_text=_('Rest time needed after this treatment (not visible to users)'))
+    pause_minutes = models.PositiveIntegerField(_('Pause After Treatment (Minutes)'), default=0, validators=[MinValueValidator(0)], help_text=_('Rest time needed after this treatment (not visible to users)'))
     price = models.DecimalField(_('Price'), max_digits=10, decimal_places=2)
     thumbnail = models.ImageField(_('Thumbnail Image'), upload_to=treatment_thumbnail_upload_path, help_text=_('Supports WebP format'))
     created_at = models.DateTimeField(auto_now_add=True)
@@ -63,6 +65,10 @@ class Treatment(models.Model):
     def get_total_minutes(self):
         """Get total duration in minutes"""
         return (self.duration_hours * 60) + self.duration_minutes
+    
+    def get_total_pause_minutes(self):
+        """Get total pause time in minutes"""
+        return (self.pause_hours * 60) + self.pause_minutes
     
     def get_title(self, language_code='hr'):
         """Get title in specified language"""
