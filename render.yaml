@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: naomi-face-studio
+    env: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn naomi_face_studio.wsgi:application
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: False
+      # Note: DATABASE_URL is automatically set when you link a Render PostgreSQL database
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_ENDPOINT_URL
+        sync: false
+      - key: R2_CUSTOM_DOMAIN
+        sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
+
+databases:
+  - name: naomi-face-studio-db
+    databaseName: naomi_face_studio
+    user: naomi_face_studio

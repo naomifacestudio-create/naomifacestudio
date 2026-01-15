@@ -14,4 +14,3 @@ python manage.py compilemessages
 - Only Croatian translation file (`-l hr`) is needed because source strings in templates are already in English
 - When language is set to English, Django uses the source strings directly (no translation file needed)
 - Croatian remains the default language (`LANGUAGE_CODE = 'hr'` in settings.py)
-

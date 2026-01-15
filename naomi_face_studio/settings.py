@@ -430,4 +430,3 @@ startup_logger.info(f"Admin Email: {ADMIN_EMAIL}")
 startup_logger.info(f"Site URL: {SITE_URL}")
 startup_logger.info(f"Allowed Hosts: {', '.join(ALLOWED_HOSTS)}")
 startup_logger.info("=" * 60)
-
