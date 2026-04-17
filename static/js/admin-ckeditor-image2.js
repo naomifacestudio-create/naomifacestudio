@@ -77,6 +77,60 @@
         };
     }
 
+    /**
+     * After image2 dialog OK, center alignment sometimes does not show in the editor.
+     * dialog.once('ok') runs once per open (no listener pile-up). Priority 999 runs after commits.
+     */
+    function patchImage2CenterOnDialogOk(ev) {
+        var editor = ev.editor;
+        editor.on('dialogShow', function (evt) {
+            var dialog = evt.data;
+            if (!dialog || dialog.getName() !== 'image2') {
+                return;
+            }
+            dialog.once(
+                'ok',
+                function () {
+                    var widget =
+                        typeof dialog.getModel === 'function' ? dialog.getModel() : null;
+                    if (!widget || widget.name !== 'image' || !widget.parts || !widget.parts.image) {
+                        return;
+                    }
+                    var align = widget.data.align;
+                    if (align === 'block') {
+                        align = 'center';
+                    }
+                    if (align !== 'center') {
+                        return;
+                    }
+                    var img = widget.parts.image;
+                    var wrap = widget.wrapper;
+                    var classes = [
+                        'image-align-left',
+                        'image-align-center',
+                        'image-align-right',
+                    ];
+                    var i;
+                    for (i = 0; i < classes.length; i++) {
+                        wrap.removeClass(classes[i]);
+                        img.removeClass(classes[i]);
+                    }
+                    wrap.addClass('image-align-center');
+                    img.addClass('image-align-center');
+                    img.setStyle('display', 'block');
+                    img.setStyle('margin-left', 'auto');
+                    img.setStyle('margin-right', 'auto');
+                    img.setStyle('float', 'none');
+                    wrap.setStyle('text-align', 'center');
+                    wrap.setStyle('float', 'none');
+                },
+                null,
+                null,
+                999
+            );
+        });
+    }
+
     function stripNoiseFromPaste(ev) {
         var editor = ev.editor;
         if (!editor || !editor.dataProcessor || !editor.dataProcessor.htmlFilter) {
@@ -111,6 +165,9 @@
 
     whenCKEDITOR(function () {
         CKEDITOR.on('dialogDefinition', patchImage2AlignField);
-        CKEDITOR.on('instanceReady', stripNoiseFromPaste);
+        CKEDITOR.on('instanceReady', function (ev) {
+            stripNoiseFromPaste(ev);
+            patchImage2CenterOnDialogOk(ev);
+        });
     });
 }());

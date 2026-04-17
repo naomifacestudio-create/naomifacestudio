@@ -10,7 +10,9 @@
     clear: both;
 }
 
-.richtext-content p {
+/* Float clearfix for text beside floated images; do not apply to center wrappers
+   (overflow:hidden breaks margin:auto centering in CKEditor and in the browser). */
+.richtext-content p:not(.image-align-center) {
     overflow: hidden;
 }
 
@@ -54,6 +56,21 @@
     margin-left: auto;
     margin-right: auto;
     vertical-align: middle;
+}
+
+/* CKEditor image2: center wrapper is often a p/div with this class around the widget */
+.richtext-content p.image-align-center,
+.richtext-content div.image-align-center {
+    overflow: visible;
+    text-align: center;
+}
+
+.richtext-content p.image-align-center .cke_widget_wrapper,
+.richtext-content div.image-align-center .cke_widget_wrapper {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
 }
 
 /* ----- Legacy align-* (older saved HTML) ----- */
