@@ -8,18 +8,18 @@
 {% block content %}
 <div class="container mx-auto px-4 py-12">
     <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#593d09]">{{ treatment.get_title }}</h1>
+        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ treatment.get_title }}</h1>
         
-        <div class="prose prose-lg max-w-none text-[#593d09] mb-8">
+        <div class="richtext-content prose prose-lg max-w-none text-[#5D5350] mb-8">
             {{ treatment.get_full_description|safe }}
         </div>
         
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
             <div>
-                <p class="text-lg text-[#593d09]"><strong>{% trans "Duration:" %}</strong> {{ treatment.get_duration_display }}</p>
-                <p class="text-lg text-[#593d09]"><strong>{% trans "Price:" %}</strong> {{ treatment.price }} €</p>
+                <p class="text-lg text-[#5D5350]"><strong>{% trans "Duration:" %}</strong> {{ treatment.get_duration_display }}</p>
+                <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ treatment.price }} €</p>
             </div>
-            <a href="{% url 'reservations:calendar_with_treatment' treatment.get_slug %}" class="bg-[#593d09] text-white px-8 py-4 rounded-lg hover:bg-[#4a3207] transition-colors shadow-lg">
+            <a href="{% url 'reservations:calendar_with_treatment' treatment.get_slug %}" class="bg-[#5D5350] text-white px-8 py-4 rounded-lg hover:bg-[#4a4340] transition-colors shadow-lg">
                 {% trans "Reservation" %}
             </a>
         </div>

@@ -1,0 +1,193 @@
+/**
+ * Rich text from CKEditor (image2 + legacy align-*).
+ * Used on public pages (.richtext-content wrapper) and in the editor iframe
+ * (body.richtext-content via CKEDITOR bodyClass + contentsCss).
+ */
+
+.richtext-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.richtext-content p {
+    overflow: hidden;
+}
+
+.richtext-content img {
+    height: auto;
+    max-width: 100%;
+}
+
+/* ----- image2_alignClasses (settings: image-align-left|center|right) ----- */
+.richtext-content .image-align-left,
+.richtext-content img.image-align-left,
+.richtext-content figure.image-align-left {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content .image-align-right,
+.richtext-content img.image-align-right,
+.richtext-content figure.image-align-right {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content .image-align-center,
+.richtext-content img.image-align-center,
+.richtext-content figure.image-align-center {
+    float: none !important;
+    display: block;
+    margin: 20px auto;
+    clear: both;
+    max-width: 100%;
+    text-align: center;
+}
+
+.richtext-content figure.image-align-center img {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+}
+
+/* ----- Legacy align-* (older saved HTML) ----- */
+.richtext-content .align-left,
+.richtext-content img.align-left,
+.richtext-content figure.align-left {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content .align-right,
+.richtext-content img.align-right,
+.richtext-content figure.align-right {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content .align-center,
+.richtext-content img.align-center,
+.richtext-content figure.align-center,
+.richtext-content img[class*="align-center"] {
+    float: none !important;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 1em;
+    clear: both;
+    max-width: 100%;
+}
+
+/* ----- HTML align attribute ----- */
+.richtext-content img[align="left"] {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content img[align="right"] {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content img[align="center"],
+.richtext-content img[align="middle"] {
+    float: none !important;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    clear: both;
+}
+
+/* ----- Inline float styles (saved from dialog patch / browser) ----- */
+.richtext-content img[style*="float:left"],
+.richtext-content img[style*="float: left"] {
+    float: left !important;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content img[style*="float:right"],
+.richtext-content img[style*="float: right"] {
+    float: right !important;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    max-width: 50%;
+}
+
+.richtext-content img[style*="float: none"],
+.richtext-content img[style*="float:none"] {
+    float: none !important;
+}
+
+/* Block + auto margins = center */
+.richtext-content img[style*="margin-left: auto"][style*="margin-right: auto"],
+.richtext-content img[style*="margin-left:auto"][style*="margin-right:auto"] {
+    display: block;
+    clear: both;
+}
+
+/* ----- image2 captioned figures ----- */
+.richtext-content figure.image-captioned {
+    max-width: 100%;
+}
+
+.richtext-content figure.image-captioned figcaption {
+    font-size: 0.875rem;
+    margin-top: 0.35em;
+    color: inherit;
+}
+
+/* ----- Default: block images behave sensibly ----- */
+.richtext-content figure {
+    max-width: 100%;
+}
+
+.richtext-content figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ----- Mobile: no side floats ----- */
+@media (max-width: 767px) {
+    .richtext-content .image-align-left,
+    .richtext-content .image-align-right,
+    .richtext-content img.image-align-left,
+    .richtext-content img.image-align-right,
+    .richtext-content figure.image-align-left,
+    .richtext-content figure.image-align-right,
+    .richtext-content .align-left,
+    .richtext-content .align-right,
+    .richtext-content img.align-left,
+    .richtext-content img.align-right,
+    .richtext-content figure.align-left,
+    .richtext-content figure.align-right,
+    .richtext-content img[align="left"],
+    .richtext-content img[align="right"],
+    .richtext-content img[style*="float:left"],
+    .richtext-content img[style*="float: left"],
+    .richtext-content img[style*="float:right"],
+    .richtext-content img[style*="float: right"] {
+        float: none !important;
+        width: 100%;
+        max-width: 100% !important;
+        height: auto;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block;
+    }
+}

@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Our Blog" %}</h1>
+    <h1 class="text-4xl font-bold mb-8 text-[#5D5350] text-center">{% trans "Our Blog" %}</h1>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {% for blog in blogs %}
@@ -20,16 +20,16 @@
             </div>
             {% endif %}
             <div class="p-6">
-                <h2 class="text-2xl font-bold mb-3 text-[#593d09]">{{ blog.get_title }}</h2>
-                <p class="text-[#593d09] mb-4">{{ blog.get_short_description }}</p>
-                <a href="{{ blog.get_absolute_url }}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+                <h2 class="text-2xl font-bold mb-3 text-[#5D5350]">{{ blog.get_title }}</h2>
+                <p class="text-[#5D5350] mb-4">{{ blog.get_short_description }}</p>
+                <a href="{{ blog.get_absolute_url }}" class="inline-block bg-[#5D5350] text-white px-6 py-2 rounded hover:bg-[#4a4340] transition-colors">
                     {% trans "See more" %}
                 </a>
             </div>
         </div>
         {% empty %}
         <div class="col-span-3 text-center py-12">
-            <p class="text-[#593d09] text-lg">{% trans "No blog posts available at the moment." %}</p>
+            <p class="text-[#5D5350] text-lg">{% trans "No blog posts available at the moment." %}</p>
         </div>
         {% endfor %}
     </div>
@@ -40,7 +40,7 @@
         <ul class="flex gap-2">
             {% if page_obj.has_previous %}
             <li>
-                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-[#5D5350] text-white rounded hover:bg-[#4a4340]">
                     {% trans "Previous" %}
                 </a>
             </li>
@@ -49,11 +49,11 @@
             {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
             <li>
-                <span class="px-4 py-2 bg-[#593d09] text-white rounded">{{ num }}</span>
+                <span class="px-4 py-2 bg-[#5D5350] text-white rounded">{{ num }}</span>
             </li>
             {% else %}
             <li>
-                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-[#593d09] rounded hover:bg-gray-300">
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-[#5D5350] rounded hover:bg-gray-300">
                     {{ num }}
                 </a>
             </li>
@@ -62,7 +62,7 @@
             
             {% if page_obj.has_next %}
             <li>
-                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-[#593d09] text-white rounded hover:bg-[#4a3207]">
+                <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-[#5D5350] text-white rounded hover:bg-[#4a4340]">
                     {% trans "Next" %}
                 </a>
             </li>

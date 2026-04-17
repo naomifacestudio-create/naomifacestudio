@@ -8,7 +8,7 @@
 {% block content %}
 <div class="container mx-auto px-4 py-12">
     <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#593d09]">{{ education.get_title }}</h1>
+        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ education.get_title }}</h1>
         
         {% if education.thumbnail %}
         <div class="mb-8 flex justify-center">
@@ -18,11 +18,11 @@
         
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
             <div>
-                <p class="text-lg text-[#593d09]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
+                <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
             </div>
         </div>
         
-        <div class="prose prose-lg max-w-none text-[#593d09]">
+        <div class="richtext-content prose prose-lg max-w-none text-[#5D5350]">
             {{ education.get_full_description|safe }}
         </div>
     </div>

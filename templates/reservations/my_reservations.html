@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "My Reservations" %}</h1>
+    <h1 class="text-4xl font-bold mb-8 text-[#5D5350] text-center">{% trans "My Reservations" %}</h1>
     
     <div class="max-w-4xl mx-auto">
         {% if reservations %}
@@ -14,11 +14,11 @@
             <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-md">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="text-xl font-bold text-[#593d09] mb-2">{{ reservation.treatment.get_title }}</h3>
-                        <p class="text-[#593d09] mb-1"><strong>{% trans "Date:" %}</strong> {{ reservation.date|date:"d.m.Y" }}</p>
-                        <p class="text-[#593d09] mb-1"><strong>{% trans "Time:" %}</strong> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</p>
-                        <p class="text-[#593d09] mb-1"><strong>{% trans "Price:" %}</strong> {{ reservation.treatment.price }} €</p>
-                        <p class="text-[#593d09]"><strong>{% trans "Status:" %}</strong> {{ reservation.get_status_display }}</p>
+                        <h3 class="text-xl font-bold text-[#5D5350] mb-2">{{ reservation.treatment.get_title }}</h3>
+                        <p class="text-[#5D5350] mb-1"><strong>{% trans "Date:" %}</strong> {{ reservation.date|date:"d.m.Y" }}</p>
+                        <p class="text-[#5D5350] mb-1"><strong>{% trans "Time:" %}</strong> {{ reservation.start_time|time:"H:i" }} - {{ reservation.end_time|time:"H:i" }}</p>
+                        <p class="text-[#5D5350] mb-1"><strong>{% trans "Price:" %}</strong> {{ reservation.treatment.price }} €</p>
+                        <p class="text-[#5D5350]"><strong>{% trans "Status:" %}</strong> {{ reservation.get_status_display }}</p>
                     </div>
                     {% if reservation.status != 'cancelled' %}
                     <button onclick="cancelReservation({{ reservation.id }})" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
@@ -31,8 +31,8 @@
         </div>
         {% else %}
         <div class="text-center py-12">
-            <p class="text-[#593d09] text-lg">{% trans "You have no reservations." %}</p>
-            <a href="{% url 'reservations:calendar' %}" class="inline-block mt-4 bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+            <p class="text-[#5D5350] text-lg">{% trans "You have no reservations." %}</p>
+            <a href="{% url 'reservations:calendar' %}" class="inline-block mt-4 bg-[#5D5350] text-white px-6 py-2 rounded hover:bg-[#4a4340] transition-colors">
                 {% trans "Book a Treatment" %}
             </a>
         </div>

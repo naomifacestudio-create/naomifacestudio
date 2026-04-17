@@ -8,7 +8,7 @@
 {% block content %}
 <div class="container mx-auto px-4 py-12">
     <div class="max-w-md mx-auto">
-        <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Login" %}</h1>
+        <h1 class="text-4xl font-bold mb-8 text-[#5D5350] text-center">{% trans "Login" %}</h1>
         
         {% if messages %}
             {% for message in messages %}
@@ -22,7 +22,7 @@
             {% csrf_token %}
             
             <div class="mb-4">
-                <label for="{{ form.username.id_for_label }}" class="block mb-2 font-medium text-[#593d09]">{% trans "Username or Email" %}</label>
+                <label for="{{ form.username.id_for_label }}" class="block mb-2 font-medium text-[#5D5350]">{% trans "Username or Email" %}</label>
                 {{ form.username }}
                 {% if form.username.errors %}
                     <div class="mt-1 text-red-600 text-sm">{{ form.username.errors }}</div>
@@ -30,7 +30,7 @@
             </div>
             
             <div class="mb-6">
-                <label for="{{ form.password.id_for_label }}" class="block mb-2 font-medium text-[#593d09]">{% trans "Password" %}</label>
+                <label for="{{ form.password.id_for_label }}" class="block mb-2 font-medium text-[#5D5350]">{% trans "Password" %}</label>
                 {{ form.password }}
                 {% if form.password.errors %}
                     <div class="mt-1 text-red-600 text-sm">{{ form.password.errors }}</div>
@@ -43,15 +43,15 @@
                 </div>
             {% endif %}
             
-            <button type="submit" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-medium">
+            <button type="submit" class="w-full bg-[#5D5350] text-white px-6 py-3 rounded hover:bg-[#4a4340] transition-colors font-medium">
                 {% trans "Login" %}
             </button>
         </form>
         
         <div class="mt-6 text-center">
-            <p class="text-[#593d09]">
+            <p class="text-[#5D5350]">
                 {% trans "Don't have an account?" %}
-                <a href="{% url 'core:signup' %}?next={{ request.GET.next|default:'' }}" class="text-[#593d09] font-medium hover:underline">
+                <a href="{% url 'core:signup' %}?next={{ request.GET.next|default:'' }}" class="text-[#5D5350] font-medium hover:underline">
                     {% trans "Sign up here" %}
                 </a>
             </p>

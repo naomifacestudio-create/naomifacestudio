@@ -1,11 +1,11 @@
 {% load static %}
 {% load i18n %}
-<header class="bg-white shadow-md sticky top-0 z-40">
+<header class="bg-[#EFECEA] shadow-md sticky top-0 z-40">
     <div class="container mx-auto px-4">
         <!-- Mobile Header: Logo, Hamburger, and Top Actions -->
         <div class="flex items-center justify-between py-4 md:hidden">
             <!-- Hamburger Menu Button -->
-            <button type="button" data-drawer-target="mobile-menu" data-drawer-toggle="mobile-menu" aria-controls="mobile-menu" class="p-2 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors">
+            <button type="button" data-drawer-target="mobile-menu" data-drawer-toggle="mobile-menu" aria-controls="mobile-menu" class="p-2 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -44,30 +44,31 @@
             <nav class="flex flex-row justify-between items-center py-4 border-t border-gray-200">
                 <!-- Navbar Items -->
                 <ul class="flex justify-center gap-8">
-                    <li><a href="{% url 'core:home' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Home" %}</a></li>
-                    <li><a href="{% url 'core:about_me' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "About me" %}</a></li>
-                    <li><a href="{% url 'treatments:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Treatments" %}</a></li>
-                    <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
-                    <li><a href="{% url 'education:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Education" %}</a></li>
-                    <li><a href="{% url 'blogs:list' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Blogs" %}</a></li>
-                    <li><a href="{% url 'contacts:form' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Contact" %}</a></li>
+                    <li><a href="{% url 'core:home' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'core:about_me' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "About me" %}</a></li>
+                    <li><a href="{% url 'core:forlled' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Forlle'd" %}</a></li>
+                    <li><a href="{% url 'treatments:list' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Treatments" %}</a></li>
+                    <li><a href="{% url 'gift_vouchers:form' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Gift Voucher" %}</a></li>
+                    <li><a href="{% url 'education:list' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Education" %}</a></li>
+                    <li><a href="{% url 'blogs:list' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Blogs" %}</a></li>
+                    <li><a href="{% url 'contacts:form' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Contact" %}</a></li>
                 </ul>
                 
                 <!-- Reservations Button, Login/Signup, and Language Switcher -->
                 <div class="flex items-center gap-4">
                     <!-- Reservations Button -->
-                    <a href="{% url 'reservations:calendar' %}" class="bg-[#593d09] text-white px-4 py-2 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                    <a href="{% url 'reservations:calendar' %}" class="bg-[#5D5350] text-white px-4 py-2 rounded hover:bg-[#4a4340] transition-colors font-medium">
                         {% trans "Reservations" %}
                     </a>
                     
                     <!-- Login/Signup -->
                     <div class="flex items-center gap-2">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'core:account' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "My Account" %}</a>
-                            <a href="{% url 'core:logout' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Logout" %}</a>
+                            <a href="{% url 'core:account' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "My Account" %}</a>
+                            <a href="{% url 'core:logout' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Logout" %}</a>
                         {% else %}
-                            <a href="{% url 'core:login' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Login" %}</a>
-                            <a href="{% url 'core:signup' %}" class="text-[#593d09] hover:text-[#4a3207] transition-colors font-medium">{% trans "Sign Up" %}</a>
+                            <a href="{% url 'core:login' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Login" %}</a>
+                            <a href="{% url 'core:signup' %}" class="text-[#5D5350] hover:text-[#4a4340] transition-colors font-medium">{% trans "Sign Up" %}</a>
                         {% endif %}
                     </div>
                     
@@ -91,7 +92,7 @@
 </header>
 
 <!-- Mobile Offcanvas Menu (Drawer) -->
-<div id="mobile-menu" class="fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80" tabindex="-1" aria-labelledby="mobile-menu-label">
+<div id="mobile-menu" class="fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-[#EFECEA] w-80" tabindex="-1" aria-labelledby="mobile-menu-label">
     <div class="flex flex-col h-full">
         <!-- Header with Logo and Close Button -->
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
@@ -109,37 +110,42 @@
         <nav class="flex-1">
             <ul class="space-y-2">
                 <li>
-                    <a href="{% url 'core:home' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:home' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Home" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'core:about_me' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:about_me' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "About me" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'treatments:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:forlled' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                        {% trans "Forlle'd" %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'treatments:list' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Treatments" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'gift_vouchers:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'gift_vouchers:form' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Gift Voucher" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'education:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'education:list' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Education" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'blogs:list' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'blogs:list' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Blogs" %}
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'contacts:form' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'contacts:form' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium" data-drawer-hide="mobile-menu">
                         {% trans "Contact" %}
                     </a>
                 </li>
@@ -149,24 +155,24 @@
         <!-- Bottom Section: Actions -->
         <div class="pt-6 border-t border-gray-200 space-y-4">
             <!-- Reservations Button -->
-            <a href="{% url 'reservations:calendar' %}" class="block w-full bg-[#593d09] text-white px-4 py-3 rounded-lg hover:bg-[#4a3207] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
+            <a href="{% url 'reservations:calendar' %}" class="block w-full bg-[#5D5350] text-white px-4 py-3 rounded-lg hover:bg-[#4a4340] transition-colors text-center font-medium" data-drawer-hide="mobile-menu">
                 {% trans "Reservations" %}
             </a>
             
             <!-- Login/Signup -->
             <div class="space-y-2">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'core:account' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:account' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "My Account" %}
                     </a>
-                    <a href="{% url 'admin:logout' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'admin:logout' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Logout" %}
                     </a>
                 {% else %}
-                    <a href="{% url 'core:login' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:login' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Login" %}
                     </a>
-                    <a href="{% url 'core:signup' %}" class="block px-4 py-3 text-[#593d09] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
+                    <a href="{% url 'core:signup' %}" class="block px-4 py-3 text-[#5D5350] hover:bg-gray-100 rounded-lg transition-colors font-medium text-center" data-drawer-hide="mobile-menu">
                         {% trans "Sign Up" %}
                     </a>
                 {% endif %}

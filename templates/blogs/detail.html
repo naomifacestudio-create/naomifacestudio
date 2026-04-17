@@ -8,7 +8,7 @@
 {% block content %}
 <div class="container mx-auto px-4 py-12">
     <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#593d09]">{{ blog.get_title }}</h1>
+        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ blog.get_title }}</h1>
         
         {% if blog.thumbnail %}
         <div class="mb-8 flex justify-center">
@@ -16,7 +16,7 @@
         </div>
         {% endif %}
         
-        <div class="prose prose-lg max-w-none text-[#593d09]">
+        <div class="richtext-content prose prose-lg max-w-none text-[#5D5350]">
             {{ blog.get_full_description|safe }}
         </div>
     </div>

@@ -7,12 +7,12 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold mb-8 text-[#593d09] text-center">{% trans "Book Your Treatment" %}</h1>
+    <h1 class="text-4xl font-bold mb-8 text-[#5D5350] text-center">{% trans "Book Your Treatment" %}</h1>
     
     {% if not user.is_authenticated %}
     <div class="max-w-2xl mx-auto mb-8 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <p class="text-[#593d09] mb-4">{% trans "You need to create an account to make a reservation." %}</p>
-        <a href="{% url 'core:signup' %}?next={{ request.path }}" class="inline-block bg-[#593d09] text-white px-6 py-2 rounded hover:bg-[#4a3207] transition-colors">
+        <p class="text-[#5D5350] mb-4">{% trans "You need to create an account to make a reservation." %}</p>
+        <a href="{% url 'core:signup' %}?next={{ request.path }}" class="inline-block bg-[#5D5350] text-white px-6 py-2 rounded hover:bg-[#4a4340] transition-colors">
             {% trans "Create Account / Login" %}
         </a>
     </div>
@@ -21,8 +21,8 @@
     <div class="max-w-4xl mx-auto">
         <!-- Treatment Selection -->
         <div class="mb-8">
-            <label for="treatment_select" class="block mb-2 font-bold text-[#593d09]">{% trans "Select Treatment" %}</label>
-            <select id="treatment_select" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]">
+            <label for="treatment_select" class="block mb-2 font-bold text-[#5D5350]">{% trans "Select Treatment" %}</label>
+            <select id="treatment_select" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#5D5350]">
                 <option value="">{% trans "-- Select Treatment --" %}</option>
                 {% for t in treatments %}
                 <option value="{{ t.id }}" {% if treatment and treatment.id == t.id %}selected{% endif %}>{{ t.get_title }} - {{ t.get_duration_display }}</option>
@@ -34,13 +34,13 @@
         <div id="calendar-container" class="bg-white p-6 rounded-lg shadow-md">
             <!-- Calendar Navigation -->
             <div class="flex items-center justify-between mb-4">
-                <button id="prev-month" class="p-2 text-[#593d09] hover:bg-gray-100 rounded transition-colors">
+                <button id="prev-month" class="p-2 text-[#5D5350] hover:bg-gray-100 rounded transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                 </button>
-                <h2 id="calendar-month-year" class="text-xl font-bold text-[#593d09]"></h2>
-                <button id="next-month" class="p-2 text-[#593d09] hover:bg-gray-100 rounded transition-colors">
+                <h2 id="calendar-month-year" class="text-xl font-bold text-[#5D5350]"></h2>
+                <button id="next-month" class="p-2 text-[#5D5350] hover:bg-gray-100 rounded transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
@@ -48,18 +48,18 @@
             </div>
             <div id="calendar" class="mb-6"></div>
             <div id="time-slots" class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4"></div>
-            <div id="slot-message" class="text-center text-[#593d09] mt-4"></div>
+            <div id="slot-message" class="text-center text-[#5D5350] mt-4"></div>
             
             <!-- Selected Time Display and Message Field -->
             <div id="booking-form" style="display: none;" class="mt-6 pt-6 border-t border-gray-200">
                 <div class="mb-4">
-                    <p class="text-[#593d09] mb-2"><strong>{% trans "Selected Time:" %} <span id="selected-time-display"></span></strong></p>
+                    <p class="text-[#5D5350] mb-2"><strong>{% trans "Selected Time:" %} <span id="selected-time-display"></span></strong></p>
                 </div>
                 <div class="mb-4">
-                    <label for="reservation-message" class="block mb-2 font-medium text-[#593d09]">{% trans "Message (optional)" %}</label>
-                    <textarea id="reservation-message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#593d09]" placeholder="{% trans 'Add any special requests or notes...' %}"></textarea>
+                    <label for="reservation-message" class="block mb-2 font-medium text-[#5D5350]">{% trans "Message (optional)" %}</label>
+                    <textarea id="reservation-message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-[#5D5350]" placeholder="{% trans 'Add any special requests or notes...' %}"></textarea>
                 </div>
-                <button id="submit-reservation-btn" class="w-full bg-[#593d09] text-white px-6 py-3 rounded hover:bg-[#4a3207] transition-colors font-medium">
+                <button id="submit-reservation-btn" class="w-full bg-[#5D5350] text-white px-6 py-3 rounded hover:bg-[#4a4340] transition-colors font-medium">
                     {% trans "Submit Reservation" %}
                 </button>
             </div>
@@ -134,7 +134,7 @@
         
         // Day headers
         dayNames.forEach(day => {
-            calendarHTML += `<div class="text-center font-bold text-[#593d09] py-2">${day}</div>`;
+            calendarHTML += `<div class="text-center font-bold text-[#5D5350] py-2">${day}</div>`;
         });
         calendarHTML += '</div><div class="grid grid-cols-7 gap-2">';
         
@@ -166,11 +166,11 @@
             if (!isAvailable) {
                 buttonClass += 'bg-gray-200 text-gray-400 cursor-not-allowed';
             } else if (isSelected) {
-                buttonClass += 'bg-[#593d09] text-white';
+                buttonClass += 'bg-[#5D5350] text-white';
             } else if (isToday) {
-                buttonClass += 'bg-green-100 text-[#593d09] hover:bg-[#593d09] hover:text-white font-bold';
+                buttonClass += 'bg-green-100 text-[#5D5350] hover:bg-[#5D5350] hover:text-white font-bold';
             } else {
-                buttonClass += 'bg-gray-100 text-[#593d09] hover:bg-[#593d09] hover:text-white';
+                buttonClass += 'bg-gray-100 text-[#5D5350] hover:bg-[#5D5350] hover:text-white';
             }
             
             calendarHTML += `
@@ -236,13 +236,13 @@
                 message = '{% trans "No available time slots for this date. All slots may be booked." %}';
             }
             
-            container.innerHTML = `<p class="text-[#593d09] p-4 bg-yellow-50 border border-yellow-200 rounded">${message}</p>`;
+            container.innerHTML = `<p class="text-[#5D5350] p-4 bg-yellow-50 border border-yellow-200 rounded">${message}</p>`;
             return;
         }
         
         availableSlots.forEach(slot => {
             const button = document.createElement('button');
-            button.className = 'px-4 py-2 bg-gray-100 text-[#593d09] rounded hover:bg-[#593d09] hover:text-white transition-colors';
+            button.className = 'px-4 py-2 bg-gray-100 text-[#5D5350] rounded hover:bg-[#5D5350] hover:text-white transition-colors';
             button.textContent = slot.start;
             button.onclick = () => selectTimeSlot(slot.start);
             container.appendChild(button);

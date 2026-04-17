@@ -233,11 +233,19 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': True,
         'mathJaxLib': '//cdn.ckeditor.com/4.6.1/standard/plugins/mathjax/lib/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
-        # Image2 plugin configuration for alignment support
-        'image2_alignClasses': ['align-left', 'align-center', 'align-right'],
+        # Image2: stable alignment classes (must match static/css/richtext-content.css
+        # and any JS in static/js/admin-ckeditor-image2.js).
+        'image2_alignClasses': [
+            'image-align-left',
+            'image-align-center',
+            'image-align-right',
+        ],
         'image2_disableResizer': False,
         'image2_captionedClass': 'image-captioned',
         'allowedContent': True,
+        # Editor iframe uses same alignment rules as public pages
+        'bodyClass': 'richtext-content',
+        'contentsCss': [f'{STATIC_URL}css/richtext-content.css'],
     },
 }
 
@@ -402,9 +410,7 @@ LOGGING = {
 
 # Create logs directory if it doesn't exist
 LOGS_DIR = BASE_DIR / 'logs'
-LOGS_DIR.mkdir(exist_ok=True)
-
-# Log startup configuration (after logging is configured)
+LOGS_DIR.mkdir(exist_ok=True)# Log startup configuration (after logging is configured)
 import logging
 startup_logger = logging.getLogger('django')
 startup_logger.info("=" * 60)

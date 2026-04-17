@@ -1,23 +1,27 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
 from django.utils.translation import get_language
-from django.db.models import Q
 from .models import Treatment
 
 
 def treatment_list(request):
-    """List all treatments with pagination"""
+    """List all active treatments on one page with optional price sorting"""
     language_code = get_language()[:2]
-    treatments = Treatment.objects.filter(is_active=True).order_by('-created_at')
-    
-    paginator = Paginator(treatments, 4)
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number)
-    
+    sort = request.GET.get('sort', '')
+    if sort not in ('', 'price_asc', 'price_desc'):
+        sort = ''
+
+    qs = Treatment.objects.filter(is_active=True)
+    if sort == 'price_asc':
+        qs = qs.order_by('price', '-created_at')
+    elif sort == 'price_desc':
+        qs = qs.order_by('-price', '-created_at')
+    else:
+        qs = qs.order_by('-created_at')
+
     context = {
-        'page_obj': page_obj,
-        'treatments': page_obj,
+        'treatments': qs,
         'language_code': language_code,
+        'current_sort': sort,
     }
     return render(request, 'treatments/list.html', context)
 

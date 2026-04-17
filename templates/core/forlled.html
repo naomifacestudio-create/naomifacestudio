@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Forlle'd" %}{% endblock %}
+
+{% block meta_description %}{% trans "Discover why Naomi Face Studio trusts Forlle'd professional Japanese cosmetics for anti-aging and skin restructuring." %}{% endblock %}
+
+{% block content %}
+<div class="w-full px-4 md:px-8 lg:px-12 py-12 bg-[#EFECEA]">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl font-bold mb-10 text-[#5D5350] text-center">{% trans "Why Forlle'd?" %}</h1>
+
+        <figure class="mb-10 flex justify-center">
+            <img src="{% static 'images/forlled-1.webp' %}"
+                 alt="{% trans "Forlle'd product presentation" %}"
+                 class="max-w-full h-auto rounded-lg shadow-md">
+        </figure>
+
+        <div class="prose prose-lg max-w-none text-[#5D5350]">
+            <p class="text-lg leading-relaxed mb-6">{% trans "Forlle'd is a Japanese manufacturer of high-tech professional cosmetic products that leads in the field of anti-aging and skin restructuring. By applying the most advanced technologies and solutions awarded the Nobel Prize, Forlle'd cosmetics delay both natural (chronological) aging and photoaging of the skin." %}</p>
+            <p class="text-lg leading-relaxed mb-10">{% trans "Forlle'd products contain low molecular weight ingredients whose combinations enable skin regeneration and rejuvenation at the cellular level without injections. A unique complex of low molecular weight active ingredients restores the skin's structure and improves cellular regeneration, enhances hydration and detoxification, strengthens the skin's immunity and protects against irritants and allergens, normalizes the mineral balance in the skin, and accelerates the healing process." %}</p>
+        </div>
+
+        <figure class="flex justify-center">
+            <img src="{% static 'images/forlled-2.webp' %}"
+                 alt="{% trans "Forlle'd treatments and results" %}"
+                 class="max-w-full h-auto rounded-lg shadow-md">
+        </figure>
+    </div>
+</div>
+{% endblock %}

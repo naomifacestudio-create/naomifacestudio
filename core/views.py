@@ -25,6 +25,14 @@ def about_me(request):
     return render(request, 'core/about_me.html', context)
 
 
+def forlled(request):
+    """Forlle'd brand information page"""
+    context = {
+        'page_title': _("Forlle'd"),
+    }
+    return render(request, 'core/forlled.html', context)
+
+
 def signup_view(request):
     """User signup view"""
     language_code = get_language()[:2]
