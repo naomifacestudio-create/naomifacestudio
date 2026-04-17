@@ -151,6 +151,12 @@
     float: none !important;
 }
 
+/* Win over generic img[style*="float:left"] rules when class + inline style both match */
+.richtext-content img.image-align-center[style],
+.richtext-content img.image-align-center[style*="float"] {
+    float: none !important;
+}
+
 /* Block + auto margins = center */
 .richtext-content img[style*="margin-left: auto"][style*="margin-right: auto"],
 .richtext-content img[style*="margin-left:auto"][style*="margin-right:auto"] {
