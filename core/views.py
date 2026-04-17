@@ -1,8 +1,18 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.contrib import messages
-from django.utils.translation import get_language, gettext_lazy as _
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.urls import Resolver404, resolve, reverse, translate_url
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import (
+    activate,
+    check_for_language,
+    get_language,
+    gettext_lazy as _,
+)
 from django.views.decorators.http import require_http_methods
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from .models import EmailCollection
@@ -140,4 +150,130 @@ def logout_view(request):
     logout(request)
     messages.success(request, _('You have been logged out successfully.'))
     return redirect('core:home')
+
+
+def _reverse_detail_for_language(next_url, lang_code):
+    """
+    For URLs whose last path segment is language-specific (blog/treatment/education
+    detail, reservation calendar with treatment), return the path for lang_code.
+
+    Django's translate_url() only swaps the locale prefix; the slug stays the same,
+    which 404s when HR and EN slugs differ.
+    """
+    try:
+        match = resolve(next_url)
+    except Resolver404:
+        return None
+
+    prev = get_language()
+    try:
+        activate(lang_code)
+        view_name = match.view_name
+        kwargs = match.kwargs
+
+        if view_name == 'blogs:detail':
+            slug = kwargs.get('slug')
+            if not slug:
+                return None
+            from blogs.models import Blog
+
+            obj = Blog.objects.filter(
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            ).first()
+            if obj:
+                return reverse(
+                    'blogs:detail', kwargs={'slug': obj.get_slug(lang_code)}
+                )
+
+        if view_name == 'treatments:detail':
+            slug = kwargs.get('slug')
+            if not slug:
+                return None
+            from treatments.models import Treatment
+
+            obj = Treatment.objects.filter(
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            ).first()
+            if obj:
+                return reverse(
+                    'treatments:detail', kwargs={'slug': obj.get_slug(lang_code)}
+                )
+
+        if view_name == 'education:detail':
+            slug = kwargs.get('slug')
+            if not slug:
+                return None
+            from education.models import Education
+
+            obj = Education.objects.filter(
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            ).first()
+            if obj:
+                return reverse(
+                    'education:detail', kwargs={'slug': obj.get_slug(lang_code)}
+                )
+
+        if view_name == 'reservations:calendar_with_treatment':
+            treatment_slug = kwargs.get('treatment_slug')
+            if not treatment_slug:
+                return None
+            from treatments.models import Treatment
+
+            obj = Treatment.objects.filter(
+                Q(slug_hr=treatment_slug) | Q(slug_en=treatment_slug), is_active=True
+            ).first()
+            if obj:
+                return reverse(
+                    'reservations:calendar_with_treatment',
+                    kwargs={'treatment_slug': obj.get_slug(lang_code)},
+                )
+
+        return None
+    finally:
+        activate(prev)
+
+
+def localized_set_language(request):
+    """
+    Same contract as django.views.i18n.set_language, but redirects slug-based detail
+    pages using the slug for the chosen language (not only the locale prefix).
+    """
+    next_url = request.POST.get('next', request.GET.get('next'))
+    if (
+        next_url or request.accepts('text/html')
+    ) and not url_has_allowed_host_and_scheme(
+        url=next_url,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        next_url = request.META.get('HTTP_REFERER')
+        if not url_has_allowed_host_and_scheme(
+            url=next_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        ):
+            next_url = '/'
+    response = HttpResponseRedirect(next_url) if next_url else HttpResponse(status=204)
+    if request.method == 'POST':
+        lang_code = request.POST.get('language')
+        if lang_code and check_for_language(lang_code):
+            if next_url:
+                detail_path = _reverse_detail_for_language(next_url, lang_code)
+                if detail_path:
+                    response = HttpResponseRedirect(detail_path)
+                else:
+                    next_trans = translate_url(next_url, lang_code)
+                    if next_trans != next_url:
+                        response = HttpResponseRedirect(next_trans)
+            response.set_cookie(
+                settings.LANGUAGE_COOKIE_NAME,
+                lang_code,
+                max_age=settings.LANGUAGE_COOKIE_AGE,
+                path=settings.LANGUAGE_COOKIE_PATH,
+                domain=settings.LANGUAGE_COOKIE_DOMAIN,
+                secure=settings.LANGUAGE_COOKIE_SECURE,
+                httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+                samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+            )
+    return response
 
