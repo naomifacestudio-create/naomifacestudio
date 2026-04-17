@@ -1,7 +1,9 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.db import models
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+
+from core.i18n_utils import active_language_code
 
 
 def blog_thumbnail_upload_path(instance, filename):
@@ -38,31 +40,37 @@ class Blog(models.Model):
     def __str__(self):
         return self.title_hr
     
-    def get_absolute_url(self, language_code='hr'):
-        """Get absolute URL for blog"""
+    def get_absolute_url(self, language_code=None):
+        """Get absolute URL for blog (uses active locale when language_code is omitted)."""
+        language_code = active_language_code(language_code)
         if language_code == 'en':
             slug = self.slug_en
         else:
             slug = self.slug_hr
         return reverse('blogs:detail', kwargs={'slug': slug})
     
-    def get_title(self, language_code='hr'):
-        """Get title in specified language"""
+    def get_title(self, language_code=None):
+        """Get title in specified language (active locale when omitted)."""
+        language_code = active_language_code(language_code)
         return getattr(self, f'title_{language_code}', self.title_hr)
     
-    def get_slug(self, language_code='hr'):
-        """Get slug in specified language"""
+    def get_slug(self, language_code=None):
+        """Get slug in specified language (active locale when omitted)."""
+        language_code = active_language_code(language_code)
         return getattr(self, f'slug_{language_code}', self.slug_hr)
     
-    def get_short_description(self, language_code='hr'):
-        """Get short description in specified language"""
+    def get_short_description(self, language_code=None):
+        """Get short description in specified language (active locale when omitted)."""
+        language_code = active_language_code(language_code)
         return getattr(self, f'short_description_{language_code}', self.short_description_hr)
     
-    def get_full_description(self, language_code='hr'):
-        """Get full description in specified language"""
+    def get_full_description(self, language_code=None):
+        """Get full description in specified language (active locale when omitted)."""
+        language_code = active_language_code(language_code)
         return getattr(self, f'full_description_{language_code}', self.full_description_hr)
     
-    def get_meta_description(self, language_code='hr'):
-        """Get meta description in specified language"""
+    def get_meta_description(self, language_code=None):
+        """Get meta description in specified language (active locale when omitted)."""
+        language_code = active_language_code(language_code)
         return getattr(self, f'meta_description_{language_code}', self.meta_description_hr) or self.get_short_description(language_code)
 
