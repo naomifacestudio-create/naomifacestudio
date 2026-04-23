@@ -6,6 +6,26 @@ from django.core.validators import MinValueValidator
 from datetime import datetime, time, timedelta
 
 
+class ReservationBlockedDate(models.Model):
+    date = models.DateField(_('Blocked date'), unique=True)
+    reason = models.CharField(_('Reason'), max_length=255, blank=True)
+    is_active = models.BooleanField(_('Active'), default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['date']
+        verbose_name = _('Blocked reservation date')
+        verbose_name_plural = _('Blocked reservation dates')
+
+    def __str__(self):
+        return f"{self.date} ({'active' if self.is_active else 'inactive'})"
+
+    @classmethod
+    def get_block_for_date(cls, value):
+        return cls.objects.filter(date=value, is_active=True).first()
+
+
 class Reservation(models.Model):
     STATUS_CHOICES = [
         ('pending', _('Pending')),
@@ -59,6 +79,9 @@ class Reservation(models.Model):
     @staticmethod
     def is_available(date, start_time, treatment, exclude_reservation=None):
         """Check if a time slot is available"""
+        if ReservationBlockedDate.get_block_for_date(date):
+            return False
+
         # Check if day is working day
         day_of_week = date.weekday()
         working_hours = Reservation.get_working_hours(day_of_week)

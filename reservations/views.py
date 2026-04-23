@@ -9,7 +9,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from datetime import datetime, timedelta, date, time as dt_time
-from .models import Reservation
+from calendar import monthrange
+from .models import Reservation, ReservationBlockedDate
 from treatments.models import Treatment
 from core.models import EmailCollection
 import json
@@ -142,6 +143,37 @@ def reservation_calendar(request, treatment_slug=None):
 
 
 @require_http_methods(["GET"])
+def get_blocked_dates(request):
+    """API endpoint to get blocked reservation dates in a month."""
+    year = request.GET.get('year')
+    month = request.GET.get('month')
+    if not year or not month:
+        return JsonResponse({'error': 'Year and month parameters required'}, status=400)
+
+    try:
+        year = int(year)
+        month = int(month)
+        _, last_day = monthrange(year, month)
+        start_date = date(year, month, 1)
+        end_date = date(year, month, last_day)
+    except (ValueError, TypeError):
+        return JsonResponse({'error': 'Invalid year or month'}, status=400)
+
+    blocked = ReservationBlockedDate.objects.filter(
+        is_active=True,
+        date__gte=start_date,
+        date__lte=end_date,
+    ).values('date', 'reason')
+
+    return JsonResponse({
+        'blocked_dates': [
+            {'date': item['date'].isoformat(), 'reason': item['reason']}
+            for item in blocked
+        ]
+    })
+
+
+@require_http_methods(["GET"])
 def get_available_slots(request):
     """API endpoint to get available time slots for a date"""
     treatment_id = request.GET.get('treatment_id')
@@ -156,6 +188,14 @@ def get_available_slots(request):
     except (Treatment.DoesNotExist, ValueError):
         return JsonResponse({'error': 'Invalid treatment or date'}, status=400)
     
+    blocked_day = ReservationBlockedDate.get_block_for_date(selected_date)
+    if blocked_day:
+        return JsonResponse({
+            'available_slots': [],
+            'reason': 'blocked',
+            'message': blocked_day.reason or 'Reservations are disabled for this date'
+        })
+
     # Get working hours for the day
     day_of_week = selected_date.weekday()
     working_hours = Reservation.get_working_hours(day_of_week)
@@ -262,6 +302,13 @@ def create_reservation(request):
         start_time = datetime.strptime(start_time_str, '%H:%M').time()
     except (Treatment.DoesNotExist, ValueError):
         return JsonResponse({'error': 'Invalid data'}, status=400)
+
+    blocked_day = ReservationBlockedDate.get_block_for_date(reservation_date)
+    if blocked_day:
+        return JsonResponse(
+            {'error': blocked_day.reason or 'Reservations are disabled for this date'},
+            status=400
+        )
     
     # Check if slot is available
     if not Reservation.is_available(reservation_date, start_time, treatment):

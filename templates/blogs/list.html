@@ -15,8 +15,8 @@
         {% for blog in blogs %}
         <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
             {% if blog.thumbnail %}
-            <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
-                <img src="{{ blog.thumbnail.url }}" alt="{{ blog.get_title }}" class="max-w-full max-h-full object-contain">
+            <div class="w-full aspect-square bg-gray-100 overflow-hidden">
+                <img src="{{ blog.thumbnail.url }}" alt="{{ blog.get_title }}" class="w-full h-full object-cover">
             </div>
             {% endif %}
             <div class="p-6">

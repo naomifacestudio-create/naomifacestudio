@@ -75,6 +75,7 @@
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
     let selectedTimeSlot = null;
+    let blockedDates = {};
     
     // Treatment selection handler
     document.getElementById('treatment_select').addEventListener('change', function() {
@@ -110,7 +111,9 @@
     loadCalendar();
     {% endif %}
     
-    function loadCalendar() {
+    async function loadCalendar() {
+        await loadBlockedDates(currentYear, currentMonth + 1);
+
         // Use today from Croatia timezone (passed from server)
         const todayCroatiaStr = '{{ today_croatia|default:"" }}';
         // For date comparison, use string comparison to avoid timezone issues
@@ -158,7 +161,9 @@
             // Compare date strings to avoid timezone issues
             const isPast = todayCroatiaStr && dateStr < todayCroatiaStr;
             const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-            const isAvailable = !isPast && !isWeekend;
+            const blockedInfo = blockedDates[dateStr];
+            const isBlocked = !!blockedInfo;
+            const isAvailable = !isPast && !isWeekend && !isBlocked;
             const isToday = dateStr === todayCroatiaStr;
             const isSelected = selectedDate === dateStr;
             
@@ -178,6 +183,7 @@
                     onclick="selectDate('${dateStr}')" 
                     class="${buttonClass}"
                     ${!isAvailable ? 'disabled' : ''}
+                    title="${isBlocked ? (blockedInfo.reason || '{% trans "Reservations are disabled for this date" %}') : ''}"
                 >
                     ${day}
                 </button>
@@ -192,8 +198,27 @@
         calendarHTML += '</div>';
         calendar.innerHTML = calendarHTML;
     }
+
+    async function loadBlockedDates(year, month) {
+        blockedDates = {};
+        try {
+            const response = await fetch(`{% url 'reservations:blocked_dates' %}?year=${year}&month=${month}`);
+            const data = await response.json();
+            (data.blocked_dates || []).forEach(item => {
+                blockedDates[item.date] = { reason: item.reason || '' };
+            });
+        } catch (error) {
+            console.error('Error loading blocked dates:', error);
+        }
+    }
     
     function selectDate(date) {
+        if (blockedDates[date]) {
+            const message = blockedDates[date].reason || '{% trans "Reservations are disabled for this date" %}';
+            document.getElementById('time-slots').innerHTML = '';
+            document.getElementById('time-slots').innerHTML = `<p class="text-[#5D5350] p-4 bg-yellow-50 border border-yellow-200 rounded">${message}</p>`;
+            return;
+        }
         selectedDate = date;
         selectedTimeSlot = null; // Reset selected time when date changes
         document.getElementById('booking-form').style.display = 'none'; // Hide booking form

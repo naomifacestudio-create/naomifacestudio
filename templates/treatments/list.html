@@ -33,8 +33,8 @@
         {% for treatment in treatments %}
         <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
             {% if treatment.thumbnail %}
-            <div class="w-full h-64 bg-gray-100 flex items-center justify-center">
-                <img src="{{ treatment.thumbnail.url }}" alt="{{ treatment.get_title }}" class="max-w-full max-h-full object-contain">
+            <div class="w-full aspect-square bg-gray-100 overflow-hidden">
+                <img src="{{ treatment.thumbnail.url }}" alt="{{ treatment.get_title }}" class="w-full h-full object-cover">
             </div>
             {% endif %}
             <div class="p-6">

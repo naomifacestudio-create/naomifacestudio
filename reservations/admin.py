@@ -5,7 +5,15 @@ from django.http import JsonResponse
 from django.utils.html import format_html
 from django.utils import timezone
 from datetime import datetime, date
-from .models import Reservation
+from .models import Reservation, ReservationBlockedDate
+
+
+@admin.register(ReservationBlockedDate)
+class ReservationBlockedDateAdmin(admin.ModelAdmin):
+    list_display = ['date', 'reason', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['reason']
+    ordering = ['date']
 
 
 @admin.register(Reservation)
