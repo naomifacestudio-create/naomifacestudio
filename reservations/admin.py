@@ -1,10 +1,11 @@
 from django.contrib import admin
+from django.contrib import messages
 from django.urls import path
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.utils.html import format_html
 from django.utils import timezone
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from .models import Reservation, ReservationBlockedDate
 
 
@@ -14,6 +15,70 @@ class ReservationBlockedDateAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
     search_fields = ['reason']
     ordering = ['date']
+    change_list_template = 'admin/reservations/reservationblockeddate/change_list.html'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'block-range/',
+                self.admin_site.admin_view(self.block_range_view),
+                name='reservations_reservationblockeddate_block_range',
+            ),
+        ]
+        return custom_urls + urls
+
+    def block_range_view(self, request):
+        if request.method == 'POST':
+            start_raw = request.POST.get('start_date')
+            end_raw = request.POST.get('end_date')
+            reason = (request.POST.get('reason') or '').strip()
+            is_active = request.POST.get('is_active') == 'on'
+
+            try:
+                start_date = datetime.strptime(start_raw, '%Y-%m-%d').date()
+                end_date = datetime.strptime(end_raw, '%Y-%m-%d').date()
+            except (TypeError, ValueError):
+                messages.error(request, 'Please provide valid start and end dates.')
+                return redirect('admin:reservations_reservationblockeddate_block_range')
+
+            if start_date > end_date:
+                messages.error(request, 'Start date must be before or equal to end date.')
+                return redirect('admin:reservations_reservationblockeddate_block_range')
+
+            created = 0
+            updated = 0
+            current = start_date
+            while current <= end_date:
+                blocked, was_created = ReservationBlockedDate.objects.get_or_create(
+                    date=current,
+                    defaults={'reason': reason, 'is_active': is_active},
+                )
+                if was_created:
+                    created += 1
+                else:
+                    blocked.reason = reason
+                    blocked.is_active = is_active
+                    blocked.save(update_fields=['reason', 'is_active', 'updated_at'])
+                    updated += 1
+                current += timedelta(days=1)
+
+            messages.success(
+                request,
+                f'Blocked range processed. Created {created} day(s), updated {updated} day(s).',
+            )
+            return redirect('admin:reservations_reservationblockeddate_changelist')
+
+        context = {
+            **self.admin_site.each_context(request),
+            'opts': self.model._meta,
+            'title': 'Block reservation date range',
+        }
+        return render(
+            request,
+            'admin/reservations/reservationblockeddate/block_range.html',
+            context,
+        )
 
 
 @admin.register(Reservation)

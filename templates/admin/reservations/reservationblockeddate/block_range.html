@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    &rsaquo; <a href="{% url 'admin:reservations_reservationblockeddate_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+    &rsaquo; {% trans "Block Date Range" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <form method="post" style="max-width: 560px;">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            <h2>{% trans "Block multiple days at once" %}</h2>
+            <div class="form-row">
+                <label for="start_date">{% trans "Start date" %}</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-row">
+                <label for="end_date">{% trans "End date" %}</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+            <div class="form-row">
+                <label for="reason">{% trans "Reason (optional)" %}</label>
+                <input type="text" id="reason" name="reason" maxlength="255" style="width: 100%;">
+            </div>
+            <div class="form-row">
+                <label for="is_active">{% trans "Active" %}</label>
+                <input type="checkbox" id="is_active" name="is_active" checked>
+            </div>
+        </fieldset>
+        <div class="submit-row">
+            <input type="submit" class="default" value="{% trans 'Block Range' %}">
+            <a href="{% url 'admin:reservations_reservationblockeddate_changelist' %}" class="button cancel-link">{% trans "Cancel" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
