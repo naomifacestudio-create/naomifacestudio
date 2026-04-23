@@ -15,7 +15,7 @@
         {% for blog in blogs %}
         <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
             {% if blog.thumbnail %}
-            <div class="w-full aspect-square bg-gray-100 overflow-hidden">
+            <div class="w-full max-w-[220px] aspect-square bg-gray-100 overflow-hidden rounded-md mx-auto mt-6">
                 <img src="{{ blog.thumbnail.url }}" alt="{{ blog.get_title }}" class="w-full h-full object-cover">
             </div>
             {% endif %}

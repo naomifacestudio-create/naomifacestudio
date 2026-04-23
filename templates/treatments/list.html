@@ -29,11 +29,11 @@
         </form>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {% for treatment in treatments %}
         <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
             {% if treatment.thumbnail %}
-            <div class="w-full aspect-square bg-gray-100 overflow-hidden">
+            <div class="w-full max-w-[220px] aspect-square bg-gray-100 overflow-hidden rounded-md mx-auto mt-6">
                 <img src="{{ treatment.thumbnail.url }}" alt="{{ treatment.get_title }}" class="w-full h-full object-cover">
             </div>
             {% endif %}
@@ -49,7 +49,7 @@
             </div>
         </div>
         {% empty %}
-        <div class="col-span-2 text-center py-12">
+        <div class="col-span-full text-center py-12">
             <p class="text-[#5D5350] text-lg">{% trans "No treatments available at the moment." %}</p>
         </div>
         {% endfor %}
