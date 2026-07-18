@@ -4,7 +4,7 @@ A comprehensive Django web application for a beauty studio featuring treatments,
 
 ## Features
 
-- **Multilingual Support**: Croatian (default) and English
+- **Multilingual Support**: Serbian Latin (default) and English
 - **Treatment Management**: Admin interface for managing facial treatments with bilingual content
 - **Blog System**: Blog posts with pagination and bilingual support
 - **Reservation System**: Calendar-based booking with working hours and duration-based blocking
@@ -21,7 +21,7 @@ A comprehensive Django web application for a beauty studio featuring treatments,
 - Django 5.0.1
 - PostgreSQL
 - Tailwind CSS + Flowbite
-- CKEditor 5 (latest)
+- Custom multilingual visual page builder
 - SendGrid
 - Cloudflare R2
 - WhiteNoise (for static files)
@@ -113,7 +113,7 @@ naomi_face_studio/
 
 ### Multilingual Support
 - Uses Django's i18n framework
-- Croatian as default language
+- Serbian Latin as default language
 - All user-facing content translatable
 - Admin fields support both languages
 

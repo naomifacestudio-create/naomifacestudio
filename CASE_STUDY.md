@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-**Naomi Face Studio** is a comprehensive Django-based web application designed for a premium beauty studio in Croatia. The platform provides a complete digital solution for managing facial treatments, blog content, online reservations, gift vouchers, and customer communications. Built with modern web technologies and best practices, the application serves both Croatian and English-speaking customers with a fully bilingual interface.
+**Naomi Face Studio** is a comprehensive Django-based web application designed for a premium beauty studio. The platform provides a complete digital solution for managing facial treatments, blog content, online reservations, gift vouchers, and customer communications. Built with modern web technologies and best practices, the application serves both Serbian and English-speaking customers with a fully bilingual interface.
 
 **Key Highlights:**
 - **Platform Type:** B2C E-commerce & Booking System
-- **Primary Market:** Croatia (with English support)
+- **Primary Market:** Serbian and English support
 - **Technology:** Django 5.0.1, PostgreSQL, Cloudflare R2, SendGrid
 - **Deployment:** Render.com (Cloud Platform)
 - **Development Timeline:** Modern Django application with production-ready features
@@ -30,15 +30,15 @@ Naomi Face Studio is a premium facial treatment studio offering:
 1. **Digital Presence:** Establish a professional online presence for the beauty studio
 2. **Booking System:** Enable customers to book appointments online with real-time availability
 3. **Content Management:** Provide easy-to-use admin interface for managing treatments, blogs, and educational content
-4. **Multilingual Support:** Serve both Croatian and English-speaking customers
+4. **Multilingual Support:** Serve both Serbian and English-speaking customers
 5. **E-commerce:** Enable gift voucher sales with automated email delivery
 6. **SEO Optimization:** Ensure high visibility in search engines
 7. **Mobile-First Design:** Provide excellent user experience on all devices
 
 ### 1.3 Target Audience
 
-- **Primary:** Croatian-speaking customers seeking facial treatments
-- **Secondary:** English-speaking expatriates and tourists in Croatia
+- **Primary:** Serbian-speaking customers seeking facial treatments
+- **Secondary:** English-speaking expatriates and tourists
 - **User Types:** 
   - End customers (booking appointments, purchasing vouchers)
   - Admin staff (managing content and reservations)
@@ -87,7 +87,7 @@ naomi_face_studio/
 ├── contacts/         # Contact form submissions
 ├── templates/        # HTML templates (29 files)
 ├── static/           # Static files (CSS, JS, images)
-└── locale/           # Translation files (Croatian)
+└── locale/           # Translation files (Serbian Latin)
 ```
 
 ### 2.3 Technology Stack
@@ -101,7 +101,7 @@ naomi_face_studio/
 #### Frontend
 - **CSS Framework:** Tailwind CSS
 - **UI Components:** Flowbite 2.3.0
-- **Rich Text Editor:** CKEditor 5 (latest)
+- **Content Editor:** Custom multilingual visual page builder
 - **JavaScript:** Vanilla JS with Flowbite components
 
 #### Third-Party Services
@@ -112,7 +112,6 @@ naomi_face_studio/
 
 #### Django Packages
 - `django-modeltranslation` - Multilingual content management
-- `django-ckeditor` - Rich text editing
 - `django-storages` + `boto3` - Cloud storage integration
 - `django-ratelimit` - Rate limiting for forms
 - `django-honeypot` - Spam protection
@@ -127,13 +126,13 @@ naomi_face_studio/
 
 **Implementation:**
 - Uses Django's built-in internationalization (i18n) framework
-- Croatian (`hr`) as default language
+- Serbian Latin (`sr-latn`) as default language
 - English (`en`) as secondary language
 - Language switching via URL patterns and session-based selection
 
 **Technical Details:**
 - All user-facing strings use Django's translation system
-- Models have separate fields for each language (e.g., `title_hr`, `title_en`)
+- Models have separate fields for each language (e.g., `title_sr`, `title_en`)
 - Admin interface supports bilingual content entry
 - Language switcher in header (flag icons)
 - URL patterns support language prefixes via `i18n_patterns`
@@ -141,17 +140,17 @@ naomi_face_studio/
 **Code Example:**
 ```python
 # settings.py
-LANGUAGE_CODE = 'hr'
+LANGUAGE_CODE = 'sr-latn'
 LANGUAGES = [
-    ('hr', 'Croatian'),
+    ('sr-latn', 'Serbian'),
     ('en', 'English'),
 ]
 
 # Model example
 class Treatment(models.Model):
-    title_hr = models.CharField(_('Title (Croatian)'), max_length=200)
+    title_sr = models.CharField(_('Title (Serbian)'), max_length=200)
     title_en = models.CharField(_('Title (English)'), max_length=200)
-    slug_hr = models.SlugField(_('Slug (Croatian)'), max_length=200, unique=True)
+    slug_sr = models.SlugField(_('Slug (Serbian)'), max_length=200, unique=True)
     slug_en = models.SlugField(_('Slug (English)'), max_length=200, unique=True)
 ```
 
@@ -159,7 +158,7 @@ class Treatment(models.Model):
 
 **Features:**
 - Bilingual treatment listings with detailed descriptions
-- Rich text content using CKEditor
+- Structured content using the multilingual visual builder
 - Duration-based scheduling (hours and minutes)
 - Pause periods after treatments (for staff rest time)
 - Pricing information
@@ -169,10 +168,10 @@ class Treatment(models.Model):
 **Model Structure:**
 ```python
 class Treatment(models.Model):
-    # Croatian fields
-    title_hr, slug_hr, short_description_hr, full_description_hr, meta_description_hr
+    # Serbian Latin fields
+    title_sr, slug_sr, short_description_sr, body_page_sr, body_plaintext_sr
     # English fields
-    title_en, slug_en, short_description_en, full_description_en, meta_description_en
+    title_en, slug_en, short_description_en, body_page_en, body_plaintext_en
     # Common fields
     duration_hours, duration_minutes
     pause_hours, pause_minutes  # Hidden from users, used for scheduling
@@ -249,8 +248,8 @@ A sophisticated calendar-based booking system with intelligent time slot managem
 - Created/updated timestamps
 
 **Content Management:**
-- CKEditor for rich text editing
-- Image uploads via CKEditor
+- Shared visual builder for structured content editing
+- Image and video uploads through the builder
 - Automatic image cleanup when posts are deleted
 - Export/import functionality for backups
 
@@ -355,10 +354,11 @@ EmailCollection.collect_email(
 3. **File Organization:**
    ```
    media/
-   ├── treatments/thumbnails/
-   ├── blogs/thumbnails/
-   ├── education/thumbnails/
-   └── uploads/  (CKEditor uploads)
+   ├── content/featured/
+   └── page/
+       ├── images/
+       ├── videos/
+       └── posters/
    ```
 
 ### 4.2 Automatic Orphaned File Cleanup
@@ -367,26 +367,24 @@ EmailCollection.collect_email(
 When content is deleted or updated, associated media files can become orphaned, wasting storage space and increasing costs.
 
 **Solution:**
-- Signal-based cleanup on model deletion
-- Scans HTML content for image references
-- Identifies unused files in uploads folder
-- Automatic deletion from R2 storage
+- Reference-aware cleanup on visual-document updates and deletion
+- Extracts storage keys directly from builder JSON
+- Preserves files referenced by any content object
+- Deletes through the configured local or R2 storage backend
 - Logging of cleanup operations
 
 **Implementation:**
-- `pre_delete` signals on Blog, Treatment, Education models
-- `cleanup_orphaned_ckeditor_uploads()` function
-- HTML parsing to extract image URLs
-- Comparison with R2 bucket contents
-- Safe deletion with error handling
+- Builder JSON reference extraction
+- Transaction-aware deletion after database commits
+- Shared-reference checks across Blog, Treatment, and Education
+- Pending-upload cleanup from editor sessions
 
 **Code Flow:**
 ```python
-@receiver(pre_delete, sender=Blog)
-def delete_blog_files(sender, instance, **kwargs):
-    # Extract image URLs from HTML content
-    # Delete thumbnail
-    # Delete all referenced images from R2
+def cleanup_removed_json_media(old_refs, new_refs):
+    # Compare known storage keys without listing the bucket
+    # Preserve keys referenced by another visual document
+    # Delete only unreferenced managed media
     # Clean up orphaned uploads
 ```
 
@@ -775,7 +773,7 @@ When content is deleted, associated media files remain in cloud storage, increas
 Managing bilingual content efficiently without duplicating models.
 
 **Solution:**
-- Separate fields for each language (`_hr`, `_en` suffixes)
+- Separate fields for each language (`_sr`, `_en` suffixes)
 - Helper methods (`get_title()`, `get_slug()`) for language-specific access
 - Django's i18n for UI strings
 - Language-aware URL generation
@@ -876,7 +874,7 @@ Contact forms vulnerable to bot submissions.
 - PostgreSQL: Latest (via Render)
 - Tailwind CSS: Latest
 - Flowbite: 2.3.0
-- CKEditor: Latest (6.7.0)
+- Visual builder: Native Django and vanilla JavaScript
 
 ### 16.3 Third-Party Integrations
 

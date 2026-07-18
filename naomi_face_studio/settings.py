@@ -43,13 +43,13 @@ INSTALLED_APPS = [
     
     # Third party apps
     'modeltranslation',
-    'ckeditor',
-    'ckeditor_uploader',
     'storages',
     'import_export',
     'honeypot',
     
     # Local apps
+    'page',
+    'seo.apps.SeoConfig',
     'core',
     'treatments',
     'blogs',
@@ -85,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'seo.context_processors.site_seo',
             ],
         },
     },
@@ -137,14 +138,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# Admin interface will use this language (Croatian)
-LANGUAGE_CODE = 'hr'
+# Admin interface and default public locale use Serbian Latin
+LANGUAGE_CODE = 'sr-latn'
+# Studio is in Rijeka; keep local business timezone
 TIME_ZONE = 'Europe/Zagreb'
 USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('hr', 'Croatian'),
+    ('sr-latn', 'Serbian'),
     ('en', 'English'),
 ]
 
@@ -204,50 +206,6 @@ else:
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# CKEditor Configuration
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': '100%',
-        'extraPlugins': ','.join([
-            'uploadimage',
-            'image2',
-            'div',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath'
-        ]),
-        'removePlugins': 'image',
-        'filebrowserWindowHeight': 725,
-        'filebrowserWindowWidth': 940,
-        'toolbarCanCollapse': True,
-        'mathJaxLib': '//cdn.ckeditor.com/4.6.1/standard/plugins/mathjax/lib/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML',
-        'tabSpaces': 4,
-        # Image2: stable alignment classes (must match static/css/richtext-content.css
-        # and any JS in static/js/admin-ckeditor-image2.js).
-        'image2_alignClasses': [
-            'image-align-left',
-            'image-align-center',
-            'image-align-right',
-        ],
-        'image2_disableResizer': False,
-        'image2_captionedClass': 'image-captioned',
-        'allowedContent': True,
-        # Editor iframe uses same alignment rules as public pages
-        'bodyClass': 'richtext-content',
-        'contentsCss': [f'{STATIC_URL}css/richtext-content.css'],
-    },
-}
 
 # Email Configuration (SendGrid)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

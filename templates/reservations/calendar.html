@@ -114,8 +114,8 @@
     async function loadCalendar() {
         await loadBlockedDates(currentYear, currentMonth + 1);
 
-        // Use today from Croatia timezone (passed from server)
-        const todayCroatiaStr = '{{ today_croatia|default:"" }}';
+        // Use today from local timezone (passed from server)
+        const todayLocalStr = '{{ today_local|default:"" }}';
         // For date comparison, use string comparison to avoid timezone issues
         const calendar = document.getElementById('calendar');
         calendar.innerHTML = '';
@@ -159,12 +159,12 @@
             const dateStr = `${year}-${month}-${dayStr}`;
             
             // Compare date strings to avoid timezone issues
-            const isPast = todayCroatiaStr && dateStr < todayCroatiaStr;
+            const isPast = todayLocalStr && dateStr < todayLocalStr;
             const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
             const blockedInfo = blockedDates[dateStr];
             const isBlocked = !!blockedInfo;
             const isAvailable = !isPast && !isWeekend && !isBlocked;
-            const isToday = dateStr === todayCroatiaStr;
+            const isToday = dateStr === todayLocalStr;
             const isSelected = selectedDate === dateStr;
             
             let buttonClass = 'p-2 rounded transition-colors ';

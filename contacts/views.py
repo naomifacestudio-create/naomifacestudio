@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import get_language, activate, gettext as _
+from core.i18n_utils import active_django_language
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
@@ -66,16 +67,17 @@ def contact_form(request):
     return render(request, 'contacts/form.html', context)
 
 
-def send_contact_email(submission, language_code='hr'):
+def send_contact_email(submission, language_code='sr-latn'):
     """Send contact form email to admin"""
     # Activate the language for email rendering
     current_language = get_language()
+    django_language = active_django_language(language_code)
     try:
-        activate(language_code)
+        activate(django_language)
         
         context = {
             'submission': submission,
-            'language_code': language_code,
+            'language_code': django_language,
         }
         
         # Translate subject line

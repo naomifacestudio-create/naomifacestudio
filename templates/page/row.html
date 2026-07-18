@@ -1,0 +1,9 @@
+<div class="{{ row.css_classes }}" data-row-id="{{ row.id }}">
+    {% for column in row.columns %}
+        <div class="{{ column.css_classes }}" data-column-id="{{ column.id }}">
+            {% for block_html in column.blocks_html %}
+                <div class="iv-page-block">{{ block_html|safe }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

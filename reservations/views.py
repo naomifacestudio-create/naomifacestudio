@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import get_language, activate, gettext as _
+from core.i18n_utils import active_django_language, active_language_code
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
@@ -19,25 +20,27 @@ import logging
 logger = logging.getLogger('reservations')
 
 
-def send_reservation_emails(reservation, language_code='hr'):
+def send_reservation_emails(reservation, language_code='sr-latn'):
     """Send reservation confirmation emails to user and admin"""
     # Activate the language for email rendering
     current_language = get_language()
+    django_language = active_django_language(language_code)
+    content_language = active_language_code(language_code)
     try:
-        activate(language_code)
+        activate(django_language)
         
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
         # Get translated treatment title
-        treatment_title = reservation.treatment.get_title(language_code)
+        treatment_title = reservation.treatment.get_title(content_language)
         
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
             'user_profile': profile,
-            'language_code': language_code,
+            'language_code': content_language,
             'treatment_title': treatment_title,
         }
         
@@ -74,25 +77,27 @@ def send_reservation_emails(reservation, language_code='hr'):
         activate(current_language)
 
 
-def send_cancellation_email(reservation, language_code='hr'):
+def send_cancellation_email(reservation, language_code='sr-latn'):
     """Send cancellation email to admin"""
     # Activate the language for email rendering
     current_language = get_language()
+    django_language = active_django_language(language_code)
+    content_language = active_language_code(language_code)
     try:
-        activate(language_code)
+        activate(django_language)
         
         # Get user profile for mobile phone
         profile = getattr(reservation.user, 'profile', None)
         
         # Get translated treatment title
-        treatment_title = reservation.treatment.get_title(language_code)
+        treatment_title = reservation.treatment.get_title(content_language)
         
         context = {
             'reservation': reservation,
             'treatment': reservation.treatment,
             'user': reservation.user,
             'user_profile': profile,
-            'language_code': language_code,
+            'language_code': content_language,
             'treatment_title': treatment_title,
         }
         
@@ -124,20 +129,20 @@ def reservation_calendar(request, treatment_slug=None):
         if language_code == 'en':
             treatment = get_object_or_404(Treatment, slug_en=treatment_slug, is_active=True)
         else:
-            treatment = get_object_or_404(Treatment, slug_hr=treatment_slug, is_active=True)
+            treatment = get_object_or_404(Treatment, slug_sr=treatment_slug, is_active=True)
     else:
         treatment = None
     
     treatments = Treatment.objects.filter(is_active=True)
     
-    # Get current date in Croatia timezone for calendar
-    today_croatia = timezone.localtime(timezone.now()).date()
+    # Get current date in local timezone for calendar
+    today_local = timezone.localtime(timezone.now()).date()
     
     context = {
         'treatment': treatment,
         'treatments': treatments,
         'language_code': language_code,
-        'today_croatia': today_croatia.isoformat(),  # Pass as ISO format string
+        'today_local': today_local.isoformat(),  # Pass as ISO format string
     }
     return render(request, 'reservations/calendar.html', context)
 
@@ -224,35 +229,35 @@ def get_available_slots(request):
     current_time = datetime.combine(selected_date, start_time)
     end_datetime = datetime.combine(selected_date, end_time)
     
-    # Get current datetime in Croatia timezone (settings.TIME_ZONE = 'Europe/Zagreb')
+    # Get current datetime in local timezone (settings.TIME_ZONE = 'Europe/Zagreb')
     # timezone.localtime() converts UTC to the timezone set in settings.TIME_ZONE
-    now_croatia = timezone.localtime(timezone.now())
-    today_croatia = now_croatia.date()
+    now_local = timezone.localtime(timezone.now())
+    today_local = now_local.date()
     
-    if selected_date == today_croatia:
+    if selected_date == today_local:
         # If selecting today, start from current time in Croatia + 1 hour buffer
-        now_time_croatia = now_croatia.replace(second=0, microsecond=0) + timedelta(hours=1)
-        # Create timezone-aware datetime from current_time (assume Croatia timezone)
+        now_time_local = now_local.replace(second=0, microsecond=0) + timedelta(hours=1)
+        # Create timezone-aware datetime from current_time (assume local timezone)
         # For comparison, we need both datetimes to be timezone-aware
         current_time_aware = timezone.make_aware(current_time)
         
-        if current_time_aware < now_time_croatia:
-            current_time_aware = now_time_croatia
+        if current_time_aware < now_time_local:
+            current_time_aware = now_time_local
             # Round up to next 15-minute interval
             minutes_to_add = 15 - (current_time_aware.minute % 15)
             if minutes_to_add < 15:
                 current_time_aware += timedelta(minutes=minutes_to_add)
-            # Convert back to naive datetime (in Croatia timezone) for the loop
+            # Convert back to naive datetime (in local timezone) for the loop
             current_time = current_time_aware.astimezone(timezone.get_current_timezone()).replace(tzinfo=None)
     
     while current_time + treatment_duration <= end_datetime:
         slot_start = current_time.time()
         slot_end = (current_time + treatment_duration).time()
         
-        # Skip if slot is in the past (for today) - compare in Croatia timezone
-        if selected_date == today_croatia:
+        # Skip if slot is in the past (for today) - compare in local timezone
+        if selected_date == today_local:
             current_time_aware = timezone.make_aware(current_time)
-            if current_time_aware < now_croatia:
+            if current_time_aware < now_local:
                 current_time += slot_duration
                 continue
         

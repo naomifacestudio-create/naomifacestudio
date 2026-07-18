@@ -85,7 +85,7 @@ class ReservationBlockedDateAdmin(admin.ModelAdmin):
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ['user_info', 'treatment', 'date', 'start_time', 'end_time', 'status', 'created_at']
     list_filter = []  # Filters disabled
-    search_fields = ['user__username', 'user__email', 'user__first_name', 'user__last_name', 'user__profile__mobile', 'treatment__title_hr', 'treatment__title_en']
+    search_fields = ['user__username', 'user__email', 'user__first_name', 'user__last_name', 'user__profile__mobile', 'treatment__title_sr', 'treatment__title_en']
     readonly_fields = ['user_info_display']
     fieldsets = (
         ('Reservation Details', {

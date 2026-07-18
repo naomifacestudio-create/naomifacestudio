@@ -1,0 +1,8 @@
+<div class="iv-page-media iv-page-media--align-{{ align }}" style="width: {{ width_percent }}%;">
+    <figure class="iv-page-image">
+        <img src="{{ src }}" alt="{{ alt }}" loading="{{ loading|default:'lazy' }}" decoding="async">
+        {% if caption %}
+            <figcaption class="iv-page-image__caption">{{ caption }}</figcaption>
+        {% endif %}
+    </figure>
+</div>

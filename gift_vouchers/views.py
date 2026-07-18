@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import get_language, activate, gettext as _
+from core.i18n_utils import active_django_language, active_language_code
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
@@ -93,19 +94,21 @@ def gift_voucher_form(request):
     return render(request, 'gift_vouchers/form.html', context)
 
 
-def send_gift_voucher_emails(gift_voucher, language_code='hr'):
+def send_gift_voucher_emails(gift_voucher, language_code='sr-latn'):
     """Send gift voucher emails to purchaser, recipient, and admin"""
     # Activate the language for email rendering
     current_language = get_language()
+    django_language = active_django_language(language_code)
+    content_language = active_language_code(language_code)
     try:
-        activate(language_code)
+        activate(django_language)
         
         # Get translated treatment title
-        treatment_title = gift_voucher.treatment.get_title(language_code)
+        treatment_title = gift_voucher.treatment.get_title(content_language)
         
         context = {
             'gift_voucher': gift_voucher,
-            'language_code': language_code,
+            'language_code': content_language,
             'treatment_title': treatment_title,
         }
         

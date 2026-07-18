@@ -9,27 +9,28 @@
     <meta name="color-scheme" content="light">
     
     {% block meta %}
-    <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
-    <meta name="keywords" content="{% block meta_keywords %}{% endblock meta_keywords %}">
+    <meta name="description" content="{% block meta_description %}{{ seo.description }}{% endblock meta_description %}">
+    <meta name="robots" content="{{ seo.robots|default:'index, follow' }}">
     <meta name="author" content="Naomi Face Studio">
     {% endblock meta %}
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <meta property="og:title" content="{% block og_title %}{% endblock og_title %}">
-    <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
-    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock og_image %}">
+    <meta property="og:type" content="{{ seo.og_type|default:'website' }}">
+    <meta property="og:url" content="{{ seo.og_url|default:seo.canonical }}">
+    <meta property="og:title" content="{% block og_title %}{{ seo.og_title }}{% endblock og_title %}">
+    <meta property="og:description" content="{% block og_description %}{{ seo.og_description }}{% endblock og_description %}">
+    <meta property="og:image" content="{% block og_image %}{{ seo.og_image }}{% endblock og_image %}">
     
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <meta property="twitter:title" content="{% block twitter_title %}{% endblock twitter_title %}">
-    <meta property="twitter:description" content="{% block twitter_description %}{% endblock twitter_description %}">
-    <meta property="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock twitter_image %}">
+    <meta name="twitter:card" content="{{ seo.twitter_card|default:'summary_large_image' }}">
+    <meta name="twitter:url" content="{{ seo.og_url|default:seo.canonical }}">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ seo.twitter_title }}{% endblock twitter_title %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ seo.twitter_description }}{% endblock twitter_description %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ seo.twitter_image|default:seo.og_image }}{% endblock twitter_image %}">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path|slice:':-1'|default:request.path }}{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ seo.canonical }}{% endblock %}">
+    {% block hreflang_tags %}{% endblock %}
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.webp' %}">
@@ -46,7 +47,6 @@
     
     <!-- Flowbite CSS -->
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'css/richtext-content.css' %}">
     
     <!-- Custom CSS -->
     <style>

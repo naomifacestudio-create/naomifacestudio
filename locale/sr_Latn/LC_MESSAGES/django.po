@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2025-12-18 21:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: hr\n"
+"Language-Team: Serbian Latin <LL@li.org>\n"
+"Language: sr-latn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,8 +20,8 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: .\blogs\admin.py:46 .\education\admin.py:46 .\treatments\admin.py:51
-msgid "Croatian Content"
-msgstr "Hrvatski sadržaj"
+msgid "Serbian Content"
+msgstr "Srpski sadržaj"
 
 #: .\blogs\admin.py:49 .\education\admin.py:49 .\treatments\admin.py:54
 msgid "English Content"
@@ -37,24 +37,24 @@ msgid "Blogs"
 msgstr "Blogovi"
 
 #: .\blogs\models.py:14 .\education\models.py:14 .\treatments\models.py:16
-msgid "Title (Croatian)"
-msgstr "Naslov (hrvatski)"
+msgid "Title (Serbian)"
+msgstr "Naslov (srpski)"
 
 #: .\blogs\models.py:15 .\education\models.py:15 .\treatments\models.py:17
-msgid "Slug (Croatian)"
-msgstr "Slug (hrvatski)"
+msgid "Slug (Serbian)"
+msgstr "Slug (srpski)"
 
 #: .\blogs\models.py:16 .\education\models.py:16 .\treatments\models.py:18
-msgid "Short Description (Croatian)"
-msgstr "Kratak opis (hrvatski)"
+msgid "Short Description (Serbian)"
+msgstr "Kratak opis (srpski)"
 
 #: .\blogs\models.py:17 .\education\models.py:17 .\treatments\models.py:19
-msgid "Full Description (Croatian)"
-msgstr "Puni opis (hrvatski)"
+msgid "Full Description (Serbian)"
+msgstr "Puni opis (srpski)"
 
 #: .\blogs\models.py:18 .\education\models.py:18 .\treatments\models.py:20
-msgid "Meta Description (Croatian)"
-msgstr "Meta opis (hrvatski)"
+msgid "Meta Description (Serbian)"
+msgstr "Meta opis (srpski)"
 
 #: .\blogs\models.py:21 .\education\models.py:21 .\treatments\models.py:23
 msgid "Title (English)"
@@ -137,7 +137,7 @@ msgstr "Kontakt forme"
 
 #: .\contacts\views.py:26
 msgid "Too many requests. Please try again later."
-msgstr "Previše zahtjeva. Molimo pokušajte ponovno kasnije."
+msgstr "Previše zahteva. Molimo pokušajte ponovo kasnije."
 
 #: .\contacts\views.py:36
 msgid "Please fill in all required fields."
@@ -158,11 +158,11 @@ msgstr ""
 
 #: .\core\admin.py:54
 msgid "Export selected emails as CSV"
-msgstr "Izvezi odabrane emailove kao CSV"
+msgstr "Izvezi izabrane emailove kao CSV"
 
 #: .\core\admin.py:62
 msgid "Export selected emails as text (one per line)"
-msgstr "Izvezi odabrane emailove kao tekst (jedan po redu)"
+msgstr "Izvezi izabrane emailove kao tekst (jedan po redu)"
 
 # App names for admin interface
 #: .\core\apps.py:8
@@ -190,7 +190,7 @@ msgstr "O meni"
 
 #: .\core\views.py:58
 msgid "Account created successfully!"
-msgstr "Račun je uspješno kreiran!"
+msgstr "Nalog je uspešno kreiran!"
 
 #: .\core\views.py:86
 msgid "Welcome back!"
@@ -202,7 +202,7 @@ msgstr "Nevažeće korisničko ime ili lozinka."
 
 #: .\core\views.py:133
 msgid "You have been logged out successfully."
-msgstr "Uspješno ste odjavljeni."
+msgstr "Uspešno ste odjavljeni."
 
 #: .\education\admin.py:52
 msgid "Education Details"
@@ -228,7 +228,7 @@ msgstr "Pošalji poklon vaučer na moju email adresu"
 
 #: .\gift_vouchers\models.py:9 .\templates\gift_vouchers\form.html:39
 msgid "Send the gift voucher to recipient's email address"
-msgstr "Pošalji poklon vaučer na email adresu primatelja"
+msgstr "Pošalji poklon vaučer na email adresu primaoca"
 
 #: .\gift_vouchers\models.py:16
 msgid "Email Delivery Option"
@@ -236,7 +236,7 @@ msgstr "Opcija isporuke emaila"
 
 #: .\gift_vouchers\models.py:19
 msgid "Recipient Name"
-msgstr "Ime primatelja"
+msgstr "Ime primaoca"
 
 #: .\gift_vouchers\models.py:20
 msgid "Personalised Message"
@@ -244,11 +244,11 @@ msgstr "Personalizirana poruka"
 
 #: .\gift_vouchers\models.py:21 .\templates\gift_vouchers\form.html:57
 msgid "Who is this gift from?"
-msgstr "Tko šalje ovaj poklon?"
+msgstr "Ko šalje ovaj poklon?"
 
 #: .\gift_vouchers\models.py:30
 msgid "Recipient Email Address"
-msgstr "Email adresa primatelja"
+msgstr "Email adresa primaoca"
 
 #: .\gift_vouchers\models.py:33
 msgid "Email Sent"
@@ -262,17 +262,17 @@ msgstr "Poklon vaučer"
 
 #: .\gift_vouchers\views.py:86
 msgid "Gift voucher order submitted successfully!"
-msgstr "Narudžba poklon vaučera je uspješno poslana!"
+msgstr "Porudžbina poklon vaučera je uspešno poslana!"
 
 #: .\gift_vouchers\views.py:113
 #, python-format
 msgid "New Gift Voucher Order - %(name)s"
-msgstr "Nova narudžba poklon vaučera - %(name)s"
+msgstr "Nova porudžbina poklon vaučera - %(name)s"
 
 #: .\gift_vouchers\views.py:126
 #, python-format
 msgid "Gift Voucher Order Confirmation - %(treatment)s"
-msgstr "Potvrda narudžbe poklon vaučera - %(treatment)s"
+msgstr "Potvrda porudžbine poklon vaučera - %(treatment)s"
 
 #: .\gift_vouchers\views.py:140
 #, python-format
@@ -639,11 +639,11 @@ msgstr ""
 #: .\templates\core\account.html:4 .\templates\core\account.html:11
 #: .\templates\includes\header.html:66 .\templates\includes\header.html:160
 msgid "My Account"
-msgstr "Moj račun"
+msgstr "Moj nalog"
 
 #: .\templates\core\account.html:6
 msgid "View and manage your account information and reservations."
-msgstr "Pregledajte i upravljajte informacijama o svom računu i rezervacijama."
+msgstr "Pregledajte i upravljajte informacijama o svom nalogu i rezervacijama."
 
 #: .\templates\core\account.html:15
 msgid "Personal Information"
@@ -720,7 +720,7 @@ msgstr "Jeste li sigurni da želite otkazati ovu rezervaciju?"
 #: .\templates\core\account.html:122
 #: .\templates\reservations\my_reservations.html:59
 msgid "Reservation cancelled successfully"
-msgstr "Rezervacija je uspješno otkazana"
+msgstr "Rezervacija je uspešno otkazana"
 
 #: .\templates\core\account.html:125 .\templates\core\account.html:130
 #: .\templates\reservations\my_reservations.html:62
@@ -821,8 +821,8 @@ msgid ""
 "account first if you don't have one."
 msgstr ""
 "Možete rezervirati tretman klikom na gumb 'Rezervacije' u navigacijskom "
-"izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
-"račun ako ga nemate."
+"izborniku ili izravno sa stranice tretmana. Najprije ćete trebati kreirati "
+"nalog ako ga nemate."
 
 #: .\templates\core\home.html:53 .\templates\core\home.html:81
 msgid "What are your working hours?"
@@ -845,8 +845,8 @@ msgid ""
 "Yes, you can cancel your reservation from your account's 'My Reservations' "
 "page."
 msgstr ""
-"Da, možete otkazati rezervaciju s stranice 'Moje rezervacije' na vašem "
-"računu."
+"Da, možete otkazati rezervaciju sa stranice 'Moje rezervacije' na vašem "
+"nalogu."
 
 #: .\templates\core\home.html:76
 msgid ""
@@ -855,14 +855,14 @@ msgid ""
 "an account first if you do not have one."
 msgstr ""
 "Možete rezervirati tretman klikom na gumb Rezervacije u navigacijskom "
-"izborniku ili izravno s stranice tretmana. Najprije ćete trebati kreirati "
-"račun ako ga nemate."
+"izborniku ili izravno sa stranice tretmana. Najprije ćete trebati kreirati "
+"nalog ako ga nemate."
 
 #: .\templates\core\home.html:92
 msgid ""
 "Yes, you can cancel your reservation from your accounts My Reservations page."
 msgstr ""
-"Da, možete otkazati rezervaciju s stranice Moje rezervacije na vašem računu."
+"Da, možete otkazati rezervaciju sa stranice Moje rezervacije na vašem nalogu."
 
 #: .\templates\core\login.html:4 .\templates\core\login.html:11
 #: .\templates\core\login.html:47 .\templates\includes\header.html:69
@@ -872,7 +872,7 @@ msgstr "Prijava"
 
 #: .\templates\core\login.html:6
 msgid "Login to your account at Naomi Face Studio."
-msgstr "Prijavite se na svoj račun u Naomi Face Studio."
+msgstr "Prijavite se na svoj nalog u Naomi Face Studio."
 
 #: .\templates\core\login.html:25
 msgid "Username or Email"
@@ -884,7 +884,7 @@ msgstr "Lozinka"
 
 #: .\templates\core\login.html:53
 msgid "Don't have an account?"
-msgstr "Nemate račun?"
+msgstr "Nemate nalog?"
 
 #: .\templates\core\login.html:55
 msgid "Sign up here"
@@ -897,11 +897,11 @@ msgstr "Registracija"
 
 #: .\templates\core\signup.html:6
 msgid "Create an account to book treatments at Naomi Face Studio."
-msgstr "Kreirajte račun za rezervaciju tretmana u Naomi Face Studio."
+msgstr "Kreirajte nalog za rezervaciju tretmana u Naomi Face Studio."
 
 #: .\templates\core\signup.html:11
 msgid "Create Account"
-msgstr "Kreiraj račun"
+msgstr "Kreiraj nalog"
 
 #: .\templates\core\signup.html:76
 msgid "Confirm Password"
@@ -909,7 +909,7 @@ msgstr "Potvrdite lozinku"
 
 #: .\templates\core\signup.html:96
 msgid "Already have an account?"
-msgstr "Već imate račun?"
+msgstr "Već imate nalog?"
 
 #: .\templates\core\signup.html:98
 msgid "Login here"
@@ -925,12 +925,12 @@ msgstr "Trenutno nema dostupnih obrazovnih tečajeva."
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:17
 msgid "New Gift Voucher Order"
-msgstr "Nova narudžba poklon vaučera"
+msgstr "Nova porudžbina poklon vaučera"
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:20
 #: .\templates\gift_vouchers\emails\purchaser_confirmation.html:21
 msgid "Order Details"
-msgstr "Detalji narudžbe"
+msgstr "Detalji porudžbine"
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:21
 #: .\templates\gift_vouchers\emails\purchaser_confirmation.html:22
@@ -943,7 +943,7 @@ msgstr "Tretman:"
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:22
 msgid "Recipient Name:"
-msgstr "Ime primatelja:"
+msgstr "Ime primaoca:"
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:23
 #: .\templates\gift_vouchers\emails\purchaser_confirmation.html:24
@@ -969,11 +969,11 @@ msgstr "Isporuka emaila:"
 
 #: .\templates\gift_vouchers\emails\admin_notification.html:33
 msgid "Recipient Email:"
-msgstr "Email primatelja:"
+msgstr "Email primaoca:"
 
 #: .\templates\gift_vouchers\emails\purchaser_confirmation.html:17
 msgid "Gift Voucher Order Confirmation"
-msgstr "Potvrda narudžbe poklon vaučera"
+msgstr "Potvrda porudžbine poklon vaučera"
 
 #: .\templates\gift_vouchers\emails\purchaser_confirmation.html:20
 msgid "Thank you for your gift voucher order!"
@@ -1032,7 +1032,7 @@ msgstr "Detalji poklon vaučera"
 
 #: .\templates\gift_vouchers\form.html:49
 msgid "Recipient name"
-msgstr "Ime primatelja"
+msgstr "Ime primaoca"
 
 #: .\templates\gift_vouchers\form.html:53
 msgid "Personalised message"
@@ -1040,7 +1040,7 @@ msgstr "Personalizirana poruka"
 
 #: .\templates\gift_vouchers\form.html:61
 msgid "Recipient email address"
-msgstr "Email adresa primatelja"
+msgstr "Email adresa primaoca"
 
 #: .\templates\gift_vouchers\form.html:69
 msgid "Purchaser details"
@@ -1114,11 +1114,11 @@ msgstr "Rezervirajte vaš tretman"
 
 #: .\templates\reservations\calendar.html:14
 msgid "You need to create an account to make a reservation."
-msgstr "Morate kreirati račun za izradu rezervacije."
+msgstr "Morate kreirati nalog za izradu rezervacije."
 
 #: .\templates\reservations\calendar.html:16
 msgid "Create Account / Login"
-msgstr "Kreiraj račun / Prijava"
+msgstr "Kreiraj nalog / Prijava"
 
 #: .\templates\reservations\calendar.html:24
 msgid "Select Treatment"
@@ -1134,7 +1134,7 @@ msgstr "Poruka (opcionalno)"
 
 #: .\templates\reservations\calendar.html:60
 msgid "Add any special requests or notes..."
-msgstr "Dodajte posebne zahtjeve ili napomene..."
+msgstr "Dodajte posebne zahteve ili napomene..."
 
 #: .\templates\reservations\calendar.html:63
 msgid "Submit Reservation"
@@ -1146,7 +1146,7 @@ msgstr "Molimo prvo odaberite tretman"
 
 #: .\templates\reservations\calendar.html:219
 msgid "Error loading available slots. Please try again."
-msgstr "Greška pri učitavanju dostupnih termina. Molimo pokušajte ponovno."
+msgstr "Greška pri učitavanju dostupnih termina. Molimo pokušajte ponovo."
 
 #: .\templates\reservations\calendar.html:232
 msgid "No available slots for this date"
@@ -1168,7 +1168,7 @@ msgstr "Molimo odaberite datum, tretman i vrijeme"
 
 #: .\templates\reservations\calendar.html:289
 msgid "Reservation created successfully!"
-msgstr "Rezervacija je uspješno kreirana!"
+msgstr "Rezervacija je uspešno kreirana!"
 
 #: .\templates\reservations\calendar.html:292
 #: .\templates\reservations\calendar.html:297
@@ -1270,20 +1270,16 @@ msgid "Duration (Minutes)"
 msgstr "Trajanje (minute)"
 
 #: .\treatments\models.py:32
-#, fuzzy
-#| msgid "Our Treatments"
 msgid "Pause After Treatment (Hours)"
-msgstr "Naši tretmani"
+msgstr "Pauza nakon tretmana (sati)"
 
 #: .\treatments\models.py:32 .\treatments\models.py:33
 msgid "Rest time needed after this treatment (not visible to users)"
-msgstr ""
+msgstr "Vreme odmora potrebno nakon ovog tretmana (nije vidljivo korisnicima)"
 
 #: .\treatments\models.py:33
-#, fuzzy
-#| msgid "Duration (Minutes)"
 msgid "Pause After Treatment (Minutes)"
-msgstr "Trajanje (minute)"
+msgstr "Pauza nakon tretmana (minute)"
 
 #: .\treatments\models.py:42
 msgid "Treatment"

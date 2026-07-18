@@ -38,7 +38,7 @@ class GiftVoucher(models.Model):
         verbose_name_plural = _('Gift Vouchers')
     
     def __str__(self):
-        return f"Gift Voucher for {self.recipient_name} - {self.treatment.title_hr}"
+        return f"Gift Voucher for {self.recipient_name} - {self.treatment.title_sr}"
     
     def get_delivery_email(self):
         """Get the email address where voucher should be sent"""

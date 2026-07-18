@@ -1,0 +1,17 @@
+<div class="iv-page-faq iv-page-faq--{{ style }}">
+    {% if style == "list" %}
+        {% for item in items %}
+            <div class="iv-page-faq__item">
+                <h3 class="iv-page-faq__question">{{ item.question }}</h3>
+                <div class="iv-page-faq__answer">{{ item.answer }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% for item in items %}
+            <details class="iv-page-faq__item">
+                <summary class="iv-page-faq__question">{{ item.question }}</summary>
+                <div class="iv-page-faq__answer">{{ item.answer }}</div>
+            </details>
+        {% endfor %}
+    {% endif %}
+</div>

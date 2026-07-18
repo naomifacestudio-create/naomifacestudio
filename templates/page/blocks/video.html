@@ -1,0 +1,20 @@
+<div class="iv-page-media iv-page-media--align-{{ align }}" style="width: {{ width_percent }}%;">
+    <div class="iv-page-video {% if file_src %}iv-page-video--file{% else %}iv-page-video--aspect-{{ aspect_class }}{% endif %}">
+        <div class="iv-page-video__frame">
+            {% if file_src %}
+                <video controls preload="metadata" playsinline{% if poster %} poster="{{ poster }}"{% endif %} src="{{ file_src }}"></video>
+            {% else %}
+                <iframe
+                    src="{{ embed_url }}"
+                    title="YouTube video"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            {% endif %}
+        </div>
+        {% if caption %}
+            <p class="iv-page-video__caption">{{ caption }}</p>
+        {% endif %}
+    </div>
+</div>

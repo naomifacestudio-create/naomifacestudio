@@ -1,16 +1,41 @@
-"""Helpers for models that store parallel hr/en fields."""
+"""Helpers for models that store parallel sr/en fields (Serbian Latin + English)."""
+
+DEFAULT_CONTENT_LANGUAGE = 'sr'
+DEFAULT_DJANGO_LANGUAGE = 'sr-latn'
+
+
+def active_django_language(language_code=None):
+    """
+    Resolve a Django locale code from LANGUAGES (``sr-latn`` / ``en``).
+    """
+    if language_code is None:
+        from django.utils.translation import get_language
+
+        language_code = get_language() or DEFAULT_DJANGO_LANGUAGE
+
+    normalized = str(language_code).lower().replace('_', '-')
+    if normalized.startswith('en'):
+        return 'en'
+    if normalized.startswith('sr'):
+        return DEFAULT_DJANGO_LANGUAGE
+    return DEFAULT_DJANGO_LANGUAGE
 
 
 def active_language_code(language_code=None):
     """
-    Resolve the two-letter language code for content fields.
+    Resolve the content-field language code used by bilingual models.
 
-    When ``language_code`` is omitted (e.g. ``{{ blog.get_title }}`` in a template),
-    use Django's active locale from ``LocaleMiddleware`` / ``get_language()``.
+    Django locale codes may be ``sr-latn`` / ``sr_Latn`` / ``sr``; content fields
+    use the short ``sr`` / ``en`` suffixes.
     """
-    if language_code is not None:
-        return language_code[:2]
-    from django.utils.translation import get_language
+    if language_code is None:
+        from django.utils.translation import get_language
 
-    lang = get_language() or 'hr'
-    return lang[:2] if len(lang) >= 2 else lang
+        language_code = get_language() or DEFAULT_DJANGO_LANGUAGE
+
+    normalized = str(language_code).lower().replace('_', '-')
+    if normalized.startswith('en'):
+        return 'en'
+    if normalized.startswith('sr'):
+        return 'sr'
+    return DEFAULT_CONTENT_LANGUAGE

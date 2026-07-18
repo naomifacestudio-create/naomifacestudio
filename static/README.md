@@ -7,7 +7,7 @@ Place your static files here:
 
 ## Required Images:
 - logo.png
-- croatia-flag.png
+- srb-flag.webp
 - uk-flag.png
 - favicon.ico
 - og-image.jpg

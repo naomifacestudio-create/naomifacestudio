@@ -1,0 +1,357 @@
+/**
+ * Visual page builder — javni prikaz (iv_page_v1)
+ */
+
+.iv-page {
+  width: 100%;
+  --iv-page-gutter: 1.25rem;
+  --iv-page-gutter-between: calc(var(--iv-page-gutter) * 2);
+}
+
+.iv-page-section {
+  width: 100%;
+  padding-block: 2rem;
+}
+
+.iv-page-section + .iv-page-section {
+  margin-top: 1rem;
+}
+
+.iv-page-section__inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--iv-page-gutter-between);
+}
+
+.iv-page-section--width-contained .iv-page-section__inner {
+  width: min(90%, 72rem);
+  max-width: none;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.iv-page-section--width-full .iv-page-section__inner {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.iv-page-section--bg-default { background: transparent; }
+.iv-page-section--bg-light { background: var(--color-surface-muted, #f4f4f5); }
+.iv-page-section--bg-dark {
+  background: var(--color-surface-inverse, #18181b);
+  color: var(--color-text-inverse, #fafafa);
+}
+.iv-page-section--bg-accent {
+  background: var(--color-accent-subtle, #e8f1ff);
+}
+.iv-page-section--bg-custom {
+  /* color comes from inline style background-color */
+}
+
+.iv-page-section--align-left { text-align: left; }
+.iv-page-section--align-center { text-align: center; }
+
+.iv-page-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  width: 100%;
+  column-gap: 0;
+  row-gap: var(--iv-page-gutter-between);
+  align-items: start;
+}
+
+.iv-page-row--align-top { align-items: start; }
+.iv-page-row--align-center { align-items: center; }
+.iv-page-row--align-bottom { align-items: end; }
+
+.iv-page-col--align-left { text-align: left; }
+.iv-page-col--align-center { text-align: center; }
+.iv-page-col--align-right { text-align: right; }
+
+.iv-page-heading--align-left,
+.iv-page-text--align-left { text-align: left; }
+.iv-page-heading--align-center,
+.iv-page-text--align-center { text-align: center; margin-inline: auto; }
+.iv-page-heading--align-right,
+.iv-page-text--align-right { text-align: right; margin-left: auto; }
+
+.iv-page-divider {
+  border: 0;
+  border-top: 1px solid var(--color-border, #d4d4d8);
+  margin: 1rem 0;
+}
+
+.iv-page-col {
+  min-width: 0;
+  padding-inline: 0;
+}
+
+.col-mobile-1 { grid-column: span 1; }
+.col-mobile-2 { grid-column: span 2; }
+.col-mobile-3 { grid-column: span 3; }
+.col-mobile-4 { grid-column: span 4; }
+.col-mobile-5 { grid-column: span 5; }
+.col-mobile-6 { grid-column: span 6; }
+.col-mobile-7 { grid-column: span 7; }
+.col-mobile-8 { grid-column: span 8; }
+.col-mobile-9 { grid-column: span 9; }
+.col-mobile-10 { grid-column: span 10; }
+.col-mobile-11 { grid-column: span 11; }
+.col-mobile-12 { grid-column: span 12; }
+
+@media (min-width: 768px) {
+  .iv-page {
+    --iv-page-gutter: 2.5rem;
+  }
+
+  .iv-page-section--width-contained .iv-page-section__inner {
+    padding-inline: 0;
+  }
+
+  /* Elementor-style gutter: padding on columns, not grid track gaps */
+  .iv-page-col {
+    padding-inline: var(--iv-page-gutter);
+  }
+
+  .col-tablet-1 { grid-column: span 1; }
+  .col-tablet-2 { grid-column: span 2; }
+  .col-tablet-3 { grid-column: span 3; }
+  .col-tablet-4 { grid-column: span 4; }
+  .col-tablet-5 { grid-column: span 5; }
+  .col-tablet-6 { grid-column: span 6; }
+  .col-tablet-7 { grid-column: span 7; }
+  .col-tablet-8 { grid-column: span 8; }
+  .col-tablet-9 { grid-column: span 9; }
+  .col-tablet-10 { grid-column: span 10; }
+  .col-tablet-11 { grid-column: span 11; }
+  .col-tablet-12 { grid-column: span 12; }
+}
+
+@media (min-width: 1200px) {
+  .col-desktop-1 { grid-column: span 1; }
+  .col-desktop-2 { grid-column: span 2; }
+  .col-desktop-3 { grid-column: span 3; }
+  .col-desktop-4 { grid-column: span 4; }
+  .col-desktop-5 { grid-column: span 5; }
+  .col-desktop-6 { grid-column: span 6; }
+  .col-desktop-7 { grid-column: span 7; }
+  .col-desktop-8 { grid-column: span 8; }
+  .col-desktop-9 { grid-column: span 9; }
+  .col-desktop-10 { grid-column: span 10; }
+  .col-desktop-11 { grid-column: span 11; }
+  .col-desktop-12 { grid-column: span 12; }
+}
+
+.iv-page-block + .iv-page-block {
+  margin-top: 1rem;
+}
+
+.iv-page-block {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Nivo H1–H4 je samo semantički — veličina, težina i stil dolaze ručno
+   (toolbar / inline HTML), ne iz tipografije za h1–h4. */
+.iv-page-heading {
+  margin: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-wrap: pretty;
+}
+
+.iv-page-text a,
+.iv-page-heading a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.iv-page-text {
+  margin: 0;
+  width: 100%;
+  max-width: 65ch;
+  line-height: 1.65;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.iv-page-text * {
+  max-width: 100%;
+  overflow-wrap: inherit;
+  word-break: inherit;
+}
+
+/* Must come after the base .iv-page-text rule: its `margin: 0` would
+   otherwise override these auto margins and the capped 65ch box would
+   stay flushed left even with text-align: center/right. */
+.iv-page-text--align-center {
+  margin-inline: auto;
+}
+
+.iv-page-text--align-right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.iv-page-section--align-center .iv-page-text {
+  margin-inline: auto;
+}
+
+.iv-page-button-wrap {
+  margin-top: 1.25rem;
+  display: flex;
+  width: 100%;
+}
+
+.iv-page-button-wrap--align-left {
+  justify-content: flex-start;
+}
+
+.iv-page-button-wrap--align-center {
+  justify-content: center;
+}
+
+.iv-page-button-wrap--align-right {
+  justify-content: flex-end;
+}
+
+.iv-page-media {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.iv-page-media--align-left {
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+}
+
+.iv-page-media--align-center {
+  margin-inline: auto !important;
+}
+
+.iv-page-media--align-right {
+  margin-inline-start: auto !important;
+  margin-inline-end: 0 !important;
+}
+
+.iv-page-image {
+  margin: 0;
+}
+
+.iv-page-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.iv-page-image__caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted, #71717a);
+}
+
+.iv-page-section--bg-dark .iv-page-image__caption {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.iv-page-video__frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #000;
+}
+
+.iv-page-video__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.iv-page-video--file .iv-page-video__frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: auto;
+  background: transparent;
+}
+
+.iv-page-video--file video {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+  background: #000;
+}
+
+.iv-page-video--aspect-16-9 .iv-page-video__frame {
+  aspect-ratio: 16 / 9;
+}
+
+.iv-page-video--aspect-4-3 .iv-page-video__frame {
+  aspect-ratio: 4 / 3;
+}
+
+.iv-page-video__caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted, #71717a);
+}
+
+.iv-page-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.iv-page-faq__item {
+  border: 1px solid var(--color-border, #e4e4e7);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.iv-page-faq--accordion .iv-page-faq__item {
+  padding: 0;
+}
+
+.iv-page-faq--accordion summary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  list-style: none;
+}
+
+.iv-page-faq--accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.iv-page-faq__question {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.iv-page-faq__answer {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted, #52525b);
+}
+
+.iv-page-faq--accordion .iv-page-faq__answer {
+  padding: 0 1rem 0.75rem;
+  margin-top: 0;
+}

@@ -51,7 +51,7 @@ class Reservation(models.Model):
         unique_together = [['date', 'start_time']]
     
     def __str__(self):
-        return f"{self.user.username} - {self.treatment.title_hr} - {self.date} {self.start_time}"
+        return f"{self.user.username} - {self.treatment.title_sr} - {self.date} {self.start_time}"
     
     def save(self, *args, **kwargs):
         """Calculate end_time based on treatment duration"""

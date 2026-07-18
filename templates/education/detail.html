@@ -1,32 +1,40 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static page_tags %}
 
-{% block title %}{{ education.get_title }}{% endblock %}
+{% block title %}{{ seo.title }}{% endblock %}
 
-{% block meta_description %}{{ education.get_meta_description }}{% endblock %}
+{% block meta_description %}{{ seo.description }}{% endblock %}
+{% block canonical_url %}{{ seo.canonical }}{% endblock %}
+{% block hreflang_tags %}
+{% for code, url in seo.alternates.items %}<link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+{% endfor %}<link rel="alternate" hreflang="x-default" href="{{ seo.x_default }}">
+{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ seo.schema_json|safe }}</script>{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/iv-page.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-12">
     <div class="max-w-4xl mx-auto">
         <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ education.get_title }}</h1>
-        
+
         {% if education.thumbnail %}
         <div class="mb-8 flex justify-center">
             <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="max-w-full h-auto object-contain rounded-lg">
         </div>
         {% endif %}
-        
+
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
             <div>
                 <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
             </div>
         </div>
-        
-        <div class="richtext-content prose prose-lg max-w-none text-[#5D5350]">
-            {{ education.get_full_description|safe }}
+
+        <div class="iv-page-host text-[#5D5350]">
+            {% render_localized_page education %}
         </div>
     </div>
 </div>
 {% endblock %}
-
-

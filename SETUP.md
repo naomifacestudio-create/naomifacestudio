@@ -72,7 +72,7 @@ python manage.py compilemessages
 
 10. **Add required static files:**
    - Place logo.png in `static/images/`
-   - Place croatia-flag.png in `static/images/`
+   - Place srb-flag.webp in `static/images/`
    - Place uk-flag.png in `static/images/`
    - Place favicon.ico in `static/images/`
    - Place og-image.jpg in `static/images/`
@@ -88,8 +88,8 @@ python manage.py runserver
 1. Access admin at: `http://localhost:8000/admin/`
 2. Login with superuser credentials
 3. Start creating:
-   - Treatments (with Croatian and English content)
-   - Blog posts (with Croatian and English content)
+   - Treatments (with Serbian and English content)
+   - Blog posts (with Serbian and English content)
 
 ## Production Deployment (Render)
 
@@ -102,7 +102,7 @@ python manage.py runserver
 
 ## Important Notes
 
-- **CKEditor**: Latest version is configured. Images uploaded through CKEditor will be stored in R2 when `USE_R2=True`
+- **Visual builder**: Blog, education, and treatment media use local storage or R2 when `USE_R2=True`
 - **Email Collection**: All emails from contact forms and user registrations are automatically collected
 - **File Cleanup**: Orphaned files are automatically deleted from R2 when treatments/blogs are deleted or updated
 - **Reservations**: Users must create accounts before booking. The system redirects to login if not authenticated
