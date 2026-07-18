@@ -53,6 +53,24 @@ class LegacyHtmlConversionTests(SimpleTestCase):
         self.assertEqual(page["sections"], [])
         self.assertEqual(plaintext, "")
 
+    def test_preserves_linked_images_and_br_separated_words(self):
+        page, plaintext = convert_ckeditor_html(
+            """
+            <h2>Line1<br>Line2</h2>
+            <p><a href="https://example.com"><img src="/media/uploads/a.jpg" alt="A"></a> after</p>
+            <table><caption>Title Cap</caption><tr><td>Cell One</td></tr></table>
+            """
+        )
+        blocks = page["sections"][0]["rows"][0]["columns"][0]["blocks"]
+
+        self.assertEqual(validate_page(page), [])
+        self.assertIn("image", [block["type"] for block in blocks])
+        self.assertIn("Line1", plaintext)
+        self.assertIn("Line2", plaintext)
+        self.assertIn("after", plaintext)
+        self.assertIn("Title Cap", plaintext)
+        self.assertIn("Cell One", plaintext)
+
 
 class TreatmentBuilderModelTests(TestCase):
     def test_treatment_uses_builder_without_legacy_columns(self):

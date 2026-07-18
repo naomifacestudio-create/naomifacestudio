@@ -114,11 +114,32 @@ def _serialize(node: _Node | str) -> str:
 
 
 def _text(node: _Node | str) -> str:
+    """Extract visible text without inventing word breaks between adjacent text nodes."""
     if isinstance(node, str):
         return node
-    separator = "\n" if node.tag in _BLOCK_TAGS or node.tag == "root" else ""
-    value = separator.join(_text(child) for child in node.children)
-    return re.sub(r"[ \t\r\f\v]+", " ", value).strip()
+    parts: list[str] = []
+    for child in node.children:
+        if isinstance(child, str):
+            parts.append(child)
+            continue
+        if child.tag == "br":
+            parts.append("\n")
+            continue
+        piece = _text(child)
+        if not piece:
+            continue
+        if child.tag in _BLOCK_TAGS or child.tag == "root":
+            if parts and not parts[-1].endswith("\n"):
+                parts.append("\n")
+            parts.append(piece)
+            if not piece.endswith("\n"):
+                parts.append("\n")
+        else:
+            parts.append(piece)
+    value = "".join(parts)
+    value = re.sub(r"[ \t\r\f\v]+", " ", value)
+    value = re.sub(r" *\n *", "\n", value)
+    return value.strip()
 
 
 def _find_first(node: _Node, tags: set[str]) -> _Node | None:
@@ -235,6 +256,44 @@ def _inline_text(children: list[_Node | str]) -> str:
     return sanitize_inline_html("".join(_serialize(child) for child in children))
 
 
+def _unwrap_media_container(node: _Node, container: _Node, *, heading_level: int | None = None) -> list[dict]:
+    """Preserve order of text and images inside wrappers such as linked <a><img></a>."""
+    blocks: list[dict] = []
+    inline_buffer: list[_Node | str] = []
+
+    def flush_inline() -> None:
+        value = _inline_text(inline_buffer)
+        inline_buffer.clear()
+        if not (value and _text_from_inline(value)):
+            return
+        if heading_level is not None:
+            blocks.append(create_heading_block(level=heading_level, text=value))
+        else:
+            blocks.append(create_text_block(text=value))
+
+    for child in node.children:
+        if isinstance(child, str):
+            inline_buffer.append(child)
+            continue
+        if child.tag == "img":
+            flush_inline()
+            block = _image_block(child, container)
+            if block:
+                blocks.append(block)
+            continue
+        if child.tag in _BLOCK_TAGS:
+            flush_inline()
+            blocks.extend(_node_blocks(child))
+            continue
+        if _find_first(child, {"img"}):
+            flush_inline()
+            blocks.extend(_unwrap_media_container(child, container, heading_level=heading_level))
+            continue
+        inline_buffer.append(child)
+    flush_inline()
+    return blocks
+
+
 def _container_blocks(node: _Node) -> list[dict]:
     """Split a container into editable text/media blocks in source order."""
     blocks: list[dict] = []
@@ -247,12 +306,19 @@ def _container_blocks(node: _Node) -> list[dict]:
             blocks.append(create_text_block(text=value))
 
     for child in node.children:
-        if isinstance(child, str) or child.tag not in _BLOCK_TAGS:
-            if isinstance(child, _Node) and child.tag == "img":
+        if isinstance(child, str):
+            inline_buffer.append(child)
+            continue
+        if child.tag == "img":
+            flush_inline()
+            block = _image_block(child, node)
+            if block:
+                blocks.append(block)
+            continue
+        if child.tag not in _BLOCK_TAGS:
+            if _find_first(child, {"img"}):
                 flush_inline()
-                block = _image_block(child, node)
-                if block:
-                    blocks.append(block)
+                blocks.extend(_unwrap_media_container(child, node))
             else:
                 inline_buffer.append(child)
             continue
@@ -263,7 +329,8 @@ def _container_blocks(node: _Node) -> list[dict]:
 
 
 def _text_from_inline(value: str) -> str:
-    return re.sub(r"<[^>]+>", "", value).replace("&nbsp;", " ").strip()
+    cleaned = re.sub(r"<br\s*/?>", "\n", value or "", flags=re.IGNORECASE)
+    return re.sub(r"<[^>]+>", "", cleaned).replace("&nbsp;", " ").replace("\xa0", " ").strip()
 
 
 def _list_block(node: _Node) -> dict | None:
@@ -281,8 +348,15 @@ def _list_block(node: _Node) -> dict | None:
 
 def _table_block(node: _Node) -> dict | None:
     rows: list[str] = []
+    caption = _find_first(node, {"caption"})
+    if caption:
+        caption_text = _text(caption)
+        if caption_text:
+            rows.append(caption_text)
 
     def visit(current: _Node) -> None:
+        if current.tag == "caption":
+            return
         if current.tag == "tr":
             cells = [
                 _text(child)
@@ -303,6 +377,8 @@ def _table_block(node: _Node) -> dict | None:
 def _node_blocks(node: _Node) -> list[dict]:
     if node.tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
         level = min(4, int(node.tag[1]))
+        if _find_first(node, {"img"}):
+            return _unwrap_media_container(node, node, heading_level=level)
         value = _inline_text(node.children)
         return [create_heading_block(level=level, text=value)] if _text_from_inline(value) else []
     if node.tag == "img":
@@ -420,7 +496,15 @@ def _assert_conversion_integrity(root: _Node, page: dict) -> None:
     original_words = _word_tokens(_text(root))
     converted_words = _word_tokens(extract_page_plaintext(page))
     if original_words and not _is_subsequence(original_words, converted_words):
-        raise ValueError("CKEditor conversion would omit or reorder visible text.")
+        iterator = iter(converted_words)
+        missing = next(
+            (token for token in original_words if not any(candidate == token for candidate in iterator)),
+            original_words[0],
+        )
+        raise ValueError(
+            "CKEditor conversion would omit or reorder visible text "
+            f"(first unmatched token: {missing!r})."
+        )
 
 
 def convert_ckeditor_html(html: str | None) -> tuple[dict, str]:

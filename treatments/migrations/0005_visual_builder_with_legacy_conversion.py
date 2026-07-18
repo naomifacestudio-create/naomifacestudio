@@ -12,7 +12,14 @@ def convert_ckeditor_content(apps, schema_editor):
             # Conversion is intentionally strict. Migrations are atomic on
             # PostgreSQL, so any failure aborts and leaves all original fields
             # and media untouched instead of accepting partial conversion.
-            page, plaintext = convert_ckeditor_html(legacy_html)
+            try:
+                page, plaintext = convert_ckeditor_html(legacy_html)
+            except Exception as exc:
+                title = getattr(treatment, "title_sr", None) or getattr(treatment, "title_en", "")
+                raise ValueError(
+                    f"Failed converting Treatment pk={treatment.pk} "
+                    f"title={title!r} locale={suffix}: {exc}"
+                ) from exc
             updates[f"body_page_{suffix}"] = page
             updates[f"body_plaintext_{suffix}"] = plaintext
             updates[f"page_version_{suffix}"] = 1 if page.get("sections") else 0

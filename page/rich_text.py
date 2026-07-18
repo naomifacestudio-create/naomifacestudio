@@ -127,4 +127,6 @@ def sanitize_inline_html(value: str) -> str:
 def inline_html_to_plaintext(value: str) -> str:
     from django.utils.html import strip_tags
 
-    return normalize_html_entities(strip_tags(value or "")).strip()
+    # Preserve word boundaries that <br> represented in the source HTML.
+    normalized = re.sub(r"<br\s*/?>", "\n", value or "", flags=re.IGNORECASE)
+    return normalize_html_entities(strip_tags(normalized)).strip()
