@@ -14,7 +14,6 @@ MANAGED_PREFIXES = (
     "content/featured",
     "seo/og",
     "seo/twitter",
-    "uploads",
     "blogs/thumbnails",
     "education/thumbnails",
     "treatments/thumbnails",

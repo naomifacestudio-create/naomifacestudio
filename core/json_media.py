@@ -12,7 +12,7 @@ class JsonMediaRef:
 
 
 PAGE_BODY_FIELDS = ("body_page_sr", "body_page_en")
-CLEANUP_PREFIXES = ("page/", "uploads/")
+CLEANUP_PREFIXES = ("page/",)
 
 
 def extract_media_refs_from_page(page):
