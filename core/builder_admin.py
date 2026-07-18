@@ -287,8 +287,15 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
         except (json.JSONDecodeError, UnicodeDecodeError):
             return JsonResponse({"ok": False, "error": "invalid_json"}, status=400)
         path = str((payload or {}).get("path") or "").strip()
+        media_type = str((payload or {}).get("media_type") or "image").strip()
         try:
-            result = EditorMediaService().resolve_existing_path(path, request=request)
+            service = EditorMediaService()
+            if media_type == "video":
+                result = service.resolve_existing_video_path(path, request=request)
+            elif media_type == "image":
+                result = service.resolve_existing_path(path, request=request)
+            else:
+                return JsonResponse({"ok": False, "error": "invalid_media_type"}, status=400)
         except EditorMediaError as exc:
             return JsonResponse({"ok": False, "error": exc.code}, status=400)
         return JsonResponse({"ok": True, "path": result.path, "url": result.url})

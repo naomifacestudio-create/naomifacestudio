@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import PurePosixPath
 
 from django.core.files.storage import storages
 from django.core.files.uploadedfile import UploadedFile
@@ -151,6 +152,30 @@ class EditorMediaService:
             path=cleaned,
             url=self.build_public_url(cleaned, request=request),
             alt="",
+        )
+
+    def resolve_existing_video_path(
+        self,
+        path: str,
+        *,
+        request=None,
+    ) -> EditorVideoUploadResult:
+        cleaned = str(path or "").strip().replace("\\", "/").lstrip("/")
+        if (
+            not cleaned
+            or cleaned.startswith(("http://", "https://"))
+            or ".." in cleaned.split("/")
+        ):
+            raise EditorMediaError("invalid_path")
+        if not cleaned.startswith("page/videos/"):
+            raise EditorMediaError("unsupported_path")
+        if PurePosixPath(cleaned).suffix.lower() not in {".mp4", ".webm", ".mov"}:
+            raise EditorMediaError("invalid_video")
+        if not storages["default"].exists(cleaned):
+            raise EditorMediaError("missing_file")
+        return EditorVideoUploadResult(
+            path=cleaned,
+            url=self.build_public_url(cleaned, request=request),
         )
 
     def build_public_url_or_rollback(

@@ -95,3 +95,34 @@ class ResolveExistingMediaTests(TestCase):
         )
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()["error"], "unsupported_path")
+
+    def test_resolve_existing_page_video(self):
+        video_path = "page/videos/2026/07/shared.mp4"
+        default_storage.save(video_path, ContentFile(b"video-content"))
+        url = reverse("admin:blogs_blog_page_resolve_media", args=(self.blog.pk,))
+        response = self.client.post(
+            url,
+            data=(
+                '{"path": "page/videos/2026/07/shared.mp4", '
+                '"media_type": "video"}'
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertTrue(payload["ok"])
+        self.assertEqual(payload["path"], video_path)
+        self.assertTrue(payload["url"])
+
+    def test_rejects_image_path_for_video_reuse(self):
+        url = reverse("admin:blogs_blog_page_resolve_media", args=(self.blog.pk,))
+        response = self.client.post(
+            url,
+            data=(
+                '{"path": "page/images/2026/07/shared.png", '
+                '"media_type": "video"}'
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["error"], "unsupported_path")

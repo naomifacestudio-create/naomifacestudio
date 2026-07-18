@@ -1710,7 +1710,7 @@
     }
   }
 
-  async function copyImagePath(path, input) {
+  async function copyMediaPath(path, input) {
     const value = String(path || "").trim();
     if (!value) {
       return false;
@@ -1749,7 +1749,7 @@
     return "";
   }
 
-  function resolveImageStoragePath(block) {
+  function resolveMediaStoragePath(block) {
     const existing = String(block?.attrs?.path || "").trim();
     if (existing) {
       return existing;
@@ -1761,10 +1761,10 @@
     return derived;
   }
 
-  function appendImagePathField(bodyEl, block, state) {
+  function appendMediaPathField(bodyEl, block, state, pathNoun, uploadNoun) {
     const existingPath = String(block?.attrs?.path || "").trim();
-    const path = resolveImageStoragePath(block);
-    const hasImage = Boolean(path || String(block?.attrs?.src || "").trim());
+    const path = resolveMediaStoragePath(block);
+    const hasMedia = Boolean(path || String(block?.attrs?.src || "").trim());
     // Backfill missing path from the public URL so reuse works after older uploads.
     if (path && !existingPath) {
       markDirty(state);
@@ -1773,20 +1773,20 @@
     const field = document.createElement("label");
     field.className = "page-builder__inspector-field";
     const label = document.createElement("span");
-    label.textContent = "Putanja slike";
+    label.textContent = `Putanja ${pathNoun}`;
     const controls = document.createElement("div");
     controls.className = "page-builder__image-path-controls";
     const input = document.createElement("input");
     input.type = "text";
     input.readOnly = true;
-    input.setAttribute("aria-label", "Putanja slike");
+    input.setAttribute("aria-label", `Putanja ${pathNoun}`);
     if (path) {
       input.value = path;
     } else {
       input.value = "";
-      input.placeholder = hasImage
-        ? "Putanja nije dostupna — učitajte sliku ponovno"
-        : "Učitajte sliku da biste dobili putanju";
+      input.placeholder = hasMedia
+        ? `Putanja nije dostupna — učitajte ${uploadNoun} ponovno`
+        : `Učitajte ${uploadNoun} da biste dobili putanju`;
     }
     const copyBtn = document.createElement("button");
     copyBtn.type = "button";
@@ -1794,10 +1794,10 @@
     copyBtn.className = "page-builder__inspector-btn page-builder__inspector-btn--inline";
     copyBtn.disabled = !path;
     copyBtn.addEventListener("click", async () => {
-      const copied = await copyImagePath(path, input);
+      const copied = await copyMediaPath(path, input);
       showToast(
         state.root,
-        copied ? "Putanja slike je kopirana." : "Kopiranje nije uspjelo. Označite i kopirajte putanju ručno.",
+        copied ? `Putanja ${pathNoun} je kopirana.` : "Kopiranje nije uspjelo. Označite i kopirajte putanju ručno.",
         !copied,
       );
     });
@@ -1888,7 +1888,7 @@
         state.fileInput.click();
       });
       bodyEl.appendChild(uploadBtn);
-      appendImagePathField(bodyEl, state.selection.block, state);
+      appendMediaPathField(bodyEl, state.selection.block, state, "slike", "sliku");
 
       const reuseField = document.createElement("label");
       reuseField.className = "page-builder__inspector-field";
@@ -1908,10 +1908,11 @@
       reuseBtn.className = "page-builder__inspector-btn";
       reuseBtn.addEventListener("click", async () => {
         reuseBtn.disabled = true;
-        const result = await resolveExistingImage(
+        const result = await resolveExistingMedia(
           state,
           state.selection.block,
           reuseInput.value,
+          "image",
         );
         reuseBtn.disabled = false;
         if (!result.ok) {
@@ -1962,6 +1963,42 @@
         state.videoFileInput.click();
       });
       bodyEl.appendChild(uploadBtn);
+      appendMediaPathField(bodyEl, videoBlock, state, "videa", "video");
+
+      const reuseField = document.createElement("label");
+      reuseField.className = "page-builder__inspector-field";
+      const reuseLabel = document.createElement("span");
+      reuseLabel.textContent = "Postojeći video (storage path)";
+      const reuseInput = document.createElement("input");
+      reuseInput.type = "text";
+      reuseInput.placeholder = "page/videos/...";
+      reuseInput.value = "";
+      reuseField.appendChild(reuseLabel);
+      reuseField.appendChild(reuseInput);
+      bodyEl.appendChild(reuseField);
+
+      const reuseBtn = document.createElement("button");
+      reuseBtn.type = "button";
+      reuseBtn.textContent = "Koristi postojeći video";
+      reuseBtn.className = "page-builder__inspector-btn";
+      reuseBtn.addEventListener("click", async () => {
+        reuseBtn.disabled = true;
+        const result = await resolveExistingMedia(
+          state,
+          videoBlock,
+          reuseInput.value,
+          "video",
+        );
+        reuseBtn.disabled = false;
+        if (!result.ok) {
+          showToast(state.root, result.message || "Putanja nije valjana.", true);
+          return;
+        }
+        reuseInput.value = "";
+        showToast(state.root, "Postojeći video je primijenjen.");
+      });
+      bodyEl.appendChild(reuseBtn);
+
       const videoHint = document.createElement("p");
       videoHint.className = "page-builder__inspector-hint";
       videoHint.textContent =
@@ -2258,13 +2295,17 @@
     }
   }
 
-  async function resolveExistingImage(state, block, draftPath) {
+  async function resolveExistingMedia(state, block, draftPath, mediaType) {
+    const isVideo = mediaType === "video";
+    const mediaName = isVideo ? "videa" : "slike";
+    const existingMediaName = isVideo ? "postojećeg videa" : "postojeće slike";
+    const examplePath = isVideo ? "page/videos/..." : "page/images/...";
     if (!state.resolveMediaUrl || !block) {
-      return { ok: false, message: "Ponovno korištenje slike nije dostupno." };
+      return { ok: false, message: `Ponovno korištenje ${mediaName} nije dostupno.` };
     }
     const path = String(draftPath || "").trim();
     if (!path) {
-      return { ok: false, message: "Unesite storage path (npr. page/images/...)." };
+      return { ok: false, message: `Unesite storage path (npr. ${examplePath}).` };
     }
     try {
       const response = await fetch(state.resolveMediaUrl, {
@@ -2274,25 +2315,33 @@
           "Content-Type": "application/json",
           "X-CSRFToken": getCsrfToken(),
         },
-        body: JSON.stringify({ path }),
+        body: JSON.stringify({ path, media_type: mediaType }),
         signal: AbortSignal.timeout(PAGE_SAVE_TIMEOUT_MS),
       });
       const data = await response.json();
       if (!response.ok || !data.ok) {
         return {
           ok: false,
-          message: "Putanja nije valjana ili datoteka nije ispravna slika.",
+          message: `Putanja nije valjana ili datoteka nije ispravan ${isVideo ? "video" : "format slike"}.`,
         };
       }
       block.attrs.path = data.path;
       block.attrs.src = data.url;
-      block.attrs.media_asset_id = "";
+      if (isVideo) {
+        block.attrs.url = "";
+        block.attrs.poster = "";
+        block.attrs.poster_path = "";
+        block.attrs.video_width = "";
+        block.attrs.video_height = "";
+      } else {
+        block.attrs.media_asset_id = "";
+      }
       markDirty(state);
       renderCanvas(state);
       renderEditPanel(state);
       return { ok: true };
     } catch (_error) {
-      return { ok: false, message: "Mrežna greška pri učitavanju postojeće slike." };
+      return { ok: false, message: `Mrežna greška pri učitavanju ${existingMediaName}.` };
     }
   }
 
@@ -2428,12 +2477,15 @@
           onProgress(100);
         }
         block.attrs.src = data.url;
-        block.attrs.path = data.path;
+        block.attrs.path = data.path || storagePathFromSrc(data.url) || "";
         block.attrs.url = "";
         trackSessionUpload(state, "default", data.path);
         markDirty(state);
         renderCanvas(state);
         renderEditPanel(state);
+        if (block.attrs.path) {
+          showToast(state.root, `Putanja: ${block.attrs.path}`);
+        }
         resolve({ ok: true });
       });
 
