@@ -1773,7 +1773,7 @@
     const field = document.createElement("label");
     field.className = "page-builder__inspector-field";
     const label = document.createElement("span");
-    label.textContent = "Putanja slike (kopiraj za Engleski)";
+    label.textContent = "Putanja slike";
     const controls = document.createElement("div");
     controls.className = "page-builder__image-path-controls";
     const input = document.createElement("input");
