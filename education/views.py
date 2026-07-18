@@ -31,7 +31,7 @@ def education_detail(request, slug):
     if language_code == 'en':
         education = get_object_or_404(qs, slug_en=slug)
     else:
-        education = get_object_or_404(qs, slug_sr=slug)
+        education = get_object_or_404(qs, slug_hr=slug)
 
     if not preview and not education.is_active:
         raise Http404

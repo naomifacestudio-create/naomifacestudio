@@ -31,7 +31,7 @@ def blog_detail(request, slug):
     if language_code == 'en':
         blog = get_object_or_404(qs, slug_en=slug)
     else:
-        blog = get_object_or_404(qs, slug_sr=slug)
+        blog = get_object_or_404(qs, slug_hr=slug)
 
     if not preview and not blog.is_active:
         raise Http404

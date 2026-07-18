@@ -24,14 +24,14 @@ from seo.services import get_metadata
 
 class LocalizedBuilderAdmin(admin.ModelAdmin):
     change_form_template = "admin/content_builder/change_form.html"
-    list_display = ("title_sr", "is_active", "updated_at")
+    list_display = ("title_hr", "is_active", "updated_at")
     list_filter = ("is_active",)
-    search_fields = ("title_sr", "title_en", "body_plaintext_sr", "body_plaintext_en")
+    search_fields = ("title_hr", "title_en", "body_plaintext_hr", "body_plaintext_en")
     readonly_fields = ("created_at", "updated_at")
     inlines = (SeoMetadataInline,)
     fieldsets = (
-        (_("Serbian Content"), {
-            "fields": ("title_sr", "slug_sr", "short_description_sr"),
+        (_("Croatian Content"), {
+            "fields": ("title_hr", "slug_hr", "short_description_hr"),
         }),
         (_("English Content"), {
             "fields": ("title_en", "slug_en", "short_description_en"),
@@ -40,7 +40,7 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
         (_("Dates"), {"fields": ("created_at", "updated_at")}),
     )
     exclude = (
-        "body_page_sr", "body_plaintext_sr", "page_version_sr",
+        "body_page_hr", "body_plaintext_hr", "page_version_hr",
         "body_page_en", "body_plaintext_en", "page_version_en",
     )
 
@@ -60,8 +60,8 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
     def add_view(self, request, form_url="", extra_context=None):
         if request.method == "GET":
             create_kwargs = {
-                "title_sr": "Bez naslova",
-                "slug_sr": f"draft-{uuid.uuid4().hex[:12]}",
+                "title_hr": "Bez naslova",
+                "slug_hr": f"draft-{uuid.uuid4().hex[:12]}",
                 "title_en": "Untitled",
                 "slug_en": f"draft-{uuid.uuid4().hex[:12]}",
                 "is_active": False,
@@ -86,7 +86,7 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
                 self.has_change_permission(request, obj)
                 and request.user.has_perm("seo.add_seometadata")
             ):
-                get_metadata(obj, "sr", create=True)
+                get_metadata(obj, "hr", create=True)
                 get_metadata(obj, "en", create=True)
             base = f"admin:{obj._meta.app_label}_{obj._meta.model_name}"
             documents = {}
@@ -104,7 +104,7 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
                     "title_field": f"title{suffix}",
                     "slug_field": f"slug{suffix}",
                     "excerpt_field": f"short_description{suffix}",
-                    "seo_locale": "en" if document_locale == "en" else "sr",
+                    "seo_locale": "en" if document_locale == "en" else "hr",
                 }
             current_document = documents[locale]
             extra_context.update({
@@ -242,7 +242,7 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
                 {
                     "ok": False,
                     "error": "server_error",
-                    "message": "Neočekivana greška pri čuvanju stranice.",
+                    "message": "Neočekivana pogreška pri spremanju stranice.",
                 },
                 status=500,
             )

@@ -24,7 +24,7 @@ class PageValidationError(ValueError):
 
 def validate_page(page: Any) -> list[str]:
     if not is_supported_page(page):
-        return ["Stranica mora biti iv_page_v1 sa listom sections."]
+        return ["Stranica mora biti iv_page_v1 s popisom sections."]
 
     normalized = normalize_page(page)
     errors: list[str] = []
@@ -42,7 +42,7 @@ def validate_page_or_raise(page: Any) -> None:
 
 def _validate_section(section: Any, errors: list[str], *, path: str) -> None:
     if not isinstance(section, dict):
-        errors.append(f"{path}: sekcija mora biti objekat.")
+        errors.append(f"{path}: sekcija mora biti objekt.")
         return
 
     section_id = section.get("id")
@@ -51,7 +51,7 @@ def _validate_section(section: Any, errors: list[str], *, path: str) -> None:
 
     settings = section.get("settings")
     if settings is not None and not isinstance(settings, dict):
-        errors.append(f"{path}: settings mora biti objekat.")
+        errors.append(f"{path}: settings mora biti objekt.")
     elif isinstance(settings, dict):
         _validate_section_settings(settings, errors, path=f"{path}.settings")
 
@@ -71,19 +71,19 @@ def _validate_section_settings(settings: dict[str, Any], errors: list[str], *, p
     ):
         value = settings.get(key)
         if value is not None and value not in allowed:
-            errors.append(f"{path}.{key}: nevažeća vrednost '{value}'.")
+            errors.append(f"{path}.{key}: nevažeća vrijednost '{value}'.")
 
     background_color = settings.get("background_color")
     if background_color is not None and not isinstance(background_color, str):
-        errors.append(f"{path}.background_color: mora biti string.")
+        errors.append(f"{path}.background_color: mora biti tekst.")
     elif isinstance(background_color, str) and background_color.strip():
         if not normalize_hex_color(background_color):
-            errors.append(f"{path}.background_color: unesite validan hex (#RGB ili #RRGGBB).")
+            errors.append(f"{path}.background_color: unesite valjani hex (#RGB ili #RRGGBB).")
 
 
 def _validate_row(row: Any, errors: list[str], *, path: str) -> None:
     if not isinstance(row, dict):
-        errors.append(f"{path}: red mora biti objekat.")
+        errors.append(f"{path}: red mora biti objekt.")
         return
 
     row_id = row.get("id")
@@ -92,15 +92,15 @@ def _validate_row(row: Any, errors: list[str], *, path: str) -> None:
 
     settings = row.get("settings")
     if settings is not None and not isinstance(settings, dict):
-        errors.append(f"{path}: settings mora biti objekat.")
+        errors.append(f"{path}: settings mora biti objekt.")
     elif isinstance(settings, dict):
         valign = settings.get("vertical_align")
         if valign is not None and valign not in _ALLOWED_VERTICAL_ALIGN:
-            errors.append(f"{path}.settings.vertical_align: nevažeća vrednost.")
+            errors.append(f"{path}.settings.vertical_align: nevažeća vrijednost.")
 
     columns = row.get("columns")
     if not isinstance(columns, list) or not columns:
-        errors.append(f"{path}: red mora imati bar jednu kolonu.")
+        errors.append(f"{path}: red mora imati barem jedan stupac.")
         return
 
     total_desktop = 0
@@ -112,12 +112,12 @@ def _validate_row(row: Any, errors: list[str], *, path: str) -> None:
             total_desktop += width
 
     if total_desktop > 12:
-        errors.append(f"{path}: zbir širina kolona na desktopu ne sme biti veći od 12.")
+        errors.append(f"{path}: zbroj širina stupaca na računalu ne smije biti veći od 12.")
 
 
 def _validate_column(column: Any, errors: list[str], *, path: str) -> None:
     if not isinstance(column, dict):
-        errors.append(f"{path}: kolona mora biti objekat.")
+        errors.append(f"{path}: stupac mora biti objekt.")
         return
 
     column_id = column.get("id")
@@ -126,7 +126,7 @@ def _validate_column(column: Any, errors: list[str], *, path: str) -> None:
 
     settings = column.get("settings")
     if settings is not None and not isinstance(settings, dict):
-        errors.append(f"{path}: settings mora biti objekat.")
+        errors.append(f"{path}: settings mora biti objekt.")
     elif isinstance(settings, dict):
         for width_key in ("width_mobile", "width_tablet", "width_desktop"):
             width = settings.get(width_key)
@@ -134,7 +134,7 @@ def _validate_column(column: Any, errors: list[str], *, path: str) -> None:
                 errors.append(f"{path}.settings.{width_key}: mora biti 1–12.")
         align = settings.get("horizontal_align")
         if align is not None and align not in _ALLOWED_ALIGN:
-            errors.append(f"{path}.settings.horizontal_align: nevažeća vrednost.")
+            errors.append(f"{path}.settings.horizontal_align: nevažeća vrijednost.")
 
     blocks = column.get("blocks")
     if not isinstance(blocks, list):
@@ -147,7 +147,7 @@ def _validate_column(column: Any, errors: list[str], *, path: str) -> None:
 
 def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
     if not isinstance(block, dict):
-        errors.append(f"{path}: element mora biti objekat.")
+        errors.append(f"{path}: element mora biti objekt.")
         return
 
     block_id = block.get("id")
@@ -161,17 +161,17 @@ def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
 
     settings = block.get("settings")
     if settings is not None and not isinstance(settings, dict):
-        errors.append(f"{path}: settings mora biti objekat.")
+        errors.append(f"{path}: settings mora biti objekt.")
     elif isinstance(settings, dict):
         align = settings.get("align")
         if align is not None and align not in _ALLOWED_ALIGN:
-            errors.append(f"{path}.settings.align: nevažeća vrednost.")
+            errors.append(f"{path}.settings.align: nevažeća vrijednost.")
         width_percent = settings.get("width_percent")
         if width_percent is not None:
             try:
                 width_value = int(str(width_percent).strip())
             except (TypeError, ValueError):
-                errors.append(f"{path}.settings.width_percent: mora biti ceo broj.")
+                errors.append(f"{path}.settings.width_percent: mora biti cijeli broj.")
             else:
                 if not MEDIA_WIDTH_PERCENT_MIN <= width_value <= MEDIA_WIDTH_PERCENT_MAX:
                     errors.append(
@@ -181,7 +181,7 @@ def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
 
     attrs = block.get("attrs")
     if attrs is not None and not isinstance(attrs, dict):
-        errors.append(f"{path}: attrs mora biti objekat.")
+        errors.append(f"{path}: attrs mora biti objekt.")
         return
 
     attrs = attrs or {}
@@ -204,7 +204,7 @@ def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
         if not isinstance(href, str):
             errors.append(f"{path}: button href mora biti string.")
         elif href.strip() and not _is_safe_href(href):
-            errors.append(f"{path}: button href nije dozvoljen.")
+            errors.append(f"{path}: button href nije dopušten.")
 
     elif block_type == BlockType.IMAGE:
         src = attrs.get("src") or attrs.get("path") or ""
@@ -228,7 +228,7 @@ def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
             from page.blocks.youtube import is_youtube_url
 
             if not is_youtube_url(url):
-                errors.append(f"{path}: video url mora biti validan YouTube link.")
+                errors.append(f"{path}: video url mora biti valjana YouTube poveznica.")
         elif not path:
             pass
         elif not isinstance(path, str):
@@ -243,11 +243,11 @@ def _validate_block(block: Any, errors: list[str], *, path: str) -> None:
             errors.append(f"{path}: faq style mora biti accordion ili list.")
         items = attrs.get("items")
         if not isinstance(items, list) or not items:
-            errors.append(f"{path}: faq mora imati bar jedno pitanje.")
+            errors.append(f"{path}: faq mora imati barem jedno pitanje.")
         else:
             for item_index, item in enumerate(items):
                 if not isinstance(item, dict):
-                    errors.append(f"{path}.items[{item_index}]: stavka mora biti objekat.")
+                    errors.append(f"{path}.items[{item_index}]: stavka mora biti objekt.")
                     continue
                 if not isinstance(item.get("question"), str):
                     errors.append(f"{path}.items[{item_index}]: question mora biti string.")

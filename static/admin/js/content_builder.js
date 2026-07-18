@@ -2,16 +2,16 @@
   "use strict";
 
   const LOCALIZED_FIELDS = {
-    "sr-latn": ["title_sr", "slug_sr", "short_description_sr"],
+    hr: ["title_hr", "slug_hr", "short_description_hr"],
     en: ["title_en", "slug_en", "short_description_en"],
   };
   const LOCALE_LABELS = {
-    "sr-latn": "Srpski (latinica)",
+    hr: "Hrvatski",
     en: "Engleski",
   };
 
   function setDetailsLocale(root, locale) {
-    const activeFields = new Set(LOCALIZED_FIELDS[locale] || LOCALIZED_FIELDS["sr-latn"]);
+    const activeFields = new Set(LOCALIZED_FIELDS[locale] || LOCALIZED_FIELDS.hr);
     const allFields = Object.values(LOCALIZED_FIELDS).flat();
     allFields.forEach((fieldName) => {
       root.querySelectorAll(`.field-${fieldName}`).forEach((row) => {
@@ -20,7 +20,7 @@
     });
     const label = root.querySelector("[data-builder-active-locale]");
     if (label) {
-      label.textContent = LOCALE_LABELS[locale] || LOCALE_LABELS["sr-latn"];
+      label.textContent = LOCALE_LABELS[locale] || LOCALE_LABELS.hr;
     }
   }
 
@@ -32,7 +32,7 @@
       const heading = profile.querySelector(":scope > h3");
       if (!heading || heading.querySelector("[data-seo-profile-toggle]")) return;
 
-      const label = index === 0 ? "Srpski SEO" : "Engleski SEO";
+      const label = index === 0 ? "Hrvatski SEO" : "Engleski SEO";
       heading.textContent = "";
       const title = document.createElement("span");
       title.textContent = label;
@@ -112,7 +112,7 @@
     });
 
     const localeInput = root.querySelector('[name="_builder_locale"]');
-    setDetailsLocale(root, localeInput?.value || "sr-latn");
+    setDetailsLocale(root, localeInput?.value || "hr");
     mountSeoProfileCollapsibles(root);
 
     const currentUrl = new URL(window.location.href);

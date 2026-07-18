@@ -1,12 +1,12 @@
-"""Helpers for models that store parallel sr/en fields (Serbian Latin + English)."""
+"""Helpers for models that store parallel hr/en fields (Croatian + English)."""
 
-DEFAULT_CONTENT_LANGUAGE = 'sr'
-DEFAULT_DJANGO_LANGUAGE = 'sr-latn'
+DEFAULT_CONTENT_LANGUAGE = 'hr'
+DEFAULT_DJANGO_LANGUAGE = 'hr'
 
 
 def active_django_language(language_code=None):
     """
-    Resolve a Django locale code from LANGUAGES (``sr-latn`` / ``en``).
+    Resolve a Django locale code from LANGUAGES (``hr`` / ``en``).
     """
     if language_code is None:
         from django.utils.translation import get_language
@@ -16,7 +16,8 @@ def active_django_language(language_code=None):
     normalized = str(language_code).lower().replace('_', '-')
     if normalized.startswith('en'):
         return 'en'
-    if normalized.startswith('sr'):
+    # Treat leftover Serbian cookies/locales as Croatian after the locale restore.
+    if normalized.startswith(('hr', 'sr')):
         return DEFAULT_DJANGO_LANGUAGE
     return DEFAULT_DJANGO_LANGUAGE
 
@@ -25,8 +26,7 @@ def active_language_code(language_code=None):
     """
     Resolve the content-field language code used by bilingual models.
 
-    Django locale codes may be ``sr-latn`` / ``sr_Latn`` / ``sr``; content fields
-    use the short ``sr`` / ``en`` suffixes.
+    Content fields use the ``hr`` / ``en`` suffixes.
     """
     if language_code is None:
         from django.utils.translation import get_language
@@ -36,6 +36,7 @@ def active_language_code(language_code=None):
     normalized = str(language_code).lower().replace('_', '-')
     if normalized.startswith('en'):
         return 'en'
-    if normalized.startswith('sr'):
-        return 'sr'
+    # Treat leftover Serbian cookies/locales as Croatian after the locale restore.
+    if normalized.startswith(('hr', 'sr')):
+        return 'hr'
     return DEFAULT_CONTENT_LANGUAGE

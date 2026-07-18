@@ -138,15 +138,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# Admin interface and default public locale use Serbian Latin
-LANGUAGE_CODE = 'sr-latn'
+# Admin interface and default public locale use Croatian
+LANGUAGE_CODE = 'hr'
 # Studio is in Rijeka; keep local business timezone
 TIME_ZONE = 'Europe/Zagreb'
 USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('sr-latn', 'Serbian'),
+    ('hr', 'Croatian'),
     ('en', 'English'),
 ]
 

@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class SeoMetadata(models.Model):
-    LOCALES = (("sr", _("Serbian")), ("en", _("English")))
+    LOCALES = (("hr", _("Croatian")), ("en", _("English")))
 
     content_type = models.ForeignKey(
         ContentType,
@@ -86,8 +86,8 @@ class SeoMetadata(models.Model):
                 name="seo_unique_object_locale",
             ),
             models.CheckConstraint(
-                check=models.Q(locale__in=("sr", "en")),
-                name="seo_locale_sr_or_en",
+                check=models.Q(locale__in=("hr", "en")),
+                name="seo_locale_hr_or_en",
             ),
         ]
         indexes = [models.Index(fields=("content_type", "object_id", "locale"))]
@@ -118,7 +118,7 @@ class SeoMetadata(models.Model):
 
         content = self.content_object
         if content is not None:
-            analysis_locale = "sr-latn" if self.locale == "sr" else "en"
+            analysis_locale = "hr" if self.locale == "hr" else "en"
             from page.seo_content import extract_page_analysis_parts
 
             parts = extract_page_analysis_parts(

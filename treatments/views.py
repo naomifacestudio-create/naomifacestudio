@@ -37,7 +37,7 @@ def treatment_detail(request, slug):
     if language_code == 'en':
         treatment = get_object_or_404(queryset, slug_en=slug)
     else:
-        treatment = get_object_or_404(queryset, slug_sr=slug)
+        treatment = get_object_or_404(queryset, slug_hr=slug)
     
     context = {
         'treatment': treatment,

@@ -11,7 +11,7 @@ class JsonMediaRef:
     path: str
 
 
-PAGE_BODY_FIELDS = ("body_page_sr", "body_page_en")
+PAGE_BODY_FIELDS = ("body_page_hr", "body_page_en")
 CLEANUP_PREFIXES = ("page/",)
 
 

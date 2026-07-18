@@ -94,7 +94,7 @@ def gift_voucher_form(request):
     return render(request, 'gift_vouchers/form.html', context)
 
 
-def send_gift_voucher_emails(gift_voucher, language_code='sr-latn'):
+def send_gift_voucher_emails(gift_voucher, language_code='hr'):
     """Send gift voucher emails to purchaser, recipient, and admin"""
     # Activate the language for email rendering
     current_language = get_language()

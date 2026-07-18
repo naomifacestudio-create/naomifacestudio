@@ -54,11 +54,11 @@ class OrphanCleanupCommandTests(TestCase):
 class ResolveExistingMediaTests(TestCase):
     def setUp(self):
         self.blog = Blog.objects.create(
-            title_sr="Naslov",
-            slug_sr="naslov-reuse",
+            title_hr="Naslov",
+            slug_hr="naslov-reuse",
             title_en="Title",
             slug_en="title-reuse",
-            body_page_sr=empty_page(),
+            body_page_hr=empty_page(),
             body_page_en=empty_page(),
             is_active=False,
         )

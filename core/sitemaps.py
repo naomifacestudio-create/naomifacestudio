@@ -13,7 +13,7 @@ def sitemap_content(model):
     content_type = ContentType.objects.get_for_model(model)
     excluded_ids = SeoMetadata.objects.filter(
         content_type=content_type,
-        locale="sr",
+        locale="hr",
         include_in_sitemap=False,
     ).values_list("object_id", flat=True)
     return model.objects.filter(is_active=True).exclude(pk__in=excluded_ids)
@@ -34,7 +34,7 @@ class StaticViewSitemap(Sitemap):
         )
 
     def location(self, item):
-        with translation.override("sr-latn"):
+        with translation.override("hr"):
             return reverse(item)
 
 
@@ -47,8 +47,8 @@ class BuilderContentSitemap(Sitemap):
         return sitemap_content(self.model)
 
     def location(self, obj):
-        with translation.override("sr-latn"):
-            return obj.get_absolute_url("sr-latn")
+        with translation.override("hr"):
+            return obj.get_absolute_url("hr")
 
     def lastmod(self, obj):
         return obj.updated_at

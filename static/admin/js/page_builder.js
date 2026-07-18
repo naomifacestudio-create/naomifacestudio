@@ -21,7 +21,7 @@
     image: "Slika",
     video: "Video",
     faq: "FAQ",
-    button: "Dugme",
+    button: "Gumb",
     divider: "Linija",
   };
 
@@ -75,9 +75,9 @@
   const FONT_SIZE_DEFAULT_PX = 16;
 
   const SAVE_LABELS = {
-    saved: "Sačuvano",
-    saving: "Čuva se…",
-    dirty: "Nesačuvano",
+    saved: "Spremljeno",
+    saving: "Sprema se…",
+    dirty: "Nije spremljeno",
     error: "Greška",
     conflict: "Konflikt",
   };
@@ -87,8 +87,8 @@
     sm: "Malo",
     md: "Srednje",
     lg: "Veliko",
-    default: "Podrazumevano",
-    light: "Svetla",
+    default: "Zadano",
+    light: "Svijetla",
     dark: "Tamna",
     accent: "Naglašena",
     contained: "Ograničena",
@@ -96,7 +96,7 @@
     top: "Gore",
     center: "Sredina",
     bottom: "Dole",
-    left: "Levo",
+    left: "Lijevo",
     right: "Desno",
     primary: "Primarno",
     secondary: "Sekundarno",
@@ -997,7 +997,7 @@
       if (!trimmed) {
         document.execCommand("unlink", false, null);
       } else if (!isSafeHref(trimmed)) {
-        showToast(state.root, "Link nije dozvoljen (koristite http/https, / ili #).", true);
+        showToast(state.root, "Poveznica nije dopuštena (koristite http/https, / ili #).", true);
         return;
       } else {
         document.execCommand("createLink", false, trimmed);
@@ -1302,9 +1302,9 @@
     hint.className = "page-builder__panel-hint";
     if (state.targetColumnId) {
       hint.classList.add("is-active");
-      hint.textContent = "Izaberite widget u listi ispod da ga dodate u označenu kolonu.";
+      hint.textContent = "Odaberite widget na popisu ispod kako biste ga dodali u označeni stupac.";
     } else {
-      hint.textContent = "Prvo kliknite kolonu na stranici, zatim izaberite widget.";
+      hint.textContent = "Prvo kliknite stupac na stranici, zatim odaberite widget.";
     }
     state.panelWidgets.appendChild(hint);
 
@@ -1325,7 +1325,7 @@
         `<span>${element.label}</span>`;
       card.addEventListener("click", () => {
         if (!state.targetColumnId) {
-          showToast(state.root, "Prvo kliknite kolonu na stranici.", true);
+          showToast(state.root, "Prvo kliknite stupac na stranici.", true);
           setPanelTab(state, "widgets");
           return;
         }
@@ -1384,10 +1384,10 @@
 
         row.columns.forEach((column, columnIndex) => {
           tree.appendChild(
-            navItem(state, `Kolona ${columnIndex + 1}`, "column", column.id, "column", {
+            navItem(state, `Stupac ${columnIndex + 1}`, "column", column.id, "column", {
               kind: "column",
               id: column.id,
-              label: "Kolona",
+              label: "Stupac",
               settings: column.settings,
               fields: state.catalog.column_settings,
             }, "page-builder__nav-btn--column"),
@@ -1679,14 +1679,14 @@
     label.className = "page-builder__upload-progress-label";
     label.dataset.videoUploadProgressLabel = "1";
     const percent = Number.isFinite(upload.percent) ? upload.percent : 0;
-    label.textContent = percent > 0 ? `Otpremanje: ${percent}%` : "Priprema otpremanja…";
+    label.textContent = percent > 0 ? `Učitavanje: ${percent}%` : "Priprema učitavanja…";
 
     const progress = document.createElement("progress");
     progress.className = "page-builder__upload-progress-bar";
     progress.max = 100;
     progress.value = percent;
     progress.dataset.videoUploadProgressBar = "1";
-    progress.setAttribute("aria-label", "Napredak otpremanja video fajla");
+    progress.setAttribute("aria-label", "Napredak učitavanja video datoteke");
 
     wrap.appendChild(label);
     wrap.appendChild(progress);
@@ -1703,7 +1703,7 @@
     const label = state.inspectorBody?.querySelector("[data-video-upload-progress-label]");
     const progress = state.inspectorBody?.querySelector("[data-video-upload-progress-bar]");
     if (label) {
-      label.textContent = normalized > 0 ? `Otpremanje: ${normalized}%` : "Priprema otpremanja…";
+      label.textContent = normalized > 0 ? `Učitavanje: ${normalized}%` : "Priprema učitavanja…";
     }
     if (progress) {
       progress.value = normalized;
@@ -1750,7 +1750,7 @@
       const copied = await copyImagePath(path, input);
       showToast(
         state.root,
-        copied ? "Putanja slike je kopirana." : "Kopiranje nije uspelo. Označite i kopirajte putanju ručno.",
+        copied ? "Putanja slike je kopirana." : "Kopiranje nije uspjelo. Označite i kopirajte putanju ručno.",
         !copied,
       );
     });
@@ -1834,7 +1834,7 @@
     if (state.selection.type === "image") {
       const uploadBtn = document.createElement("button");
       uploadBtn.type = "button";
-      uploadBtn.textContent = "Otpremi sliku";
+      uploadBtn.textContent = "Učitaj sliku";
       uploadBtn.className = "page-builder__inspector-btn";
       uploadBtn.addEventListener("click", () => {
         state.pendingImageBlock = state.selection.block;
@@ -1868,11 +1868,11 @@
         );
         reuseBtn.disabled = false;
         if (!result.ok) {
-          showToast(state.root, result.message || "Putanja nije validna.", true);
+          showToast(state.root, result.message || "Putanja nije valjana.", true);
           return;
         }
         reuseInput.value = "";
-        showToast(state.root, "Postojeća slika je primenjena.");
+        showToast(state.root, "Postojeća slika je primijenjena.");
       });
       bodyEl.appendChild(reuseBtn);
 
@@ -1907,7 +1907,7 @@
       });
       const uploadBtn = document.createElement("button");
       uploadBtn.type = "button";
-      uploadBtn.textContent = isUploading ? "Otpremanje videa…" : "Otpremi video fajl";
+      uploadBtn.textContent = isUploading ? "Učitavanje videa…" : "Učitaj video datoteku";
       uploadBtn.className = "page-builder__inspector-btn";
       uploadBtn.disabled = isUploading;
       uploadBtn.addEventListener("click", () => {
@@ -1918,7 +1918,7 @@
       const videoHint = document.createElement("p");
       videoHint.className = "page-builder__inspector-hint";
       videoHint.textContent =
-        "Podržano: MP4 (H.264) i WebM. Učitani fajl koristi svoj prirodni odnos strana.";
+        "Podržano: MP4 (H.264) i WebM. Učitana datoteka koristi svoj prirodni omjer stranica.";
       bodyEl.appendChild(videoHint);
 
       if (isUploading) {
@@ -1928,7 +1928,7 @@
       if (videoBlock.attrs.path || videoBlock.attrs.src) {
         const clearBtn = document.createElement("button");
         clearBtn.type = "button";
-        clearBtn.textContent = "Ukloni video fajl";
+        clearBtn.textContent = "Ukloni video datoteku";
         clearBtn.className = "page-builder__inspector-btn";
         clearBtn.addEventListener("click", () => {
           videoBlock.attrs.path = "";
@@ -2025,7 +2025,7 @@
     }
 
     if (state.selection.type === "button") {
-      appendTextField(bodyEl, "Tekst dugmeta", state.selection.block.attrs.label, (value) => {
+      appendTextField(bodyEl, "Tekst gumba", state.selection.block.attrs.label, (value) => {
         state.selection.block.attrs.label = value;
         markDirty(state);
         renderCanvas(state);
@@ -2169,7 +2169,7 @@
 
   async function uploadImage(state, file, block) {
     if (!state.uploadUrl || !file) {
-      return { ok: false, message: "Otpremanje nije dostupno." };
+      return { ok: false, message: "Učitavanje nije dostupno." };
     }
 
     const formData = new FormData();
@@ -2185,7 +2185,7 @@
       });
       const data = await response.json();
       if (!response.ok || !data.ok) {
-        return { ok: false, message: "Otpremanje slike nije uspelo." };
+        return { ok: false, message: "Učitavanje slike nije uspjelo." };
       }
 
       block.attrs.src = data.url;
@@ -2204,13 +2204,13 @@
       renderEditPanel(state);
       return { ok: true };
     } catch (_error) {
-      return { ok: false, message: "Mrežna greška pri otpremanju slike." };
+      return { ok: false, message: "Mrežna greška pri učitavanju slike." };
     }
   }
 
   async function resolveExistingImage(state, block, draftPath) {
     if (!state.resolveMediaUrl || !block) {
-      return { ok: false, message: "Ponovno korišćenje slike nije dostupno." };
+      return { ok: false, message: "Ponovno korištenje slike nije dostupno." };
     }
     const path = String(draftPath || "").trim();
     if (!path) {
@@ -2231,7 +2231,7 @@
       if (!response.ok || !data.ok) {
         return {
           ok: false,
-          message: "Putanja nije validna ili fajl nije ispravna slika.",
+          message: "Putanja nije valjana ili datoteka nije ispravna slika.",
         };
       }
       block.attrs.path = data.path;
@@ -2341,13 +2341,13 @@
       markDirty(state);
       renderCanvas(state);
     } catch (_error) {
-      // Poster je poboljšanje; video ostaje validan i ako izdvajanje slike ne uspe.
+      // Poster je poboljšanje; video ostaje valjan i ako izdvajanje slike ne uspije.
     }
   }
 
   function uploadVideo(state, file, block, onProgress) {
     if (!state.videoUploadUrl || !file) {
-      return Promise.resolve({ ok: false, message: "Otpremanje videa nije dostupno." });
+      return Promise.resolve({ ok: false, message: "Učitavanje videa nije dostupno." });
     }
 
     const formData = new FormData();
@@ -2370,7 +2370,7 @@
       request.addEventListener("load", () => {
         const data = request.response || {};
         if (request.status < 200 || request.status >= 300 || !data.ok) {
-          resolve({ ok: false, message: data.error || "Otpremanje videa nije uspelo." });
+          resolve({ ok: false, message: data.error || "Učitavanje videa nije uspjelo." });
           return;
         }
 
@@ -2388,13 +2388,13 @@
       });
 
       request.addEventListener("error", () => {
-        resolve({ ok: false, message: "Mrežna greška pri otpremanju videa." });
+        resolve({ ok: false, message: "Mrežna greška pri učitavanju videa." });
       });
       request.addEventListener("timeout", () => {
-        resolve({ ok: false, message: "Otpremanje videa je trajalo predugo. Pokušajte ponovo." });
+        resolve({ ok: false, message: "Učitavanje videa trajalo je predugo. Pokušajte ponovno." });
       });
       request.addEventListener("abort", () => {
-        resolve({ ok: false, message: "Otpremanje videa je prekinuto." });
+        resolve({ ok: false, message: "Učitavanje videa je prekinuto." });
       });
 
       request.send(formData);
@@ -2478,7 +2478,7 @@
       const link = document.createElement("span");
       const style = block.attrs.style === "secondary" ? "secondary" : "primary";
       link.className = `btn btn--${style} iv-page-button`;
-      link.textContent = block.attrs.label || "Dugme";
+      link.textContent = block.attrs.label || "Gumb";
       wrap.appendChild(link);
       preview.appendChild(wrap);
       return;
@@ -2792,7 +2792,7 @@
 
       const toolbar = document.createElement("div");
       toolbar.className = "page-builder__section-chrome";
-      toolbar.appendChild(chromeBtn("⚙", "select-section", "vb-chrome-btn--icon vb-chrome-btn--accent", "Podešavanja sekcije"));
+      toolbar.appendChild(chromeBtn("⚙", "select-section", "vb-chrome-btn--icon vb-chrome-btn--accent", "Postavke sekcije"));
       toolbar.appendChild(chromeBtn("✕", "delete-section", "vb-chrome-btn--icon vb-chrome-btn--danger", "Obriši sekciju"));
       toolbar.querySelector('[data-action="select-section"]').addEventListener("click", () => {
         selectItem(state, {
@@ -2817,7 +2817,7 @@
       const sectionHandle = document.createElement("div");
       sectionHandle.className = "page-builder__section-handle";
       sectionHandle.textContent = "Sekcija";
-      sectionHandle.title = "Prevucite da promenite redosled sekcije";
+      sectionHandle.title = "Povucite za promjenu redoslijeda sekcije";
       bindSectionReorder(state, sectionHandle, sectionIndex);
       sectionEl.appendChild(sectionHandle);
 
@@ -2846,7 +2846,7 @@
         const currentPreset = detectRowPreset(row);
         const rowToolbar = document.createElement("div");
         rowToolbar.className = "page-builder__row-chrome";
-        const rowDragHandle = chromeBtn("↕", "drag-row", "vb-chrome-btn--icon", "Prevucite da promenite redosled reda");
+        const rowDragHandle = chromeBtn("↕", "drag-row", "vb-chrome-btn--icon", "Povucite za promjenu redoslijeda reda");
         rowToolbar.appendChild(rowDragHandle);
         rowToolbar.appendChild(chromeBtn("⚙", "select-row", "vb-chrome-btn--icon vb-chrome-btn--accent"));
         const presetSelect = document.createElement("select");
@@ -2916,8 +2916,8 @@
           columnDragHandle.type = "button";
           columnDragHandle.className = "page-builder__column-drag";
           columnDragHandle.textContent = "↔";
-          columnDragHandle.title = "Prevucite da promenite redosled kolone";
-          columnDragHandle.setAttribute("aria-label", "Promeni redosled kolone");
+          columnDragHandle.title = "Povucite za promjenu redoslijeda stupca";
+          columnDragHandle.setAttribute("aria-label", "Promijeni redoslijed stupca");
           columnEl.appendChild(columnDragHandle);
           bindNestedReorder(
             state,
@@ -2944,7 +2944,7 @@
             emptyCol.className = "page-builder__column-empty";
             emptyCol.innerHTML =
               '<span class="page-builder__column-empty-icon">⊕</span>' +
-              "<span>Kliknite kolonu, zatim izaberite widget u panelu <strong>Elementi</strong></span>";
+              "<span>Kliknite stupac, zatim odaberite widget na ploči <strong>Elementi</strong></span>";
             columnInner.appendChild(emptyCol);
           }
 
@@ -3070,7 +3070,7 @@
     if (state.activeMediaUploads > 0) {
       return {
         ok: false,
-        message: "Sačekajte da se otpremanje medija završi, pa pokušajte ponovo.",
+        message: "Pričekajte da se učitavanje medija završi pa pokušajte ponovno.",
       };
     }
     if (!force && !state.dirty) {
@@ -3102,14 +3102,14 @@
         return {
           ok: false,
           code: "version_conflict",
-          message: data.message || "Sadržaj je izmenjen u drugoj sesiji. Jezik nije promenjen; osvežite stranicu pre ponovnog pokušaja.",
+          message: data.message || "Sadržaj je izmijenjen u drugoj sesiji. Jezik nije promijenjen; osvježite stranicu prije ponovnog pokušaja.",
         };
       }
       if (!response.ok || !data.ok) {
         setSaveStatus(state.postRoot, "error");
         return {
           ok: false,
-          message: (data.messages || []).join("\n") || data.message || data.error || "Greška pri čuvanju.",
+          message: (data.messages || []).join("\n") || data.message || data.error || "Greška pri spremanju.",
         };
       }
 
@@ -3125,7 +3125,7 @@
       return { ok: true };
     } catch (_error) {
       setSaveStatus(state.postRoot, "error");
-      return { ok: false, message: "Mrežna greška pri čuvanju." };
+      return { ok: false, message: "Mrežna greška pri spremanju." };
     } finally {
       state.saving = false;
     }
@@ -3158,7 +3158,7 @@
       if (!result.ok) {
         showBlocker(
           state.postRoot,
-          result.message || "Trenutni sadržaj nije sačuvan. Promena jezika je zaustavljena.",
+          result.message || "Trenutni sadržaj nije spremljen. Promjena jezika je zaustavljena.",
         );
         return result;
       }
@@ -3232,7 +3232,7 @@
     root.appendChild(videoFileInput);
 
     const documents = readJsonScript("page-builder-documents", null);
-    const locale = postRoot.querySelector('[name="_builder_locale"]')?.value || "sr-latn";
+    const locale = postRoot.querySelector('[name="_builder_locale"]')?.value || "hr";
     const initialDocument = documents && documents[locale];
     const state = {
       root,
@@ -3279,7 +3279,7 @@
 
     const initialUrl = new URL(window.location.href);
     const urlLocale = initialUrl.searchParams.get("locale");
-    const normalizedLocale = urlLocale && state.documents?.[urlLocale] ? urlLocale : "sr-latn";
+    const normalizedLocale = urlLocale && state.documents?.[urlLocale] ? urlLocale : "hr";
     if (urlLocale !== normalizedLocale && window.history?.replaceState) {
       initialUrl.searchParams.set("locale", normalizedLocale);
       window.history.replaceState({ builderLocale: normalizedLocale }, "", initialUrl);
@@ -3302,7 +3302,7 @@
     state.popStateHandler = () => {
       const url = new URL(window.location.href);
       const urlLocale = url.searchParams.get("locale");
-      const requestedLocale = urlLocale && state.documents?.[urlLocale] ? urlLocale : "sr-latn";
+      const requestedLocale = urlLocale && state.documents?.[urlLocale] ? urlLocale : "hr";
       if (urlLocale !== requestedLocale && window.history?.replaceState) {
         url.searchParams.set("locale", requestedLocale);
         window.history.replaceState({ builderLocale: requestedLocale }, "", url);
@@ -3356,7 +3356,7 @@
           }
           showToast(
             state.root,
-            "Video format ili kodek nije podržan u pregledaču. Koristite MP4 (H.264) ili WebM.",
+            "Video format ili kodek nije podržan u pregledniku. Koristite MP4 (H.264) ili WebM.",
             true,
           );
           return;
@@ -3378,7 +3378,7 @@
           if (state.selection?.block?.id === block.id) {
             renderEditPanel(state);
           }
-          showToast(state.root, "Video fajl je uspešno otpremljen.");
+          showToast(state.root, "Video datoteka uspješno je učitana.");
         }
       } finally {
         state.activeMediaUploads = Math.max(0, state.activeMediaUploads - 1);

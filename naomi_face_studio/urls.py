@@ -20,13 +20,17 @@ admin.site.site_title = 'Naomi Face Studio'
 admin.site.index_title = _('Site Administration')
 
 
-def redirect_legacy_hr_urls(request, rest=''):
-    """Keep old /hr/... bookmarks working after the Serbian Latin locale switch."""
-    target = f'/sr-latn/{rest}' if rest else '/sr-latn/'
+def redirect_legacy_sr_urls(request, rest=None):
+    """Keep Serbian-locale bookmarks working after restoring Croatian."""
+    rest = rest or ""
+    target = f'/hr/{rest}' if rest else '/hr/'
     query = request.META.get('QUERY_STRING')
+    # The previous release emitted a permanent /hr/ -> /sr-latn/ redirect.
+    # A marker query bypasses that cached URL in browsers and prevents loops.
+    target = f'{target}?locale-restored=1'
     if query:
-        target = f'{target}?{query}'
-    return redirect(target, permanent=True)
+        target = f'{target}&{query}'
+    return redirect(target, permanent=False)
 
 
 urlpatterns = [
@@ -34,7 +38,7 @@ urlpatterns = [
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('i18n/setlang/', localized_set_language, name='set_language'),
-    re_path(r'^hr/(?P<rest>.*)$', redirect_legacy_hr_urls),
+    re_path(r'^sr-latn(?:/(?P<rest>.*))?$', redirect_legacy_sr_urls),
 ]
 
 urlpatterns += i18n_patterns(

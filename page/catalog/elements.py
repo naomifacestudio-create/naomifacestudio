@@ -8,22 +8,22 @@ BUILDER_ELEMENTS = (
     {
         "id": "heading",
         "label": "Naslov",
-        "description": "H1–H4 (nivo je semantički; veličina i format ručno)",
+        "description": "H1–H4 (razina je semantička; veličina i format ručno)",
     },
     {"id": "text", "label": "Tekst", "description": "Paragraf"},
-    {"id": "image", "label": "Slika", "description": "Slika sa alt tekstom"},
+    {"id": "image", "label": "Slika", "description": "Slika s alt tekstom"},
     {"id": "video", "label": "Video", "description": "YouTube video"},
     {"id": "faq", "label": "FAQ", "description": "Pitanja i odgovori"},
-    {"id": "button", "label": "Dugme", "description": "CTA link dugme"},
+    {"id": "button", "label": "Gumb", "description": "CTA poveznica gumba"},
     {"id": "divider", "label": "Linija", "description": "Horizontalna linija"},
 )
 
 ROW_PRESET_LABELS = {
-    "one": "1 kolona",
-    "two_equal": "2 jednake kolone",
-    "two_66_33": "2 kolone (66% / 33%)",
-    "two_33_66": "2 kolone (33% / 66%)",
-    "three_equal": "3 jednake kolone",
+    "one": "1 stupac",
+    "two_equal": "2 jednaka stupca",
+    "two_66_33": "2 stupca (66% / 33%)",
+    "two_33_66": "2 stupca (33% / 66%)",
+    "three_equal": "3 jednaka stupca",
 }
 
 

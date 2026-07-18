@@ -7,12 +7,18 @@ from django.utils.html import strip_tags
 
 
 def current_locale():
-    language = (translation.get_language() or "sr-latn").lower().replace("_", "-")
-    return "en" if language.startswith("en") else "sr-latn"
+    language = (translation.get_language() or "hr").lower().replace("_", "-")
+    if language.startswith("en"):
+        return "en"
+    # Treat leftover Serbian cookies/locales as Croatian after the locale restore.
+    return "hr"
 
 
 def seo_locale(locale=None):
-    return "en" if (locale or current_locale()) == "en" else "sr"
+    language = (locale or current_locale() or "hr").lower().replace("_", "-")
+    if language.startswith("en"):
+        return "en"
+    return "hr"
 
 
 def get_metadata(obj, locale=None, create=False):
@@ -125,7 +131,7 @@ def build_seo_context(obj, request=None):
         ]
 
     alternates = {}
-    for alternate_locale in ("sr-latn", "en"):
+    for alternate_locale in ("hr", "en"):
         with translation.override(alternate_locale):
             alternate_url = obj.get_absolute_url(alternate_locale)
         alternates[alternate_locale] = (
@@ -165,6 +171,6 @@ def build_seo_context(obj, request=None):
             else "summary_large_image"
         ),
         "alternates": alternates,
-        "x_default": alternates["sr-latn"],
+        "x_default": alternates["hr"],
         "schema_json": json.dumps(schema, ensure_ascii=False),
     }

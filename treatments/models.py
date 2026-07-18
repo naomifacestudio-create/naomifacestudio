@@ -24,7 +24,7 @@ class Treatment(LocalizedBuilderContent):
         verbose_name_plural = _('Treatments')
     
     def __str__(self):
-        return self.title_sr
+        return self.title_hr
     
     def get_absolute_url(self, language_code=None):
         """Get absolute URL for treatment (uses active locale when language_code is omitted)."""
@@ -32,7 +32,7 @@ class Treatment(LocalizedBuilderContent):
         if language_code == 'en':
             slug = self.slug_en
         else:
-            slug = self.slug_sr
+            slug = self.slug_hr
         return reverse('treatments:detail', kwargs={'slug': slug})
     
     def get_duration_display(self):

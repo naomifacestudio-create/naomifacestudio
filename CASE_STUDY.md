@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-**Naomi Face Studio** is a comprehensive Django-based web application designed for a premium beauty studio. The platform provides a complete digital solution for managing facial treatments, blog content, online reservations, gift vouchers, and customer communications. Built with modern web technologies and best practices, the application serves both Serbian and English-speaking customers with a fully bilingual interface.
+**Naomi Face Studio** is a comprehensive Django-based web application designed for a premium beauty studio. The platform provides a complete digital solution for managing facial treatments, blog content, online reservations, gift vouchers, and customer communications. Built with modern web technologies and best practices, the application serves both Croatian and English-speaking customers with a fully bilingual interface.
 
 **Key Highlights:**
 - **Platform Type:** B2C E-commerce & Booking System
-- **Primary Market:** Serbian and English support
+- **Primary Market:** Croatian and English support
 - **Technology:** Django 5.0.1, PostgreSQL, Cloudflare R2, SendGrid
 - **Deployment:** Render.com (Cloud Platform)
 - **Development Timeline:** Modern Django application with production-ready features
@@ -30,14 +30,14 @@ Naomi Face Studio is a premium facial treatment studio offering:
 1. **Digital Presence:** Establish a professional online presence for the beauty studio
 2. **Booking System:** Enable customers to book appointments online with real-time availability
 3. **Content Management:** Provide easy-to-use admin interface for managing treatments, blogs, and educational content
-4. **Multilingual Support:** Serve both Serbian and English-speaking customers
+4. **Multilingual Support:** Serve both Croatian and English-speaking customers
 5. **E-commerce:** Enable gift voucher sales with automated email delivery
 6. **SEO Optimization:** Ensure high visibility in search engines
 7. **Mobile-First Design:** Provide excellent user experience on all devices
 
 ### 1.3 Target Audience
 
-- **Primary:** Serbian-speaking customers seeking facial treatments
+- **Primary:** Croatian-speaking customers seeking facial treatments
 - **Secondary:** English-speaking expatriates and tourists
 - **User Types:** 
   - End customers (booking appointments, purchasing vouchers)
@@ -87,7 +87,7 @@ naomi_face_studio/
 ├── contacts/         # Contact form submissions
 ├── templates/        # HTML templates (29 files)
 ├── static/           # Static files (CSS, JS, images)
-└── locale/           # Translation files (Serbian Latin)
+└── locale/           # Translation files (Croatian)
 ```
 
 ### 2.3 Technology Stack
@@ -126,13 +126,13 @@ naomi_face_studio/
 
 **Implementation:**
 - Uses Django's built-in internationalization (i18n) framework
-- Serbian Latin (`sr-latn`) as default language
+- Croatian (`hr`) as default language
 - English (`en`) as secondary language
 - Language switching via URL patterns and session-based selection
 
 **Technical Details:**
 - All user-facing strings use Django's translation system
-- Models have separate fields for each language (e.g., `title_sr`, `title_en`)
+- Models have separate fields for each language (e.g., `title_hr`, `title_en`)
 - Admin interface supports bilingual content entry
 - Language switcher in header (flag icons)
 - URL patterns support language prefixes via `i18n_patterns`
@@ -140,17 +140,17 @@ naomi_face_studio/
 **Code Example:**
 ```python
 # settings.py
-LANGUAGE_CODE = 'sr-latn'
+LANGUAGE_CODE = 'hr'
 LANGUAGES = [
-    ('sr-latn', 'Serbian'),
+    ('hr', 'Croatian'),
     ('en', 'English'),
 ]
 
 # Model example
 class Treatment(models.Model):
-    title_sr = models.CharField(_('Title (Serbian)'), max_length=200)
+    title_hr = models.CharField(_('Title (Croatian)'), max_length=200)
     title_en = models.CharField(_('Title (English)'), max_length=200)
-    slug_sr = models.SlugField(_('Slug (Serbian)'), max_length=200, unique=True)
+    slug_hr = models.SlugField(_('Slug (Croatian)'), max_length=200, unique=True)
     slug_en = models.SlugField(_('Slug (English)'), max_length=200, unique=True)
 ```
 
@@ -168,8 +168,8 @@ class Treatment(models.Model):
 **Model Structure:**
 ```python
 class Treatment(models.Model):
-    # Serbian Latin fields
-    title_sr, slug_sr, short_description_sr, body_page_sr, body_plaintext_sr
+    # Croatian fields
+    title_hr, slug_hr, short_description_hr, body_page_hr, body_plaintext_hr
     # English fields
     title_en, slug_en, short_description_en, body_page_en, body_plaintext_en
     # Common fields
@@ -773,7 +773,7 @@ When content is deleted, associated media files remain in cloud storage, increas
 Managing bilingual content efficiently without duplicating models.
 
 **Solution:**
-- Separate fields for each language (`_sr`, `_en` suffixes)
+- Separate fields for each language (`_hr`, `_en` suffixes)
 - Helper methods (`get_title()`, `get_slug()`) for language-specific access
 - Django's i18n for UI strings
 - Language-aware URL generation

@@ -20,7 +20,7 @@ import logging
 logger = logging.getLogger('reservations')
 
 
-def send_reservation_emails(reservation, language_code='sr-latn'):
+def send_reservation_emails(reservation, language_code='hr'):
     """Send reservation confirmation emails to user and admin"""
     # Activate the language for email rendering
     current_language = get_language()
@@ -77,7 +77,7 @@ def send_reservation_emails(reservation, language_code='sr-latn'):
         activate(current_language)
 
 
-def send_cancellation_email(reservation, language_code='sr-latn'):
+def send_cancellation_email(reservation, language_code='hr'):
     """Send cancellation email to admin"""
     # Activate the language for email rendering
     current_language = get_language()
@@ -129,7 +129,7 @@ def reservation_calendar(request, treatment_slug=None):
         if language_code == 'en':
             treatment = get_object_or_404(Treatment, slug_en=treatment_slug, is_active=True)
         else:
-            treatment = get_object_or_404(Treatment, slug_sr=treatment_slug, is_active=True)
+            treatment = get_object_or_404(Treatment, slug_hr=treatment_slug, is_active=True)
     else:
         treatment = None
     

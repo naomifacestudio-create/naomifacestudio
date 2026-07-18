@@ -15,7 +15,7 @@
       event.preventDefault();
       const result = await glue.flushBeforeSubmit(state);
       if (!result || !result.ok) {
-        window.alert((result && result.message) || "Vizuelni sadržaj nije moguće sačuvati.");
+        window.alert((result && result.message) || "Vizualni sadržaj nije moguće spremiti.");
         return;
       }
       form.dataset.builderSubmitting = "1";

@@ -11,8 +11,8 @@ class EducationResource(resources.ModelResource):
     class Meta:
         model = Education
         fields = (
-            'id', 'title_sr', 'title_en', 'slug_sr', 'slug_en',
-            'short_description_sr', 'short_description_en', 'price', 'is_active',
+            'id', 'title_hr', 'title_en', 'slug_hr', 'slug_en',
+            'short_description_hr', 'short_description_en', 'price', 'is_active',
         )
         export_order = fields
 
@@ -20,9 +20,9 @@ class EducationResource(resources.ModelResource):
 @admin.register(Education)
 class EducationAdmin(LocalizedBuilderAdmin, ImportExportModelAdmin):
     resource_class = EducationResource
-    list_display = ['title_sr', 'price', 'is_active', 'created_at', 'updated_at']
-    search_fields = ['title_sr', 'title_en', 'slug_sr', 'slug_en', 'body_plaintext_sr', 'body_plaintext_en']
-    prepopulated_fields = {'slug_sr': ('title_sr',), 'slug_en': ('title_en',)}
+    list_display = ['title_hr', 'price', 'is_active', 'created_at', 'updated_at']
+    search_fields = ['title_hr', 'title_en', 'slug_hr', 'slug_en', 'body_plaintext_hr', 'body_plaintext_en']
+    prepopulated_fields = {'slug_hr': ('title_hr',), 'slug_en': ('title_en',)}
     fieldsets = (
         *LocalizedBuilderAdmin.fieldsets[:2],
         (_('Education Details'), {'fields': ('price',)}),

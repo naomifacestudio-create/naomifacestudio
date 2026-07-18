@@ -67,7 +67,7 @@ def contact_form(request):
     return render(request, 'contacts/form.html', context)
 
 
-def send_contact_email(submission, language_code='sr-latn'):
+def send_contact_email(submission, language_code='hr'):
     """Send contact form email to admin"""
     # Activate the language for email rendering
     current_language = get_language()

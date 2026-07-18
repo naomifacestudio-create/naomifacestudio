@@ -90,12 +90,12 @@ class TreatmentBuilderModelTests(TestCase):
             '<p>Sadržaj <strong>tretmana</strong>.</p>'
         )
         treatment = Treatment.objects.create(
-            title_sr="Tretman",
-            slug_sr="tretman",
-            short_description_sr="Opis",
-            body_page_sr=page,
-            body_plaintext_sr=plaintext,
-            page_version_sr=1,
+            title_hr="Tretman",
+            slug_hr="tretman",
+            short_description_hr="Opis",
+            body_page_hr=page,
+            body_plaintext_hr=plaintext,
+            page_version_hr=1,
             title_en="Treatment",
             slug_en="treatment",
             short_description_en="Description",
@@ -103,5 +103,4 @@ class TreatmentBuilderModelTests(TestCase):
             is_active=True,
         )
 
-        self.assertTrue(treatment.has_page_content("sr-latn"))
-        self.assertFalse(hasattr(treatment, "legacy_full_description_sr"))
+        self.assertTrue(treatment.has_page_content("hr"))

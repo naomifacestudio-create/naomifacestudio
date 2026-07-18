@@ -158,7 +158,7 @@ def _reverse_detail_for_language(next_url, lang_code):
     detail, reservation calendar with treatment), return the path for lang_code.
 
     Django's translate_url() only swaps the locale prefix; the slug stays the same,
-    which 404s when Serbian and English slugs differ.
+    which 404s when Croatian and English slugs differ.
     """
     try:
         match = resolve(next_url)
@@ -178,7 +178,7 @@ def _reverse_detail_for_language(next_url, lang_code):
             from blogs.models import Blog
 
             obj = Blog.objects.filter(
-                Q(slug_sr=slug) | Q(slug_en=slug), is_active=True
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
             ).first()
             if obj:
                 return reverse(
@@ -192,7 +192,7 @@ def _reverse_detail_for_language(next_url, lang_code):
             from treatments.models import Treatment
 
             obj = Treatment.objects.filter(
-                Q(slug_sr=slug) | Q(slug_en=slug), is_active=True
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
             ).first()
             if obj:
                 return reverse(
@@ -206,7 +206,7 @@ def _reverse_detail_for_language(next_url, lang_code):
             from education.models import Education
 
             obj = Education.objects.filter(
-                Q(slug_sr=slug) | Q(slug_en=slug), is_active=True
+                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
             ).first()
             if obj:
                 return reverse(
@@ -220,7 +220,7 @@ def _reverse_detail_for_language(next_url, lang_code):
             from treatments.models import Treatment
 
             obj = Treatment.objects.filter(
-                Q(slug_sr=treatment_slug) | Q(slug_en=treatment_slug), is_active=True
+                Q(slug_hr=treatment_slug) | Q(slug_en=treatment_slug), is_active=True
             ).first()
             if obj:
                 return reverse(

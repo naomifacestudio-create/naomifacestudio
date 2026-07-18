@@ -19,9 +19,9 @@ class Education(LocalizedBuilderContent):
         verbose_name_plural = _('Education')
 
     def __str__(self):
-        return self.title_sr
+        return self.title_hr
 
     def get_absolute_url(self, language_code=None):
         language_code = active_language_code(language_code)
-        slug = self.slug_en if language_code == 'en' else self.slug_sr
+        slug = self.slug_en if language_code == 'en' else self.slug_hr
         return reverse('education:detail', kwargs={'slug': slug})

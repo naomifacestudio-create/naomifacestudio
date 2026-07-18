@@ -9,10 +9,10 @@ from .models import Treatment
 class TreatmentResource(resources.ModelResource):
     class Meta:
         model = Treatment
-        fields = ('id', 'title_sr', 'title_en', 'slug_sr', 'slug_en', 'short_description_sr', 
+        fields = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr',
                   'short_description_en', 'price', 'duration_hours', 'duration_minutes', 
                   'pause_hours', 'pause_minutes', 'is_active')
-        export_order = ('id', 'title_sr', 'title_en', 'slug_sr', 'slug_en', 'short_description_sr', 
+        export_order = ('id', 'title_hr', 'title_en', 'slug_hr', 'slug_en', 'short_description_hr',
                        'short_description_en', 'price', 'duration_hours', 'duration_minutes', 
                        'pause_hours', 'pause_minutes', 'is_active')
 
@@ -20,16 +20,16 @@ class TreatmentResource(resources.ModelResource):
 @admin.register(Treatment)
 class TreatmentAdmin(LocalizedBuilderAdmin, ImportExportModelAdmin):
     resource_class = TreatmentResource
-    list_display = ['title_sr', 'price', 'duration_hours', 'duration_minutes', 'is_active', 'created_at']
+    list_display = ['title_hr', 'price', 'duration_hours', 'duration_minutes', 'is_active', 'created_at']
     search_fields = [
-        'title_sr',
+        'title_hr',
         'title_en',
-        'slug_sr',
+        'slug_hr',
         'slug_en',
-        'body_plaintext_sr',
+        'body_plaintext_hr',
         'body_plaintext_en',
     ]
-    prepopulated_fields = {'slug_sr': ('title_sr',), 'slug_en': ('title_en',)}
+    prepopulated_fields = {'slug_hr': ('title_hr',), 'slug_en': ('title_en',)}
     fieldsets = (
         *LocalizedBuilderAdmin.fieldsets[:2],
         (

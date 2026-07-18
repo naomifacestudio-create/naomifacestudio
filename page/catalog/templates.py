@@ -134,7 +134,7 @@ SECTION_TEMPLATES: dict[str, SectionTemplate] = {
         variants=(
             SectionTemplateVariant(
                 id="light",
-                label="Svetla",
+                label="Svijetla",
                 layout_id="one_full",
                 default_settings={
                     "container_width": "contained",

@@ -1,4 +1,4 @@
-"""Shared bilingual visual-builder content for Naomi (Serbian Latin + English)."""
+"""Shared bilingual visual-builder content for Naomi (Croatian + English)."""
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -11,16 +11,16 @@ from page.schema import page_has_content
 
 # Builder document locales → model field suffixes
 LOCALE_SUFFIX = {
-    "sr-latn": "_sr",
+    "hr": "_hr",
     "en": "_en",
 }
 
 BUILDER_LOCALES = (
-    ("sr-latn", "Srpski (latinica)"),
+    ("hr", "Hrvatski"),
     ("en", "Engleski"),
 )
 
-DEFAULT_LOCALE = "sr-latn"
+DEFAULT_LOCALE = "hr"
 
 
 def normalize_builder_locale(locale=None):
@@ -28,20 +28,21 @@ def normalize_builder_locale(locale=None):
     normalized = str(locale).lower().replace("_", "-")
     if normalized.startswith("en"):
         return "en"
-    if normalized.startswith("sr"):
-        return "sr-latn"
+    # Treat leftover Serbian cookies/locales as Croatian after the locale restore.
+    if normalized.startswith(("hr", "sr")):
+        return "hr"
     return DEFAULT_LOCALE
 
 
 class LocalizedBuilderContent(models.Model):
-    """Abstract host for the CEGI-style visual page builder (sr-latn + en)."""
+    """Abstract host for the CEGI-style visual page builder (hr + en)."""
 
-    title_sr = models.CharField(_("Title (Serbian)"), max_length=200)
-    slug_sr = models.SlugField(_("Slug (Serbian)"), max_length=200, unique=True)
-    short_description_sr = models.TextField(_("Short Description (Serbian)"), max_length=500, blank=True)
-    body_page_sr = models.JSONField(_("Visual content (Serbian)"), null=True, blank=True)
-    body_plaintext_sr = models.TextField(_("Plaintext content (Serbian)"), blank=True, editable=False)
-    page_version_sr = models.PositiveIntegerField(_("Content version (Serbian)"), default=0)
+    title_hr = models.CharField(_("Title (Croatian)"), max_length=200)
+    slug_hr = models.SlugField(_("Slug (Croatian)"), max_length=200, unique=True)
+    short_description_hr = models.TextField(_("Short Description (Croatian)"), max_length=500, blank=True)
+    body_page_hr = models.JSONField(_("Visual content (Croatian)"), null=True, blank=True)
+    body_plaintext_hr = models.TextField(_("Plaintext content (Croatian)"), blank=True, editable=False)
+    page_version_hr = models.PositiveIntegerField(_("Content version (Croatian)"), default=0)
 
     title_en = models.CharField(_("Title (English)"), max_length=200)
     slug_en = models.SlugField(_("Slug (English)"), max_length=200, unique=True)
@@ -138,12 +139,12 @@ class LocalizedBuilderContent(models.Model):
         if not self.is_active:
             return
         errors = {}
-        title = (self.title_sr or "").strip()
+        title = (self.title_hr or "").strip()
         if not title or title == "Bez naslova":
-            errors["title_sr"] = _("Active content must have a real Serbian title.")
-        if (self.slug_sr or "").startswith("draft-"):
-            errors["slug_sr"] = _("Active content cannot use a temporary draft slug.")
-        if not self.has_page_content("sr-latn"):
-            errors["is_active"] = _("Active content must have Serbian visual content.")
+            errors["title_hr"] = _("Active content must have a real Croatian title.")
+        if (self.slug_hr or "").startswith("draft-"):
+            errors["slug_hr"] = _("Active content cannot use a temporary draft slug.")
+        if not self.has_page_content("hr"):
+            errors["is_active"] = _("Active content must have Croatian visual content.")
         if errors:
             raise ValidationError(errors)

@@ -72,7 +72,7 @@ python manage.py compilemessages
 
 10. **Add required static files:**
    - Place logo.png in `static/images/`
-   - Place srb-flag.webp in `static/images/`
+   - Place croatia-flag.webp in `static/images/`
    - Place uk-flag.png in `static/images/`
    - Place favicon.ico in `static/images/`
    - Place og-image.jpg in `static/images/`
@@ -88,8 +88,8 @@ python manage.py runserver
 1. Access admin at: `http://localhost:8000/admin/`
 2. Login with superuser credentials
 3. Start creating:
-   - Treatments (with Serbian and English content)
-   - Blog posts (with Serbian and English content)
+   - Treatments (with Croatian and English content)
+   - Blog posts (with Croatian and English content)
 
 ## Production Deployment (Render)
 

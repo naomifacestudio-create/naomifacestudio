@@ -28,14 +28,14 @@
     </div>
     <span class="builder-save-status" data-page-save-status data-state="saved">
       <span class="builder-save-dot" aria-hidden="true"></span>
-      <span data-page-save-label>Sačuvano</span>
+      <span data-page-save-label>Spremljeno</span>
     </span>
     <a class="builder-preview" data-builder-preview href="{{ builder_preview_url }}" target="_blank" rel="noopener">Pregled ↗</a>
     <button type="button" class="builder-drawer-trigger" data-builder-drawer-trigger="details">Detalji</button>
     {% if builder_seo_enabled %}
     <button type="button" class="builder-drawer-trigger" data-builder-drawer-trigger="seo">SEO</button>
     {% endif %}
-    <button type="submit" class="button default" name="_save">Sačuvaj</button>
+    <button type="submit" class="button default" name="_save">Spremi</button>
   </header>
   <div class="builder-blocker" data-page-blocker hidden role="alert">
     <span data-page-blocker-message></span>
@@ -95,7 +95,7 @@
         {% endfor %}
       </div>
       <div data-builder-drawer-panel="seo" hidden>
-        <p class="builder-locale-note">Srpski i engleski imaju odvojene SEO profile.</p>
+        <p class="builder-locale-note">Hrvatski i engleski imaju odvojene SEO profile.</p>
         {% for inline_admin_formset in inline_admin_formsets %}
           {% include inline_admin_formset.opts.template %}
         {% endfor %}

@@ -12,8 +12,8 @@ SEO_EDITOR_FIELDSETS = (
         {
             "fields": ("locale", "seo_title", "meta_description", "focus_keyword"),
             "description": (
-                "Ako SEO naslov ili meta opis ostanu prazni, koristiće se naslov i "
-                "kratak opis sadržaja. Glavna ključna reč služi za SEO analizu."
+                "Ako SEO naslov ili meta opis ostanu prazni, koristit će se naslov i "
+                "kratak opis sadržaja. Glavna ključna riječ služi za SEO analizu."
             ),
         },
     ),
@@ -36,8 +36,8 @@ SEO_EDITOR_FIELDSETS = (
                 "is_cornerstone",
             ),
             "description": (
-                "Kanonski URL i Schema.org podaci se automatski formiraju. Menjajte "
-                "ova polja samo kada želite da zamenite automatske vrednosti."
+                "Kanonski URL i Schema.org podaci automatski se formiraju. Mijenjajte "
+                "ova polja samo kada želite zamijeniti automatske vrijednosti."
             ),
         },
     ),
@@ -63,7 +63,7 @@ SEO_EDITOR_FIELDSETS = (
         },
     ),
     (
-        "SEO ocene",
+        "SEO ocjene",
         {
             "classes": ("collapse",),
             "fields": (
@@ -74,7 +74,7 @@ SEO_EDITOR_FIELDSETS = (
                 "image_seo_score",
                 "updated_at",
             ),
-            "description": "Ocene se automatski preračunavaju pri čuvanju SEO profila.",
+            "description": "Ocjene se automatski preračunavaju pri spremanju SEO profila.",
         },
     ),
 )
@@ -90,8 +90,8 @@ class SeoMetadataInlineFormSet(BaseGenericInlineFormSet):
             for form in self.forms
             if not self._should_delete_form(form)
         }
-        if locales != {"sr", "en"}:
-            raise ValidationError("SEO mora imati tačno srpski i engleski profil.")
+        if locales != {"hr", "en"}:
+            raise ValidationError("SEO mora imati točno hrvatski i engleski profil.")
 
 
 class SeoMetadataInline(GenericStackedInline):
@@ -119,7 +119,7 @@ class SeoMetadataInline(GenericStackedInline):
         return False
 
     def get_queryset(self, request):
-        return super().get_queryset(request).filter(locale__in=("sr", "en"))
+        return super().get_queryset(request).filter(locale__in=("hr", "en"))
 
 
 @admin.register(SeoMetadata)

@@ -13,13 +13,13 @@ from .models import SeoMetadata
 class SeoIntegrationTests(TestCase):
     def setUp(self):
         self.blog = Blog.objects.create(
-            title_sr="Srpski naslov",
-            slug_sr="srpski-naslov",
-            short_description_sr="Srpski opis",
+            title_hr="Hrvatski naslov",
+            slug_hr="hrvatski-naslov",
+            short_description_hr="Hrvatski opis",
             title_en="English title",
             slug_en="english-title",
             short_description_en="English description",
-            body_page_sr=empty_page(),
+            body_page_hr=empty_page(),
             body_page_en=empty_page(),
             is_active=False,
         )
@@ -28,7 +28,7 @@ class SeoIntegrationTests(TestCase):
         SeoMetadata.objects.create(
             content_type=ContentType.objects.get_for_model(self.blog),
             object_id=self.blog.pk,
-            locale="sr",
+            locale="hr",
             seo_title="Poseban SEO naslov",
             meta_description="Poseban SEO opis",
             robots_index=False,
@@ -49,11 +49,14 @@ class SeoIntegrationTests(TestCase):
         )
         self.client.force_login(user)
         response = self.client.get(
-            reverse("blogs:detail", kwargs={"slug": self.blog.slug_sr}),
+            reverse("blogs:detail", kwargs={"slug": self.blog.slug_hr}),
             {"preview": "1"},
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'name="robots" content="noindex, nofollow"')
+        self.assertContains(response, 'hreflang="hr"')
+        self.assertContains(response, 'hreflang="en"')
+        self.assertContains(response, 'hreflang="x-default"')
 
     def test_admin_creates_two_profiles_and_renders_collapsible_seo(self):
         user = get_user_model().objects.create_superuser(
@@ -67,7 +70,7 @@ class SeoIntegrationTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'data-builder-drawer-panel="seo"')
-        self.assertContains(response, "Srpski i engleski imaju odvojene SEO profile.")
+        self.assertContains(response, "Hrvatski i engleski imaju odvojene SEO profile.")
         self.assertEqual(
             set(
                 SeoMetadata.objects.filter(object_id=self.blog.pk).values_list(
@@ -75,7 +78,7 @@ class SeoIntegrationTests(TestCase):
                     flat=True,
                 )
             ),
-            {"sr", "en"},
+            {"hr", "en"},
         )
 
     def test_deleting_content_deletes_its_seo_profiles(self):
@@ -93,3 +96,18 @@ class SeoIntegrationTests(TestCase):
         self.assertIn(b"Sitemap:", response.content)
         self.assertIn(b"/sitemap.xml", response.content)
         self.assertIn(b"Disallow: /admin/", response.content)
+
+    def test_legacy_serbian_url_redirects_to_croatian_without_cache_loop(self):
+        response = self.client.get("/sr-latn/blogs/example/?page=2")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            response["Location"],
+            "/hr/blogs/example/?locale-restored=1&page=2",
+        )
+
+    def test_legacy_serbian_url_without_trailing_slash_redirects(self):
+        response = self.client.get("/sr-latn")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "/hr/?locale-restored=1")
