@@ -451,6 +451,11 @@ def _is_subsequence(expected: list[str], actual: list[str]) -> bool:
     return all(any(candidate == token for candidate in iterator) for token in expected)
 
 
+def _visible_characters(value: str) -> list[str]:
+    """Normalize text while ignoring boundaries introduced by media blocks."""
+    return re.findall(r"\w", value.lower(), flags=re.UNICODE)
+
+
 def _assert_conversion_integrity(root: _Node, page: dict) -> None:
     """Abort migration instead of silently dropping legacy text or media."""
     blocks = list(_page_blocks(page))
@@ -494,8 +499,14 @@ def _assert_conversion_integrity(root: _Node, page: dict) -> None:
         )
 
     original_words = _word_tokens(_text(root))
-    converted_words = _word_tokens(extract_page_plaintext(page))
-    if original_words and not _is_subsequence(original_words, converted_words):
+    converted_plaintext = extract_page_plaintext(page)
+    converted_words = _word_tokens(converted_plaintext)
+    words_preserved = _is_subsequence(original_words, converted_words)
+    characters_preserved = _is_subsequence(
+        _visible_characters(_text(root)),
+        _visible_characters(converted_plaintext),
+    )
+    if original_words and not words_preserved and not characters_preserved:
         iterator = iter(converted_words)
         missing = next(
             (token for token in original_words if not any(candidate == token for candidate in iterator)),

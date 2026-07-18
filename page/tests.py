@@ -71,6 +71,16 @@ class LegacyHtmlConversionTests(SimpleTestCase):
         self.assertIn("Title Cap", plaintext)
         self.assertIn("Cell One", plaintext)
 
+    def test_allows_text_boundary_split_by_an_image(self):
+        page, plaintext = convert_ckeditor_html(
+            '<p>Face Gym<a href="#"><img src="/media/uploads/face.jpg"></a>je tretman.</p>'
+        )
+        blocks = page["sections"][0]["rows"][0]["columns"][0]["blocks"]
+
+        self.assertEqual([block["type"] for block in blocks], ["text", "image", "text"])
+        self.assertIn("Face Gym", plaintext)
+        self.assertIn("je tretman", plaintext)
+
 
 class TreatmentBuilderModelTests(TestCase):
     def test_treatment_uses_builder_without_legacy_columns(self):
