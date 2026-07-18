@@ -412,6 +412,27 @@
   box-shadow: 0 0 0 2px var(--vb-accent-soft);
 }
 
+.page-builder__image-path-controls {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.page-builder__image-path-controls input {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+}
+
+.page-builder__image-path-controls .page-builder__inspector-btn {
+  width: auto;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
 .page-builder__inspector-btn {
   width: 100%;
   max-width: 100%;

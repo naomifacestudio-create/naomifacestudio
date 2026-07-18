@@ -1710,6 +1710,57 @@
     }
   }
 
+  async function copyImagePath(path, input) {
+    const value = String(path || "").trim();
+    if (!value) {
+      return false;
+    }
+    try {
+      await navigator.clipboard.writeText(value);
+      return true;
+    } catch (_error) {
+      input.focus();
+      input.select();
+      return document.execCommand("copy");
+    }
+  }
+
+  function appendImagePathField(bodyEl, block, state) {
+    const path = String(block?.attrs?.path || "").trim();
+    if (!path) {
+      return;
+    }
+
+    const field = document.createElement("label");
+    field.className = "page-builder__inspector-field";
+    const label = document.createElement("span");
+    label.textContent = "Putanja slike (za ponovnu upotrebu)";
+    const controls = document.createElement("div");
+    controls.className = "page-builder__image-path-controls";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = path;
+    input.readOnly = true;
+    input.setAttribute("aria-label", "Putanja slike");
+    const copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.textContent = "Kopiraj";
+    copyBtn.className = "page-builder__inspector-btn page-builder__inspector-btn--inline";
+    copyBtn.addEventListener("click", async () => {
+      const copied = await copyImagePath(path, input);
+      showToast(
+        state.root,
+        copied ? "Putanja slike je kopirana." : "Kopiranje nije uspelo. Označite i kopirajte putanju ručno.",
+        !copied,
+      );
+    });
+    controls.appendChild(input);
+    controls.appendChild(copyBtn);
+    field.appendChild(label);
+    field.appendChild(controls);
+    bodyEl.appendChild(field);
+  }
+
   function renderEditPanel(state) {
     const bodyEl = state.inspectorBody;
     if (!bodyEl || !state.selection) {
@@ -1790,6 +1841,7 @@
         state.fileInput.click();
       });
       bodyEl.appendChild(uploadBtn);
+      appendImagePathField(bodyEl, state.selection.block, state);
 
       const reuseField = document.createElement("label");
       reuseField.className = "page-builder__inspector-field";
