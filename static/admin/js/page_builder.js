@@ -1725,27 +1725,74 @@
     }
   }
 
+  function storagePathFromSrc(src) {
+    const raw = String(src || "").trim();
+    if (!raw || raw.startsWith("data:")) {
+      return "";
+    }
+    let cleaned = raw;
+    try {
+      cleaned = decodeURIComponent(new URL(raw, window.location.origin).pathname);
+    } catch (_error) {
+      cleaned = raw.split("?")[0].split("#")[0];
+    }
+    cleaned = cleaned.replace(/\\/g, "/").replace(/^\/+/, "");
+    if (cleaned.startsWith("media/")) {
+      cleaned = cleaned.slice("media/".length);
+    }
+    for (const prefix of ["page/images/", "page/posters/", "page/", "uploads/"]) {
+      const index = cleaned.indexOf(prefix);
+      if (index >= 0) {
+        return cleaned.slice(index);
+      }
+    }
+    return "";
+  }
+
+  function resolveImageStoragePath(block) {
+    const existing = String(block?.attrs?.path || "").trim();
+    if (existing) {
+      return existing;
+    }
+    const derived = storagePathFromSrc(block?.attrs?.src);
+    if (derived && block?.attrs) {
+      block.attrs.path = derived;
+    }
+    return derived;
+  }
+
   function appendImagePathField(bodyEl, block, state) {
-    const path = String(block?.attrs?.path || "").trim();
-    if (!path) {
-      return;
+    const existingPath = String(block?.attrs?.path || "").trim();
+    const path = resolveImageStoragePath(block);
+    const hasImage = Boolean(path || String(block?.attrs?.src || "").trim());
+    // Backfill missing path from the public URL so reuse works after older uploads.
+    if (path && !existingPath) {
+      markDirty(state);
     }
 
     const field = document.createElement("label");
     field.className = "page-builder__inspector-field";
     const label = document.createElement("span");
-    label.textContent = "Putanja slike (za ponovnu upotrebu)";
+    label.textContent = "Putanja slike (kopiraj za Engleski)";
     const controls = document.createElement("div");
     controls.className = "page-builder__image-path-controls";
     const input = document.createElement("input");
     input.type = "text";
-    input.value = path;
     input.readOnly = true;
     input.setAttribute("aria-label", "Putanja slike");
+    if (path) {
+      input.value = path;
+    } else {
+      input.value = "";
+      input.placeholder = hasImage
+        ? "Putanja nije dostupna — učitajte sliku ponovno"
+        : "Učitajte sliku da biste dobili putanju";
+    }
     const copyBtn = document.createElement("button");
     copyBtn.type = "button";
     copyBtn.textContent = "Kopiraj";
     copyBtn.className = "page-builder__inspector-btn page-builder__inspector-btn--inline";
+    copyBtn.disabled = !path;
     copyBtn.addEventListener("click", async () => {
       const copied = await copyImagePath(path, input);
       showToast(
@@ -2189,7 +2236,7 @@
       }
 
       block.attrs.src = data.url;
-      block.attrs.path = data.path;
+      block.attrs.path = data.path || storagePathFromSrc(data.url) || "";
       if (!String(block.attrs.alt || "").trim()) {
         const fromServer = String(data.alt || "").trim();
         const fromFile = String(file.name || "")
@@ -2202,6 +2249,9 @@
       markDirty(state);
       renderCanvas(state);
       renderEditPanel(state);
+      if (block.attrs.path) {
+        showToast(state.root, `Putanja: ${block.attrs.path}`);
+      }
       return { ok: true };
     } catch (_error) {
       return { ok: false, message: "Mrežna greška pri učitavanju slike." };

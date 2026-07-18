@@ -44,10 +44,6 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
         "body_page_en", "body_plaintext_en", "page_version_en",
     )
 
-    class Media:
-        css = {"all": ("admin/css/page_builder.css",)}
-        js = ("admin/js/page_builder.js", "admin/js/page_builder_submit.js")
-
     def get_view_on_site_url(self, obj):
         if obj is None:
             return None
