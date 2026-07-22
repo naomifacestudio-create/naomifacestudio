@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils import translation
+from django.utils import timezone, translation
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -34,6 +34,11 @@ def normalize_builder_locale(locale=None):
     return DEFAULT_LOCALE
 
 
+class BuilderContentQuerySet(models.QuerySet):
+    def publicly_visible(self):
+        return self.filter(is_active=True, publish_date__lte=timezone.localdate())
+
+
 class LocalizedBuilderContent(models.Model):
     """Abstract host for the CEGI-style visual page builder (hr + en)."""
 
@@ -58,12 +63,14 @@ class LocalizedBuilderContent(models.Model):
         help_text=_("Supports WebP format"),
     )
     is_active = models.BooleanField(_("Active"), default=True)
+    publish_date = models.DateField(_("Publish date"), default=timezone.localdate)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
-        ordering = ("-created_at",)
+        ordering = ("-publish_date", "-created_at")
+
 
     def _locale(self, locale=None):
         return normalize_builder_locale(locale)

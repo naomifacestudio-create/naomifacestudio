@@ -1,0 +1,55 @@
+/* Schema.org JSON-LD preview in admin */
+
+.seo-schema-preview {
+  max-width: 760px;
+}
+
+.seo-schema-preview__type {
+  display: inline-block;
+  margin: 0 6px 6px 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.seo-schema-preview__type--empty {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.seo-schema-preview__json-wrap {
+  display: grid;
+  gap: 12px;
+}
+
+.seo-schema-preview__json {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #111827;
+  color: #e5e7eb;
+  overflow: auto;
+  max-height: 320px;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.seo-schema-preview__json code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.seo-schema-preview__json--empty {
+  background: #f9fafb;
+  color: #6b7280;
+  border-style: dashed;
+}
+
+.seo-schema-preview.is-loading {
+  opacity: 0.65;
+  pointer-events: none;
+}

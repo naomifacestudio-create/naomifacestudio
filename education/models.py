@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from core.content import LocalizedBuilderContent
+from core.content import BuilderContentQuerySet, LocalizedBuilderContent
 from core.i18n_utils import active_language_code
 
 
@@ -12,6 +12,7 @@ def education_thumbnail_upload_path(instance, filename):
 
 
 class Education(LocalizedBuilderContent):
+    objects = BuilderContentQuerySet.as_manager()
     price = models.DecimalField(_('Price'), max_digits=10, decimal_places=2)
 
     class Meta(LocalizedBuilderContent.Meta):

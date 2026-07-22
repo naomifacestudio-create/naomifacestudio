@@ -1,26 +1,134 @@
-.content-builder-admin #content {
-  padding: 0;
-}
+/*
+  Visual builder layout.
+  Goal: no page scrollbar; only .page-builder__stage (and Elements panel) scroll.
+*/
 
-.content-builder-admin #content > h1,
-.content-builder-admin #content > h2,
-.content-builder-admin .submit-row {
-  display: none;
-}
-
-.builder-fields {
+body.visual-builder-admin #content {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
   position: relative;
-  min-height: calc(100vh - 120px);
+  z-index: 20;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.content-builder-admin #nav-sidebar {
+  z-index: 10;
+}
+
+body.content-builder-admin:has(.blog-post-editor--visual.is-drawer-open) #nav-sidebar {
+  z-index: 5;
+}
+
+body.content-builder-admin:has(.blog-post-editor--visual.is-drawer-open) #content {
+  z-index: 30;
+}
+
+/* ——— Viewport lock (cement-style) ——— */
+
+html:has(body.visual-builder-admin) {
+  height: 100%;
+  overflow: hidden !important;
+}
+
+body.visual-builder-admin {
+  --vb-admin-header-height: 56px;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+body.visual-builder-admin #container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+body.visual-builder-admin #header {
+  flex: 0 0 auto !important;
+}
+
+body.visual-builder-admin #main {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+}
+
+body.visual-builder-admin #container > nav,
+body.visual-builder-admin .breadcrumbs {
+  display: none !important;
+}
+
+body.visual-builder-admin #content,
+body.visual-builder-admin #content-main,
+body.visual-builder-admin .change-form,
+body.visual-builder-admin #content form {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+body.visual-builder-admin #content > br.clear,
+body.visual-builder-admin .submit-row,
+.content-builder-admin #content > h1,
+.content-builder-admin #content > h2 {
+  display: none !important;
+}
+
+body.visual-builder-admin .messagelist {
+  margin: 0;
+  max-height: 2.25rem;
+  overflow: hidden;
+}
+
+/*
+  Size the editor to fill from under the Django header to the window bottom.
+  JS sets --vb-frame-top / --vb-frame-left from measured header + sidebar.
+*/
+body.visual-builder-admin .builder-fields.blog-post-editor--visual,
+body.content-builder-admin .builder-fields.blog-post-editor--visual {
+  position: fixed !important;
+  top: var(--vb-frame-top, var(--vb-admin-header-height)) !important;
+  left: var(--vb-frame-left, 0px) !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 20 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  overflow: hidden !important;
+  background: var(--vb-sheet, #fff);
 }
 
 .builder-topbar {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 40;
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
   gap: .65rem;
+  width: 100%;
+  margin: 0;
   padding: .65rem 1rem;
+  box-sizing: border-box;
   border-bottom: 2px solid var(--primary);
   background: var(--body-bg);
   color: var(--body-fg);
@@ -81,9 +189,7 @@
 }
 
 .builder-blocker {
-  position: sticky;
-  top: 58px;
-  z-index: 39;
+  flex: 0 0 auto;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -105,112 +211,326 @@
   font-size: 1.25rem;
 }
 
-.page-builder__stage {
-  min-height: 650px;
-}
-
 .builder-drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  background: rgba(0, 0, 0, .28);
+  display: none !important;
 }
 
-.builder-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 81;
-  width: min(620px, 92vw);
-  overflow: hidden;
-  border-left: 1px solid var(--border-color);
-  background: var(--body-bg);
-  color: var(--body-fg);
-  box-shadow: -8px 0 30px rgba(0, 0, 0, .18);
+/* ——— Inner builder flex/grid chain ——— */
+
+body.visual-builder-admin .blog-post-editor__layout--visual {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  height: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
 }
 
-.builder-drawer[hidden],
-.builder-drawer-backdrop[hidden] {
-  display: none;
+body.visual-builder-admin .blog-post-editor__writing {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
 }
 
-.builder-drawer > header {
+body.visual-builder-admin .blog-post-editor__writing .page-builder,
+body.visual-builder-admin .blog-post-editor__writing .blog-page-builder {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+body.visual-builder-admin .page-builder__workspace {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: grid !important;
+  grid-template-columns: 280px minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  overflow: hidden !important;
+}
+
+body.visual-builder-admin .page-builder__panel {
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body.visual-builder-admin .page-builder__panel-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+}
+
+/* THE canvas scrollbar — native overflow scroll (compositor), like the SEO drawer */
+body.visual-builder-admin .page-builder__stage {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  touch-action: pan-y;
+  overflow-anchor: none;
+  scrollbar-gutter: stable;
+  padding-bottom: 3rem !important;
+  box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.visual-builder-admin .page-builder__page-sheet {
+  min-height: 0 !important;
+  max-width: 100% !important;
+  padding-bottom: 2rem;
+  /* Avoid large blur shadows inside the scrollport (main-thread paint cost) */
+  box-shadow: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.visual-builder-admin .page-builder__canvas,
+body.visual-builder-admin .page-builder__block,
+body.visual-builder-admin .page-builder__text,
+body.visual-builder-admin [data-builder-canvas] {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Skip offscreen section work while scrolling long pages */
+body.visual-builder-admin .page-builder__section-wrap {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
+}
+
+/* Instant chrome show/hide — transitions during scroll feel sticky */
+body.visual-builder-admin .page-builder__section-insert,
+body.visual-builder-admin .page-builder__section-chrome,
+body.visual-builder-admin .page-builder__block-chrome,
+body.visual-builder-admin .page-builder__section-handle,
+body.visual-builder-admin .page-builder__section::after,
+body.visual-builder-admin .page-builder__row,
+body.visual-builder-admin .page-builder__block {
+  transition: none !important;
+}
+
+body.visual-builder-admin .page-builder__section-insert-btn,
+body.visual-builder-admin .page-builder__add-section-fab,
+body.visual-builder-admin .page-builder__empty-add {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* Docked SEO/Details drawer */
+body.visual-builder-admin .builder-drawer.blog-post-editor__drawer--docked,
+body.visual-builder-admin .blog-post-editor__drawer--docked {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 100 !important;
+  width: auto !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12) !important;
+  background: #fff !important;
+  color: #1f2937 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer--docked.blog-post-editor__drawer--wide,
+body.visual-builder-admin .builder-drawer.blog-post-editor__drawer--wide {
+  width: min(780px, calc(100vw - 140px)) !important;
+  min-width: min(520px, calc(100vw - 140px)) !important;
+  max-width: calc(100vw - 140px) !important;
+}
+
+body.visual-builder-admin .builder-drawer[hidden],
+body.visual-builder-admin .blog-post-editor__drawer--docked[hidden] {
+  display: none !important;
+}
+
+body.visual-builder-admin .builder-drawer > header,
+body.visual-builder-admin .blog-post-editor__drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex: 0 0 auto;
   padding: .8rem 1rem;
-  border-bottom: 1px solid var(--border-color);
-  background: #101923;
-  color: #fff;
+  border-bottom: 1px solid #e5e7eb !important;
+  background: #fff !important;
+  color: #111827 !important;
 }
 
-.builder-drawer > header h2 {
+body.visual-builder-admin .builder-drawer > header h2,
+body.visual-builder-admin .blog-post-editor__drawer-title {
   margin: 0;
-  color: #fff;
+  color: #111827 !important;
 }
 
-.builder-drawer > header button {
+body.visual-builder-admin .builder-drawer > header button,
+body.visual-builder-admin .blog-post-editor__drawer-close {
   border: 0;
   background: transparent;
-  color: #fff;
+  color: #374151 !important;
   cursor: pointer;
   font-size: 1.6rem;
 }
 
-.builder-drawer-body {
-  height: calc(100% - 62px);
-  overflow: auto;
+body.visual-builder-admin .builder-drawer-body,
+body.visual-builder-admin .blog-post-editor__drawer-body {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
   padding: 1rem;
+  background: #fff !important;
+  color: #1f2937 !important;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 1;
 }
 
-.builder-drawer .module {
-  margin-bottom: 1rem;
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer,
+body.visual-builder-admin .blog-post-editor__drawer .seo-keyword-analyzer,
+body.visual-builder-admin .blog-post-editor__drawer .seo-unified-score,
+body.visual-builder-admin .blog-post-editor__drawer .readonly {
+  max-width: 100% !important;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
-.builder-drawer [data-builder-drawer-panel="seo"] .inline-related > h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 0 .75rem;
-  padding: .75rem .9rem;
-  border: 1px solid #49799c;
-  border-left: .35rem solid #d4aa62;
-  border-radius: .45rem;
-  background: #244b6a;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .16);
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer__header,
+body.visual-builder-admin .blog-post-editor__drawer .seo-keyword-analyzer__header {
+  align-items: flex-start;
+  min-width: 0;
 }
 
-.builder-drawer [data-builder-drawer-panel="seo"] .inline-related > h3 b,
-.builder-drawer [data-builder-drawer-panel="seo"] .inline-related > h3 .inline_label {
-  color: inherit;
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer__meta,
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer__message {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.builder-drawer [data-builder-drawer-panel="seo"] .inline-related > h3 .seo-profile-toggle {
-  border: 1px solid rgba(255, 255, 255, .55);
-  border-radius: .3rem;
-  background: rgba(255, 255, 255, .08);
-  color: #fff;
-  padding: .25rem .55rem;
-  cursor: pointer;
+body.visual-builder-admin .blog-post-editor__drawer .seo-unified-score__table {
+  width: 100%;
+  table-layout: fixed;
 }
 
-.builder-drawer [data-builder-drawer-panel="seo"] .inline-related.seo-profile-collapsed > :not(h3) {
+body.visual-builder-admin .blog-post-editor__drawer .seo-unified-score__table th,
+body.visual-builder-admin .blog-post-editor__drawer .seo-unified-score__table td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+body.visual-builder-admin .blog-post-editor__rail--visual {
+  align-self: stretch !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+}
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__section-chrome,
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__row-chrome,
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__block-chrome,
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__section-handle,
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__column-drag {
   display: none !important;
+}
+
+body.visual-builder-admin .blog-post-editor--visual.is-drawer-open .page-builder__workspace {
+  pointer-events: none;
 }
 
 .builder-locale-note {
   padding: .65rem .8rem;
   border-radius: 5px;
-  background: #1d2a38;
-  color: #fff;
+  background: #eef2ff !important;
+  color: #1e3a5f !important;
 }
 
 .builder-locale-hidden {
+  display: none !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]),
+body.visual-builder-admin .blog-post-editor__drawer select,
+body.visual-builder-admin .blog-post-editor__drawer textarea,
+body.visual-builder-admin .blog-post-editor__drawer .vTextField,
+body.visual-builder-admin .blog-post-editor__drawer .vLargeTextField {
+  background: #fff !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer .form-row,
+body.visual-builder-admin .blog-post-editor__drawer .form-row label,
+body.visual-builder-admin .blog-post-editor__drawer .readonly,
+body.visual-builder-admin .blog-post-editor__drawer .help,
+body.visual-builder-admin .blog-post-editor__drawer p.help,
+body.visual-builder-admin .blog-post-editor__drawer fieldset .description,
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer,
+body.visual-builder-admin .blog-post-editor__drawer .seo-analyzer * {
+  color: #1f2937 !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer fieldset.module > h2,
+body.visual-builder-admin .blog-post-editor__drawer fieldset.module > h2 *,
+body.visual-builder-admin .blog-post-editor__drawer .collapse summary,
+body.visual-builder-admin .blog-post-editor__drawer details > summary {
+  color: #111827 !important;
+  background: #f3f4f6 !important;
+}
+
+/* Keep collapsed SEO fieldsets to the header only — drawer CSS otherwise
+   forces display:block on .form-row and leaves empty bordered rows. */
+body.visual-builder-admin .blog-post-editor__drawer fieldset.collapsed > *:not(h2) {
+  display: none !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer fieldset.collapsed > h2 {
+  display: block !important;
+  background: var(--vb-chrome, #111827) !important;
+  color: #fff !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer fieldset.collapsed > h2 *,
+body.visual-builder-admin .blog-post-editor__drawer fieldset.collapsed .collapse-toggle {
+  display: inline !important;
+  color: inherit !important;
+  background: transparent !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer .seo-serp-preview__meta,
+body.visual-builder-admin .blog-post-editor__drawer .seo-serp-preview__sources,
+body.visual-builder-admin .blog-post-editor__drawer .seo-serp-preview__sources td,
+body.visual-builder-admin .blog-post-editor__drawer .seo-serp-preview__sources th {
+  color: #374151 !important;
+}
+
+body.visual-builder-admin .blog-post-editor__drawer [data-builder-drawer-panel="seo"] .inline-related > h3,
+body.visual-builder-admin .blog-post-editor__drawer [data-blog-drawer-panel="seo"] .inline-related > h3 {
   display: none !important;
 }
 
@@ -225,13 +545,7 @@
     overflow-x: auto;
   }
 
-  .page-builder__workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .page-builder__panel {
-    max-height: 340px;
-    border-right: 0;
-    border-bottom: 1px solid var(--border-color);
+  body.visual-builder-admin .page-builder__workspace {
+    grid-template-columns: 1fr !important;
   }
 }

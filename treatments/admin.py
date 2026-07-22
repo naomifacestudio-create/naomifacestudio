@@ -20,7 +20,7 @@ class TreatmentResource(resources.ModelResource):
 @admin.register(Treatment)
 class TreatmentAdmin(LocalizedBuilderAdmin, ImportExportModelAdmin):
     resource_class = TreatmentResource
-    list_display = ['title_hr', 'price', 'duration_hours', 'duration_minutes', 'is_active', 'created_at']
+    list_display = ['title_hr', 'price', 'duration_hours', 'duration_minutes', 'publish_date', 'is_active', 'created_at']
     search_fields = [
         'title_hr',
         'title_en',

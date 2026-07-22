@@ -177,8 +177,8 @@ def _reverse_detail_for_language(next_url, lang_code):
                 return None
             from blogs.models import Blog
 
-            obj = Blog.objects.filter(
-                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            obj = Blog.objects.publicly_visible().filter(
+                Q(slug_hr=slug) | Q(slug_en=slug)
             ).first()
             if obj:
                 return reverse(
@@ -191,8 +191,8 @@ def _reverse_detail_for_language(next_url, lang_code):
                 return None
             from treatments.models import Treatment
 
-            obj = Treatment.objects.filter(
-                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            obj = Treatment.objects.publicly_visible().filter(
+                Q(slug_hr=slug) | Q(slug_en=slug)
             ).first()
             if obj:
                 return reverse(
@@ -205,8 +205,8 @@ def _reverse_detail_for_language(next_url, lang_code):
                 return None
             from education.models import Education
 
-            obj = Education.objects.filter(
-                Q(slug_hr=slug) | Q(slug_en=slug), is_active=True
+            obj = Education.objects.publicly_visible().filter(
+                Q(slug_hr=slug) | Q(slug_en=slug)
             ).first()
             if obj:
                 return reverse(
@@ -219,8 +219,8 @@ def _reverse_detail_for_language(next_url, lang_code):
                 return None
             from treatments.models import Treatment
 
-            obj = Treatment.objects.filter(
-                Q(slug_hr=treatment_slug) | Q(slug_en=treatment_slug), is_active=True
+            obj = Treatment.objects.publicly_visible().filter(
+                Q(slug_hr=treatment_slug) | Q(slug_en=treatment_slug)
             ).first()
             if obj:
                 return reverse(

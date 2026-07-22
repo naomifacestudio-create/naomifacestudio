@@ -24,10 +24,11 @@ from seo.services import get_metadata
 
 class LocalizedBuilderAdmin(admin.ModelAdmin):
     change_form_template = "admin/content_builder/change_form.html"
-    list_display = ("title_hr", "is_active", "updated_at")
-    list_filter = ("is_active",)
+    list_display = ("title_hr", "publish_date", "is_active", "updated_at")
+    list_filter = ("is_active", "publish_date")
     search_fields = ("title_hr", "title_en", "body_plaintext_hr", "body_plaintext_en")
     readonly_fields = ("created_at", "updated_at")
+    date_hierarchy = "publish_date"
     inlines = (SeoMetadataInline,)
     fieldsets = (
         (_("Croatian Content"), {
@@ -36,13 +37,17 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
         (_("English Content"), {
             "fields": ("title_en", "slug_en", "short_description_en"),
         }),
-        (_("Publishing"), {"fields": ("thumbnail", "is_active")}),
+        (_("Publishing"), {"fields": ("thumbnail", "is_active", "publish_date")}),
         (_("Dates"), {"fields": ("created_at", "updated_at")}),
     )
     exclude = (
         "body_page_hr", "body_plaintext_hr", "page_version_hr",
         "body_page_en", "body_plaintext_en", "page_version_en",
     )
+
+    class Media:
+        # CSS is loaded with cache-bust in content_builder/change_form.html
+        js = ("admin/js/page_builder.js", "admin/js/page_builder_submit.js")
 
     def get_view_on_site_url(self, obj):
         if obj is None:

@@ -16,16 +16,16 @@
   };
 
   const ELEMENT_LABELS = {
-    heading: "Naslov",
-    text: "Tekst",
-    image: "Slika",
+    heading: "Heading",
+    text: "Text",
+    image: "Image",
     video: "Video",
     faq: "FAQ",
-    button: "Gumb",
-    divider: "Linija",
+    button: "Button",
+    divider: "Divider",
   };
 
-  const TEXT_BLOCK_PLACEHOLDER = "Unesite tekst…";
+  const TEXT_BLOCK_PLACEHOLDER = "Enter text…";
 
   const ELEMENT_ICONS = {
     heading: "H",
@@ -75,35 +75,35 @@
   const FONT_SIZE_DEFAULT_PX = 16;
 
   const SAVE_LABELS = {
-    saved: "Spremljeno",
-    saving: "Sprema se…",
-    dirty: "Nije spremljeno",
-    error: "Greška",
-    conflict: "Konflikt",
+    saved: "Saved",
+    saving: "Saving…",
+    dirty: "Unsaved",
+    error: "Error",
+    conflict: "Conflict",
   };
 
   const OPTION_LABELS = {
-    none: "Bez",
-    sm: "Malo",
-    md: "Srednje",
-    lg: "Veliko",
-    default: "Zadano",
-    light: "Svijetla",
-    dark: "Tamna",
-    accent: "Naglašena",
-    contained: "Ograničena",
-    full: "Puna širina",
-    top: "Gore",
-    center: "Sredina",
-    bottom: "Dole",
-    left: "Lijevo",
-    right: "Desno",
-    primary: "Primarno",
-    secondary: "Sekundarno",
-    outline: "Kontura",
-    "16:9": "Široko (16:9)",
-    "4:3": "Standardno (4:3)",
-    "1:1": "Kvadratno (1:1)",
+    none: "None",
+    sm: "Small",
+    md: "Medium",
+    lg: "Large",
+    default: "Default",
+    light: "Light",
+    dark: "Dark",
+    accent: "Accent",
+    contained: "Contained",
+    full: "Full width",
+    top: "Top",
+    center: "Center",
+    bottom: "Bottom",
+    left: "Left",
+    right: "Right",
+    primary: "Primary",
+    secondary: "Secondary",
+    outline: "Outline",
+    "16:9": "Wide (16:9)",
+    "4:3": "Standard (4:3)",
+    "1:1": "Square (1:1)",
   };
 
   function uid(prefix) {
@@ -281,7 +281,7 @@
         id: uid("blk"),
         type: "heading",
         settings: { ...DEFAULT_BLOCK_SETTINGS },
-        attrs: { level: 2, text: "Naslov" },
+        attrs: { level: 2, text: "Heading" },
       };
     }
     if (type === "text") {
@@ -323,8 +323,8 @@
         attrs: {
           style: "accordion",
           items: [
-            { question: "Prvo pitanje?", answer: "Odgovor na prvo pitanje." },
-            { question: "Drugo pitanje?", answer: "Odgovor na drugo pitanje." },
+            { question: "First question?", answer: "Answer to the first question." },
+            { question: "Second question?", answer: "Answer to the second question." },
           ],
         },
       };
@@ -334,7 +334,7 @@
         id: uid("blk"),
         type: "button",
         settings: { ...DEFAULT_BLOCK_SETTINGS },
-        attrs: { label: "Saznajte više", href: "", style: "primary" },
+        attrs: { label: "Learn more", href: "", style: "primary" },
       };
     }
     return {
@@ -983,13 +983,13 @@
     }
     const range = getTextSelectionRange(state, block, editable);
     if (!range) {
-      showToast(state.root, "Prvo označite tekst u bloku.", true);
+      showToast(state.root, "Select text in the block first.", true);
       return;
     }
     selectRangeContents(range);
     if (command === "createLink") {
       const current = document.queryCommandValue("createLink") || "";
-      const href = window.prompt("Unesite URL linka", current || "https://");
+      const href = window.prompt("Enter link URL", current || "https://");
       if (href == null) {
         return;
       }
@@ -997,7 +997,7 @@
       if (!trimmed) {
         document.execCommand("unlink", false, null);
       } else if (!isSafeHref(trimmed)) {
-        showToast(state.root, "Poveznica nije dopuštena (koristite http/https, / ili #).", true);
+        showToast(state.root, "Link not allowed (use http/https, /, or #).", true);
         return;
       } else {
         document.execCommand("createLink", false, trimmed);
@@ -1093,7 +1093,7 @@
     labelRow.className = "page-builder__inspector-range-label";
 
     const labelEl = document.createElement("span");
-    labelEl.textContent = "Širina (%)";
+    labelEl.textContent = "Width (%)";
 
     const valueEl = document.createElement("span");
     valueEl.className = "page-builder__inspector-range-value";
@@ -1302,9 +1302,9 @@
     hint.className = "page-builder__panel-hint";
     if (state.targetColumnId) {
       hint.classList.add("is-active");
-      hint.textContent = "Odaberite widget na popisu ispod kako biste ga dodali u označeni stupac.";
+      hint.textContent = "Choose a widget below to add it to the selected column.";
     } else {
-      hint.textContent = "Prvo kliknite stupac na stranici, zatim odaberite widget.";
+      hint.textContent = "First click a column on the page, then choose a widget.";
     }
     state.panelWidgets.appendChild(hint);
 
@@ -1325,7 +1325,7 @@
         `<span>${element.label}</span>`;
       card.addEventListener("click", () => {
         if (!state.targetColumnId) {
-          showToast(state.root, "Prvo kliknite stupac na stranici.", true);
+          showToast(state.root, "First click a column on the page.", true);
           setPanelTab(state, "widgets");
           return;
         }
@@ -1362,10 +1362,10 @@
 
     state.page.sections.forEach((section, sectionIndex) => {
       tree.appendChild(
-        navItem(state, `Sekcija ${sectionIndex + 1}`, "section", section.id, "section", {
+        navItem(state, `Section ${sectionIndex + 1}`, "section", section.id, "section", {
           kind: "section",
           id: section.id,
-          label: "Sekcija",
+          label: "Section",
           settings: section.settings,
           fields: state.catalog.section_settings,
         }, "page-builder__nav-btn--section"),
@@ -1373,10 +1373,10 @@
 
       section.rows.forEach((row, rowIndex) => {
         tree.appendChild(
-          navItem(state, `Red ${rowIndex + 1}`, "row", row.id, "row", {
+          navItem(state, `Row ${rowIndex + 1}`, "row", row.id, "row", {
             kind: "row",
             id: row.id,
-            label: "Red",
+            label: "Row",
             settings: row.settings,
             fields: state.catalog.row_settings,
           }, "page-builder__nav-btn--row"),
@@ -1384,10 +1384,10 @@
 
         row.columns.forEach((column, columnIndex) => {
           tree.appendChild(
-            navItem(state, `Stupac ${columnIndex + 1}`, "column", column.id, "column", {
+            navItem(state, `Column ${columnIndex + 1}`, "column", column.id, "column", {
               kind: "column",
               id: column.id,
-              label: "Stupac",
+              label: "Column",
               settings: column.settings,
               fields: state.catalog.column_settings,
             }, "page-builder__nav-btn--column"),
@@ -1490,17 +1490,17 @@
     row.className = "page-builder__inspector-field";
 
     const labelEl = document.createElement("span");
-    labelEl.textContent = "Formatiranje";
+    labelEl.textContent = "Formatting";
     row.appendChild(labelEl);
 
     const toolbar = document.createElement("div");
     toolbar.className = "page-builder__text-format";
     [
-      ["bold", "B", "Podebljano"],
-      ["italic", "I", "Kurziv"],
-      ["underline", "U", "Podvučeno"],
-      ["createLink", "🔗", "Dodaj link"],
-      ["unlink", "⌀", "Ukloni link"],
+      ["bold", "B", "Bold"],
+      ["italic", "I", "Italic"],
+      ["underline", "U", "Underline"],
+      ["createLink", "🔗", "Add link"],
+      ["unlink", "⌀", "Remove link"],
     ].forEach(([command, label, title]) => {
       const btn = document.createElement("button");
       btn.type = "button";
@@ -1525,7 +1525,7 @@
     row.className = "page-builder__inspector-field";
 
     const labelEl = document.createElement("span");
-    labelEl.textContent = "Veličina fonta (px)";
+    labelEl.textContent = "Font size (px)";
     row.appendChild(labelEl);
 
     const controls = document.createElement("div");
@@ -1540,7 +1540,7 @@
     input.autocomplete = "off";
     input.value = String(FONT_SIZE_DEFAULT_PX);
     input.className = "page-builder__inspector-number";
-    input.setAttribute("aria-label", "Veličina fonta u pikselima");
+    input.setAttribute("aria-label", "Font size in pixels");
 
     const arrows = document.createElement("div");
     arrows.className = "page-builder__font-size-arrows";
@@ -1549,15 +1549,15 @@
     stepUp.type = "button";
     stepUp.className = "page-builder__font-size-step";
     stepUp.textContent = "▲";
-    stepUp.title = "Povećaj";
-    stepUp.setAttribute("aria-label", "Povećaj veličinu fonta");
+    stepUp.title = "Increase";
+    stepUp.setAttribute("aria-label", "Increase font size");
 
     const stepDown = document.createElement("button");
     stepDown.type = "button";
     stepDown.className = "page-builder__font-size-step";
     stepDown.textContent = "▼";
-    stepDown.title = "Smanji";
-    stepDown.setAttribute("aria-label", "Smanji veličinu fonta");
+    stepDown.title = "Decrease";
+    stepDown.setAttribute("aria-label", "Decrease font size");
 
     const nudgeFontSize = (delta) => {
       const current = clampFontSizePx(input.value) ?? FONT_SIZE_DEFAULT_PX;
@@ -1571,12 +1571,12 @@
     const applyBtn = document.createElement("button");
     applyBtn.type = "button";
     applyBtn.className = "page-builder__inspector-btn page-builder__inspector-btn--inline";
-    applyBtn.textContent = "Primeni";
+    applyBtn.textContent = "Apply";
 
     const apply = () => {
       const applied = applyInlineFontSize(state, block, input.value);
       if (!applied) {
-        showToast(state.root, "Prvo označite tekst u bloku.", true);
+        showToast(state.root, "Select text in the block first.", true);
       }
     };
 
@@ -1638,7 +1638,7 @@
 
     const hint = document.createElement("p");
     hint.className = "page-builder__inspector-hint";
-    hint.textContent = "Označite tekst, unesite veličinu u pikselima i kliknite Primeni.";
+    hint.textContent = "Select text, enter a size in pixels, then click Apply.";
 
     arrows.appendChild(stepUp);
     arrows.appendChild(stepDown);
@@ -1679,14 +1679,14 @@
     label.className = "page-builder__upload-progress-label";
     label.dataset.videoUploadProgressLabel = "1";
     const percent = Number.isFinite(upload.percent) ? upload.percent : 0;
-    label.textContent = percent > 0 ? `Učitavanje: ${percent}%` : "Priprema učitavanja…";
+    label.textContent = percent > 0 ? `Uploading: ${percent}%` : "Preparing upload…";
 
     const progress = document.createElement("progress");
     progress.className = "page-builder__upload-progress-bar";
     progress.max = 100;
     progress.value = percent;
     progress.dataset.videoUploadProgressBar = "1";
-    progress.setAttribute("aria-label", "Napredak učitavanja video datoteke");
+    progress.setAttribute("aria-label", "Video file upload progress");
 
     wrap.appendChild(label);
     wrap.appendChild(progress);
@@ -1703,7 +1703,7 @@
     const label = state.inspectorBody?.querySelector("[data-video-upload-progress-label]");
     const progress = state.inspectorBody?.querySelector("[data-video-upload-progress-bar]");
     if (label) {
-      label.textContent = normalized > 0 ? `Učitavanje: ${normalized}%` : "Priprema učitavanja…";
+      label.textContent = normalized > 0 ? `Uploading: ${normalized}%` : "Preparing upload…";
     }
     if (progress) {
       progress.value = normalized;
@@ -1740,7 +1740,7 @@
     if (cleaned.startsWith("media/")) {
       cleaned = cleaned.slice("media/".length);
     }
-    for (const prefix of ["page/images/", "page/posters/", "page/", "uploads/"]) {
+    for (const prefix of ["page/images/", "page/posters/", "page/videos/", "page/", "uploads/"]) {
       const index = cleaned.indexOf(prefix);
       if (index >= 0) {
         return cleaned.slice(index);
@@ -1773,31 +1773,31 @@
     const field = document.createElement("label");
     field.className = "page-builder__inspector-field";
     const label = document.createElement("span");
-    label.textContent = `Putanja ${pathNoun}`;
+    label.textContent = `${pathNoun} path`;
     const controls = document.createElement("div");
     controls.className = "page-builder__image-path-controls";
     const input = document.createElement("input");
     input.type = "text";
     input.readOnly = true;
-    input.setAttribute("aria-label", `Putanja ${pathNoun}`);
+    input.setAttribute("aria-label", `${pathNoun} path`);
     if (path) {
       input.value = path;
     } else {
       input.value = "";
       input.placeholder = hasMedia
-        ? `Putanja nije dostupna — učitajte ${uploadNoun} ponovno`
-        : `Učitajte ${uploadNoun} da biste dobili putanju`;
+        ? `Path not available — upload the ${uploadNoun} again`
+        : `Upload a ${uploadNoun} to get a path`;
     }
     const copyBtn = document.createElement("button");
     copyBtn.type = "button";
-    copyBtn.textContent = "Kopiraj";
+    copyBtn.textContent = "Copy";
     copyBtn.className = "page-builder__inspector-btn page-builder__inspector-btn--inline";
     copyBtn.disabled = !path;
     copyBtn.addEventListener("click", async () => {
       const copied = await copyMediaPath(path, input);
       showToast(
         state.root,
-        copied ? `Putanja ${pathNoun} je kopirana.` : "Kopiranje nije uspjelo. Označite i kopirajte putanju ručno.",
+        copied ? `${pathNoun} path copied.` : "Copy failed. Select and copy the path manually.",
         !copied,
       );
     });
@@ -1806,6 +1806,92 @@
     field.appendChild(label);
     field.appendChild(controls);
     bodyEl.appendChild(field);
+  }
+
+  async function resolveExistingMedia(state, block, draftPath, mediaType) {
+    const isVideo = mediaType === "video";
+    const mediaName = isVideo ? "video" : "image";
+    const examplePath = isVideo ? "page/videos/..." : "page/images/...";
+    if (!state.resolveMediaUrl || !block) {
+      return { ok: false, message: `Reusing this ${mediaName} is not available.` };
+    }
+    const path = String(draftPath || "").trim();
+    if (!path) {
+      return { ok: false, message: `Enter a storage path (e.g. ${examplePath}).` };
+    }
+    try {
+      const response = await fetch(state.resolveMediaUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
+        },
+        body: JSON.stringify({ path, media_type: mediaType }),
+        signal: AbortSignal.timeout(PAGE_SAVE_TIMEOUT_MS),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        return {
+          ok: false,
+          message: `Path is invalid or the file is not a valid ${isVideo ? "video" : "image format"}.`,
+        };
+      }
+      block.attrs.path = data.path;
+      block.attrs.src = data.url;
+      if (isVideo) {
+        block.attrs.url = "";
+        block.attrs.poster = "";
+        block.attrs.poster_path = "";
+        block.attrs.video_width = "";
+        block.attrs.video_height = "";
+      } else {
+        block.attrs.media_asset_id = "";
+      }
+      markDirty(state);
+      renderCanvas(state);
+      renderEditPanel(state);
+      return { ok: true };
+    } catch (_error) {
+      return { ok: false, message: `Network error while loading ${mediaName}.` };
+    }
+  }
+
+  function appendMediaReuseControls(bodyEl, state, block, mediaType) {
+    const isVideo = mediaType === "video";
+    const reuseField = document.createElement("label");
+    reuseField.className = "page-builder__inspector-field";
+    const reuseLabel = document.createElement("span");
+    reuseLabel.textContent = isVideo
+      ? "Existing video (storage path)"
+      : "Existing image (storage path)";
+    const reuseInput = document.createElement("input");
+    reuseInput.type = "text";
+    reuseInput.placeholder = isVideo ? "page/videos/..." : "page/images/...";
+    reuseInput.value = "";
+    reuseField.appendChild(reuseLabel);
+    reuseField.appendChild(reuseInput);
+    bodyEl.appendChild(reuseField);
+
+    const reuseBtn = document.createElement("button");
+    reuseBtn.type = "button";
+    reuseBtn.textContent = isVideo ? "Use existing video" : "Use existing image";
+    reuseBtn.className = "page-builder__inspector-btn";
+    reuseBtn.addEventListener("click", async () => {
+      reuseBtn.disabled = true;
+      const result = await resolveExistingMedia(state, block, reuseInput.value, mediaType);
+      reuseBtn.disabled = false;
+      if (!result.ok) {
+        showToast(state.root, result.message || "Path is invalid.", true);
+        return;
+      }
+      reuseInput.value = "";
+      showToast(
+        state.root,
+        isVideo ? "Existing video applied." : "Existing image applied.",
+      );
+    });
+    bodyEl.appendChild(reuseBtn);
   }
 
   function renderEditPanel(state) {
@@ -1857,7 +1943,7 @@
       const headingBlock = state.selection.block;
       appendSelectField(
         bodyEl,
-        "Nivo naslova (H1–H4)",
+        "Heading level (H1–H4)",
         String(headingBlock.attrs.level || 2),
         ["1", "2", "3", "4"],
         (value) => {
@@ -1881,55 +1967,22 @@
     if (state.selection.type === "image") {
       const uploadBtn = document.createElement("button");
       uploadBtn.type = "button";
-      uploadBtn.textContent = "Učitaj sliku";
+      uploadBtn.textContent = "Upload image";
       uploadBtn.className = "page-builder__inspector-btn";
       uploadBtn.addEventListener("click", () => {
         state.pendingImageBlock = state.selection.block;
         state.fileInput.click();
       });
       bodyEl.appendChild(uploadBtn);
-      appendMediaPathField(bodyEl, state.selection.block, state, "slike", "sliku");
+      appendMediaPathField(bodyEl, state.selection.block, state, "Image", "image");
+      appendMediaReuseControls(bodyEl, state, state.selection.block, "image");
 
-      const reuseField = document.createElement("label");
-      reuseField.className = "page-builder__inspector-field";
-      const reuseLabel = document.createElement("span");
-      reuseLabel.textContent = "Postojeća slika (storage path)";
-      const reuseInput = document.createElement("input");
-      reuseInput.type = "text";
-      reuseInput.placeholder = "page/images/...";
-      reuseInput.value = "";
-      reuseField.appendChild(reuseLabel);
-      reuseField.appendChild(reuseInput);
-      bodyEl.appendChild(reuseField);
-
-      const reuseBtn = document.createElement("button");
-      reuseBtn.type = "button";
-      reuseBtn.textContent = "Koristi postojeću sliku";
-      reuseBtn.className = "page-builder__inspector-btn";
-      reuseBtn.addEventListener("click", async () => {
-        reuseBtn.disabled = true;
-        const result = await resolveExistingMedia(
-          state,
-          state.selection.block,
-          reuseInput.value,
-          "image",
-        );
-        reuseBtn.disabled = false;
-        if (!result.ok) {
-          showToast(state.root, result.message || "Putanja nije valjana.", true);
-          return;
-        }
-        reuseInput.value = "";
-        showToast(state.root, "Postojeća slika je primijenjena.");
-      });
-      bodyEl.appendChild(reuseBtn);
-
-      appendTextField(bodyEl, "Alt tekst", state.selection.block.attrs.alt, (value) => {
+      appendTextField(bodyEl, "Alt text", state.selection.block.attrs.alt, (value) => {
         state.selection.block.attrs.alt = value;
         markDirty(state);
         renderCanvas(state);
       });
-      appendTextField(bodyEl, "Opis (caption)", state.selection.block.attrs.caption, (value) => {
+      appendTextField(bodyEl, "Caption", state.selection.block.attrs.caption, (value) => {
         state.selection.block.attrs.caption = value;
         markDirty(state);
         renderCanvas(state);
@@ -1955,7 +2008,7 @@
       });
       const uploadBtn = document.createElement("button");
       uploadBtn.type = "button";
-      uploadBtn.textContent = isUploading ? "Učitavanje videa…" : "Učitaj video datoteku";
+      uploadBtn.textContent = isUploading ? "Uploading video…" : "Upload video file";
       uploadBtn.className = "page-builder__inspector-btn";
       uploadBtn.disabled = isUploading;
       uploadBtn.addEventListener("click", () => {
@@ -1963,46 +2016,12 @@
         state.videoFileInput.click();
       });
       bodyEl.appendChild(uploadBtn);
-      appendMediaPathField(bodyEl, videoBlock, state, "videa", "video");
-
-      const reuseField = document.createElement("label");
-      reuseField.className = "page-builder__inspector-field";
-      const reuseLabel = document.createElement("span");
-      reuseLabel.textContent = "Postojeći video (storage path)";
-      const reuseInput = document.createElement("input");
-      reuseInput.type = "text";
-      reuseInput.placeholder = "page/videos/...";
-      reuseInput.value = "";
-      reuseField.appendChild(reuseLabel);
-      reuseField.appendChild(reuseInput);
-      bodyEl.appendChild(reuseField);
-
-      const reuseBtn = document.createElement("button");
-      reuseBtn.type = "button";
-      reuseBtn.textContent = "Koristi postojeći video";
-      reuseBtn.className = "page-builder__inspector-btn";
-      reuseBtn.addEventListener("click", async () => {
-        reuseBtn.disabled = true;
-        const result = await resolveExistingMedia(
-          state,
-          videoBlock,
-          reuseInput.value,
-          "video",
-        );
-        reuseBtn.disabled = false;
-        if (!result.ok) {
-          showToast(state.root, result.message || "Putanja nije valjana.", true);
-          return;
-        }
-        reuseInput.value = "";
-        showToast(state.root, "Postojeći video je primijenjen.");
-      });
-      bodyEl.appendChild(reuseBtn);
-
+      appendMediaPathField(bodyEl, videoBlock, state, "Video", "video");
+      appendMediaReuseControls(bodyEl, state, videoBlock, "video");
       const videoHint = document.createElement("p");
       videoHint.className = "page-builder__inspector-hint";
       videoHint.textContent =
-        "Podržano: MP4 (H.264) i WebM. Učitana datoteka koristi svoj prirodni omjer stranica.";
+        "Supported: MP4 (H.264) and WebM. Uploaded files use their natural aspect ratio.";
       bodyEl.appendChild(videoHint);
 
       if (isUploading) {
@@ -2012,7 +2031,7 @@
       if (videoBlock.attrs.path || videoBlock.attrs.src) {
         const clearBtn = document.createElement("button");
         clearBtn.type = "button";
-        clearBtn.textContent = "Ukloni video datoteku";
+        clearBtn.textContent = "Remove video file";
         clearBtn.className = "page-builder__inspector-btn";
         clearBtn.addEventListener("click", () => {
           videoBlock.attrs.path = "";
@@ -2051,7 +2070,7 @@
     if (state.selection.type === "faq") {
       appendSelectField(
         bodyEl,
-        "Prikaz",
+        "Display",
         state.selection.block.attrs.style || "accordion",
         ["accordion", "list"],
         (value) => {
@@ -2067,12 +2086,12 @@
         const itemEl = document.createElement("div");
         itemEl.className = "page-builder__faq-item";
 
-        appendTextField(itemEl, `Pitanje ${index + 1}`, item.question, (value) => {
+        appendTextField(itemEl, `Question ${index + 1}`, item.question, (value) => {
           item.question = value;
           markDirty(state);
           renderCanvas(state);
         });
-        appendTextField(itemEl, `Odgovor ${index + 1}`, item.answer, (value) => {
+        appendTextField(itemEl, `Answer ${index + 1}`, item.answer, (value) => {
           item.answer = value;
           markDirty(state);
           renderCanvas(state);
@@ -2080,7 +2099,7 @@
 
         const removeBtn = document.createElement("button");
         removeBtn.type = "button";
-        removeBtn.textContent = "Ukloni pitanje";
+        removeBtn.textContent = "Remove question";
         removeBtn.addEventListener("click", () => {
           state.selection.block.attrs.items.splice(index, 1);
           markDirty(state);
@@ -2094,12 +2113,12 @@
 
       const addBtn = document.createElement("button");
       addBtn.type = "button";
-      addBtn.textContent = "+ Dodaj pitanje";
+      addBtn.textContent = "+ Add question";
       addBtn.className = "page-builder__inspector-btn";
       addBtn.addEventListener("click", () => {
         state.selection.block.attrs.items.push({
-          question: "Novo pitanje?",
-          answer: "Odgovor.",
+          question: "New question?",
+          answer: "Answer.",
         });
         markDirty(state);
         renderEditPanel(state);
@@ -2109,7 +2128,7 @@
     }
 
     if (state.selection.type === "button") {
-      appendTextField(bodyEl, "Tekst gumba", state.selection.block.attrs.label, (value) => {
+      appendTextField(bodyEl, "Button label", state.selection.block.attrs.label, (value) => {
         state.selection.block.attrs.label = value;
         markDirty(state);
         renderCanvas(state);
@@ -2253,7 +2272,7 @@
 
   async function uploadImage(state, file, block) {
     if (!state.uploadUrl || !file) {
-      return { ok: false, message: "Učitavanje nije dostupno." };
+      return { ok: false, message: "Upload is not available." };
     }
 
     const formData = new FormData();
@@ -2269,79 +2288,26 @@
       });
       const data = await response.json();
       if (!response.ok || !data.ok) {
-        return { ok: false, message: "Učitavanje slike nije uspjelo." };
+        return { ok: false, message: "Image upload failed." };
       }
 
       block.attrs.src = data.url;
-      block.attrs.path = data.path || storagePathFromSrc(data.url) || "";
+      block.attrs.path = data.path;
       if (!String(block.attrs.alt || "").trim()) {
         const fromServer = String(data.alt || "").trim();
         const fromFile = String(file.name || "")
           .replace(/\.[^.]+$/, "")
           .replace(/[_-]+/g, " ")
           .trim();
-        block.attrs.alt = fromServer || fromFile || "Slika";
+        block.attrs.alt = fromServer || fromFile || "Image";
       }
       trackSessionUpload(state, "default", data.path);
       markDirty(state);
       renderCanvas(state);
       renderEditPanel(state);
-      if (block.attrs.path) {
-        showToast(state.root, `Putanja: ${block.attrs.path}`);
-      }
       return { ok: true };
     } catch (_error) {
-      return { ok: false, message: "Mrežna greška pri učitavanju slike." };
-    }
-  }
-
-  async function resolveExistingMedia(state, block, draftPath, mediaType) {
-    const isVideo = mediaType === "video";
-    const mediaName = isVideo ? "videa" : "slike";
-    const existingMediaName = isVideo ? "postojećeg videa" : "postojeće slike";
-    const examplePath = isVideo ? "page/videos/..." : "page/images/...";
-    if (!state.resolveMediaUrl || !block) {
-      return { ok: false, message: `Ponovno korištenje ${mediaName} nije dostupno.` };
-    }
-    const path = String(draftPath || "").trim();
-    if (!path) {
-      return { ok: false, message: `Unesite storage path (npr. ${examplePath}).` };
-    }
-    try {
-      const response = await fetch(state.resolveMediaUrl, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCsrfToken(),
-        },
-        body: JSON.stringify({ path, media_type: mediaType }),
-        signal: AbortSignal.timeout(PAGE_SAVE_TIMEOUT_MS),
-      });
-      const data = await response.json();
-      if (!response.ok || !data.ok) {
-        return {
-          ok: false,
-          message: `Putanja nije valjana ili datoteka nije ispravan ${isVideo ? "video" : "format slike"}.`,
-        };
-      }
-      block.attrs.path = data.path;
-      block.attrs.src = data.url;
-      if (isVideo) {
-        block.attrs.url = "";
-        block.attrs.poster = "";
-        block.attrs.poster_path = "";
-        block.attrs.video_width = "";
-        block.attrs.video_height = "";
-      } else {
-        block.attrs.media_asset_id = "";
-      }
-      markDirty(state);
-      renderCanvas(state);
-      renderEditPanel(state);
-      return { ok: true };
-    } catch (_error) {
-      return { ok: false, message: `Mrežna greška pri učitavanju ${existingMediaName}.` };
+      return { ok: false, message: "Network error while uploading image." };
     }
   }
 
@@ -2440,13 +2406,13 @@
       markDirty(state);
       renderCanvas(state);
     } catch (_error) {
-      // Poster je poboljšanje; video ostaje valjan i ako izdvajanje slike ne uspije.
+      // Poster je poboljšanje; video ostaje validan i ako izdvajanje slike ne uspe.
     }
   }
 
   function uploadVideo(state, file, block, onProgress) {
     if (!state.videoUploadUrl || !file) {
-      return Promise.resolve({ ok: false, message: "Učitavanje videa nije dostupno." });
+      return Promise.resolve({ ok: false, message: "Video upload is not available." });
     }
 
     const formData = new FormData();
@@ -2469,7 +2435,7 @@
       request.addEventListener("load", () => {
         const data = request.response || {};
         if (request.status < 200 || request.status >= 300 || !data.ok) {
-          resolve({ ok: false, message: data.error || "Učitavanje videa nije uspjelo." });
+          resolve({ ok: false, message: data.error || "Video upload failed." });
           return;
         }
 
@@ -2477,26 +2443,23 @@
           onProgress(100);
         }
         block.attrs.src = data.url;
-        block.attrs.path = data.path || storagePathFromSrc(data.url) || "";
+        block.attrs.path = data.path;
         block.attrs.url = "";
         trackSessionUpload(state, "default", data.path);
         markDirty(state);
         renderCanvas(state);
         renderEditPanel(state);
-        if (block.attrs.path) {
-          showToast(state.root, `Putanja: ${block.attrs.path}`);
-        }
         resolve({ ok: true });
       });
 
       request.addEventListener("error", () => {
-        resolve({ ok: false, message: "Mrežna greška pri učitavanju videa." });
+        resolve({ ok: false, message: "Network error while uploading video." });
       });
       request.addEventListener("timeout", () => {
-        resolve({ ok: false, message: "Učitavanje videa trajalo je predugo. Pokušajte ponovno." });
+        resolve({ ok: false, message: "Video upload timed out. Please try again." });
       });
       request.addEventListener("abort", () => {
-        resolve({ ok: false, message: "Učitavanje videa je prekinuto." });
+        resolve({ ok: false, message: "Video upload was cancelled." });
       });
 
       request.send(formData);
@@ -2537,7 +2500,7 @@
       heading.contentEditable = "true";
       heading.spellcheck = true;
       setEditableHtml(heading, block.attrs.text || "");
-      bindEditablePlaceholderRich(heading, "Unesite naslov…", (value) => {
+      bindEditablePlaceholderRich(heading, "Enter heading…", (value) => {
         block.attrs.text = value;
         markDirty(state);
       });
@@ -2580,7 +2543,7 @@
       const link = document.createElement("span");
       const style = block.attrs.style === "secondary" ? "secondary" : "primary";
       link.className = `btn btn--${style} iv-page-button`;
-      link.textContent = block.attrs.label || "Gumb";
+      link.textContent = block.attrs.label || "Button";
       wrap.appendChild(link);
       preview.appendChild(wrap);
       return;
@@ -2601,7 +2564,7 @@
         placeholder.className = "page-builder__widget-placeholder";
         placeholder.innerHTML =
           '<span class="page-builder__widget-placeholder-icon">🖼</span>' +
-          "<span>Slika nije dodata</span>";
+          "<span>No image added</span>";
         wrap.appendChild(placeholder);
       }
       scale.appendChild(wrap);
@@ -2645,7 +2608,7 @@
         placeholder.className = "page-builder__video-placeholder";
         placeholder.innerHTML =
           '<span class="page-builder__widget-placeholder-icon">▶</span>' +
-          "<span>Video nije dodat</span>";
+          "<span>No video added</span>";
         scale.appendChild(placeholder);
       }
       preview.appendChild(scale);
@@ -2658,7 +2621,7 @@
       (block.attrs.items || []).forEach((item) => {
         const itemEl = document.createElement("div");
         itemEl.className = "page-builder__faq-preview-item";
-        itemEl.innerHTML = `<strong>${item.question || "Pitanje"}</strong><p>${item.answer || "Odgovor"}</p>`;
+        itemEl.innerHTML = `<strong>${item.question || "Question"}</strong><p>${item.answer || "Answer"}</p>`;
         list.appendChild(itemEl);
       });
       preview.appendChild(list);
@@ -2863,11 +2826,11 @@
       const empty = document.createElement("div");
       empty.className = "page-builder__empty";
       const message = document.createElement("p");
-      message.textContent = "Stranica je prazna.";
+      message.textContent = "This page is empty.";
       const addButton = document.createElement("button");
       addButton.type = "button";
       addButton.className = "page-builder__empty-add";
-      addButton.innerHTML = '<span aria-hidden="true">+</span> Dodaj prvu sekciju';
+      addButton.innerHTML = '<span aria-hidden="true">+</span> Add first section';
       addButton.addEventListener("click", () => {
         const section = createSection();
         state.page.sections.push(section);
@@ -2894,19 +2857,19 @@
 
       const toolbar = document.createElement("div");
       toolbar.className = "page-builder__section-chrome";
-      toolbar.appendChild(chromeBtn("⚙", "select-section", "vb-chrome-btn--icon vb-chrome-btn--accent", "Postavke sekcije"));
-      toolbar.appendChild(chromeBtn("✕", "delete-section", "vb-chrome-btn--icon vb-chrome-btn--danger", "Obriši sekciju"));
+      toolbar.appendChild(chromeBtn("⚙", "select-section", "vb-chrome-btn--icon vb-chrome-btn--accent", "Section settings"));
+      toolbar.appendChild(chromeBtn("✕", "delete-section", "vb-chrome-btn--icon vb-chrome-btn--danger", "Delete section"));
       toolbar.querySelector('[data-action="select-section"]').addEventListener("click", () => {
         selectItem(state, {
           kind: "section",
           id: section.id,
-          label: "Sekcija",
+          label: "Section",
           settings: section.settings,
           fields: state.catalog.section_settings,
         });
       });
       toolbar.querySelector('[data-action="delete-section"]').addEventListener("click", () => {
-        if (!window.confirm("Obrisati sekciju?")) {
+        if (!window.confirm("Delete this section?")) {
           return;
         }
         state.page.sections = state.page.sections.filter((item) => item.id !== section.id);
@@ -2918,8 +2881,8 @@
 
       const sectionHandle = document.createElement("div");
       sectionHandle.className = "page-builder__section-handle";
-      sectionHandle.textContent = "Sekcija";
-      sectionHandle.title = "Povucite za promjenu redoslijeda sekcije";
+      sectionHandle.textContent = "Section";
+      sectionHandle.title = "Drag to reorder section";
       bindSectionReorder(state, sectionHandle, sectionIndex);
       sectionEl.appendChild(sectionHandle);
 
@@ -2948,7 +2911,7 @@
         const currentPreset = detectRowPreset(row);
         const rowToolbar = document.createElement("div");
         rowToolbar.className = "page-builder__row-chrome";
-        const rowDragHandle = chromeBtn("↕", "drag-row", "vb-chrome-btn--icon", "Povucite za promjenu redoslijeda reda");
+        const rowDragHandle = chromeBtn("↕", "drag-row", "vb-chrome-btn--icon", "Drag to reorder row");
         rowToolbar.appendChild(rowDragHandle);
         rowToolbar.appendChild(chromeBtn("⚙", "select-row", "vb-chrome-btn--icon vb-chrome-btn--accent"));
         const presetSelect = document.createElement("select");
@@ -2962,7 +2925,7 @@
           selectItem(state, {
             kind: "row",
             id: row.id,
-            label: "Red",
+            label: "Row",
             settings: row.settings,
             fields: state.catalog.row_settings,
           });
@@ -3018,8 +2981,8 @@
           columnDragHandle.type = "button";
           columnDragHandle.className = "page-builder__column-drag";
           columnDragHandle.textContent = "↔";
-          columnDragHandle.title = "Povucite za promjenu redoslijeda stupca";
-          columnDragHandle.setAttribute("aria-label", "Promijeni redoslijed stupca");
+          columnDragHandle.title = "Drag to reorder column";
+          columnDragHandle.setAttribute("aria-label", "Reorder column");
           columnEl.appendChild(columnDragHandle);
           bindNestedReorder(
             state,
@@ -3046,7 +3009,7 @@
             emptyCol.className = "page-builder__column-empty";
             emptyCol.innerHTML =
               '<span class="page-builder__column-empty-icon">⊕</span>' +
-              "<span>Kliknite stupac, zatim odaberite widget na ploči <strong>Elementi</strong></span>";
+              "<span>Click a column, then choose a widget in the <strong>Elements</strong> panel</span>";
             columnInner.appendChild(emptyCol);
           }
 
@@ -3130,7 +3093,7 @@
       const addRow = document.createElement("button");
       addRow.type = "button";
       addRow.className = "page-builder__add-row";
-      addRow.textContent = "+ Dodaj red";
+      addRow.textContent = "+ Add row";
       addRow.addEventListener("click", () => {
         section.rows.push(createRow("one"));
         markDirty(state);
@@ -3150,7 +3113,7 @@
       const insertBtn = document.createElement("button");
       insertBtn.type = "button";
       insertBtn.className = "page-builder__section-insert-btn";
-      insertBtn.title = "Ubaci sekciju iznad";
+      insertBtn.title = "Insert section above";
       insertBtn.textContent = "+";
       insertBtn.addEventListener("click", () => {
         const section = createSection();
@@ -3172,7 +3135,7 @@
     if (state.activeMediaUploads > 0) {
       return {
         ok: false,
-        message: "Pričekajte da se učitavanje medija završi pa pokušajte ponovno.",
+        message: "Wait for the media upload to finish, then try again.",
       };
     }
     if (!force && !state.dirty) {
@@ -3204,14 +3167,14 @@
         return {
           ok: false,
           code: "version_conflict",
-          message: data.message || "Sadržaj je izmijenjen u drugoj sesiji. Jezik nije promijenjen; osvježite stranicu prije ponovnog pokušaja.",
+          message: data.message || "Content was changed in another session. Language was not switched; refresh the page before trying again.",
         };
       }
       if (!response.ok || !data.ok) {
         setSaveStatus(state.postRoot, "error");
         return {
           ok: false,
-          message: (data.messages || []).join("\n") || data.message || data.error || "Greška pri spremanju.",
+          message: (data.messages || []).join("\n") || data.message || data.error || "Error while saving.",
         };
       }
 
@@ -3227,7 +3190,7 @@
       return { ok: true };
     } catch (_error) {
       setSaveStatus(state.postRoot, "error");
-      return { ok: false, message: "Mrežna greška pri spremanju." };
+      return { ok: false, message: "Network error while saving." };
     } finally {
       state.saving = false;
     }
@@ -3235,13 +3198,13 @@
 
   async function switchLocale(state, locale, options = {}) {
     if (!state.documents || !state.documents[locale]) {
-      return { ok: false, message: "Izabrani jezik nije dostupan." };
+      return { ok: false, message: "Selected language is not available." };
     }
     if (locale === state.locale) {
       return { ok: true, code: "already_active" };
     }
     if (state.switching) {
-      return { ok: false, message: "Promena jezika je već u toku." };
+      return { ok: false, message: "Language switch is already in progress." };
     }
 
     state.switching = true;
@@ -3260,7 +3223,7 @@
       if (!result.ok) {
         showBlocker(
           state.postRoot,
-          result.message || "Trenutni sadržaj nije spremljen. Promjena jezika je zaustavljena.",
+          result.message || "Current content was not saved. Language switch was cancelled.",
         );
         return result;
       }
@@ -3458,7 +3421,7 @@
           }
           showToast(
             state.root,
-            "Video format ili kodek nije podržan u pregledniku. Koristite MP4 (H.264) ili WebM.",
+            "Video format or codec is not supported in this browser. Use MP4 (H.264) or WebM.",
             true,
           );
           return;
@@ -3480,7 +3443,7 @@
           if (state.selection?.block?.id === block.id) {
             renderEditPanel(state);
           }
-          showToast(state.root, "Video datoteka uspješno je učitana.");
+          showToast(state.root, "Video file uploaded successfully.");
         }
       } finally {
         state.activeMediaUploads = Math.max(0, state.activeMediaUploads - 1);

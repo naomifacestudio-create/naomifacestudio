@@ -11,13 +11,13 @@ def treatment_list(request):
     if sort not in ('', 'price_asc', 'price_desc'):
         sort = ''
 
-    qs = Treatment.objects.filter(is_active=True)
+    qs = Treatment.objects.publicly_visible()
     if sort == 'price_asc':
-        qs = qs.order_by('price', '-created_at')
+        qs = qs.order_by('price', '-publish_date', '-created_at')
     elif sort == 'price_desc':
-        qs = qs.order_by('-price', '-created_at')
+        qs = qs.order_by('-price', '-publish_date', '-created_at')
     else:
-        qs = qs.order_by('-created_at')
+        qs = qs.order_by('-publish_date', '-created_at')
 
     context = {
         'treatments': qs,
@@ -31,7 +31,7 @@ def treatment_detail(request, slug):
     """Individual treatment detail page"""
     language_code = active_language_code()
     preview = request.GET.get('preview') == '1' and request.user.is_staff
-    queryset = Treatment.objects.all() if preview else Treatment.objects.filter(is_active=True)
+    queryset = Treatment.objects.all() if preview else Treatment.objects.publicly_visible()
 
     # Try to find treatment by slug in current language
     if language_code == 'en':

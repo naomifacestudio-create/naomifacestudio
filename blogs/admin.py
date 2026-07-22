@@ -19,6 +19,6 @@ class BlogResource(resources.ModelResource):
 @admin.register(Blog)
 class BlogAdmin(LocalizedBuilderAdmin, ImportExportModelAdmin):
     resource_class = BlogResource
-    list_display = ['title_hr', 'is_active', 'created_at', 'updated_at']
+    list_display = ['title_hr', 'publish_date', 'is_active', 'created_at', 'updated_at']
     search_fields = ['title_hr', 'title_en', 'slug_hr', 'slug_en', 'body_plaintext_hr', 'body_plaintext_en']
     prepopulated_fields = {'slug_hr': ('title_hr',), 'slug_en': ('title_en',)}

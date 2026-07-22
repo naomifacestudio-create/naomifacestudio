@@ -21,7 +21,7 @@ logger = logging.getLogger('gift_vouchers')
 def gift_voucher_form(request):
     """Gift voucher form view"""
     language_code = get_language()[:2]
-    treatments = Treatment.objects.filter(is_active=True)
+    treatments = Treatment.objects.publicly_visible()
     
     if request.method == 'POST':
         was_limited = getattr(request, 'limited', False)
@@ -50,7 +50,7 @@ def gift_voucher_form(request):
             })
         
         try:
-            treatment = Treatment.objects.get(id=treatment_id, is_active=True)
+            treatment = Treatment.objects.publicly_visible().get(id=treatment_id)
         except Treatment.DoesNotExist:
             messages.error(request, 'Invalid treatment selected.')
             return render(request, 'gift_vouchers/form.html', {

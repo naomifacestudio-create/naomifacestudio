@@ -1,0 +1,167 @@
+/* Google SERP preview — desktop + mobile mockups */
+
+.seo-serp-preview {
+  max-width: 920px;
+}
+
+.seo-serp-preview__badge {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #5f6368;
+}
+
+.seo-serp-preview__grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .seo-serp-preview__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.seo-serp-preview__result {
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.seo-serp-preview__result--mobile {
+  max-width: 360px;
+}
+
+.seo-serp-preview__variant-label {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5f6368;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.seo-serp-preview__snippet {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.seo-serp-preview__title {
+  margin: 0 0 4px;
+  color: #1a0dab;
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 400;
+  cursor: pointer;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.seo-serp-preview__result--mobile .seo-serp-preview__title {
+  font-size: 18px;
+}
+
+.seo-serp-preview__url {
+  margin: 0 0 4px;
+  color: #202124;
+  font-size: 14px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seo-serp-preview__result--mobile .seo-serp-preview__url {
+  font-size: 12px;
+  color: #006621;
+}
+
+.seo-serp-preview__description {
+  margin: 0;
+  color: #4d5156;
+  font-size: 14px;
+  line-height: 1.58;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.seo-serp-preview__result--mobile .seo-serp-preview__description {
+  font-size: 13px;
+  -webkit-line-clamp: 3;
+}
+
+.seo-serp-preview__warnings {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seo-serp-preview__warning {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.seo-serp-preview__warning--good {
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.seo-serp-preview__warning--ok {
+  background: #fefce8;
+  border: 1px solid #fde047;
+  color: #854d0e;
+}
+
+.seo-serp-preview__warning--bad {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.seo-serp-preview__warning--neutral {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+}
+
+.seo-serp-preview__meta {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.seo-serp-preview__meta th {
+  text-align: left;
+  padding: 6px 8px 6px 0;
+  color: var(--body-quiet-color, #666);
+  font-weight: 600;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.seo-serp-preview__meta td {
+  padding: 6px 0;
+  word-break: break-word;
+}
+
+.seo-serp-preview__meta code {
+  font-size: 0.78rem;
+}
+
+.seo-serp-preview.is-loading {
+  opacity: 0.65;
+  pointer-events: none;
+}

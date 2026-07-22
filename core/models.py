@@ -109,3 +109,65 @@ class EmailCollection(models.Model):
                 user=user,
             )
 
+
+# Compatibility stub — Naomi has no CMSPage host for the ported SEO analyzers.
+class _EmptyQS:
+    def filter(self, *a, **k):
+        return self
+
+    def select_related(self, *a, **k):
+        return self
+
+    def order_by(self, *a, **k):
+        return self
+
+    def publicly_visible(self):
+        return self
+
+    def exclude(self, *a, **k):
+        return self
+
+    def only(self, *a, **k):
+        return self
+
+    def annotate(self, *a, **k):
+        return self
+
+    def __iter__(self):
+        return iter(())
+
+    def first(self):
+        return None
+
+    def exists(self):
+        return False
+
+    def __bool__(self):
+        return False
+
+    def __len__(self):
+        return 0
+
+
+class CMSPage:
+    """Non-model stub so SEO imports resolve without a CMS host."""
+
+    class PageType:
+        PROJEKTI = "projekti"
+
+    objects = _EmptyQS()
+    is_active = False
+    title = ""
+    slug = ""
+    page_type = ""
+    updated_at = None
+
+    def get_absolute_url(self):
+        return ""
+
+    def get_breadcrumb_title(self):
+        return self.title or ""
+
+    def get_canonical_url(self, request=None):
+        return ""
+

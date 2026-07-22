@@ -27,7 +27,8 @@
 }
 
 .blog-post-editor--visual .blog-post-editor__layout--visual {
-  min-height: calc(100vh - 52px);
+  /* Must stay 0 so the stage can become a real scroll container */
+  min-height: 0;
 }
 
 .blog-post-editor--visual .blog-post-editor__writing {
@@ -119,6 +120,7 @@
 .page-builder__workspace {
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   flex: 1;
   min-height: 0;
 }
@@ -736,8 +738,9 @@
 .page-builder__stage {
   position: relative;
   background: var(--vb-canvas);
+  min-height: 0;
   overflow: auto;
-  padding: 1.5rem 1rem 3rem;
+  padding: 1.5rem 1rem 1.5rem;
 }
 
 .page-builder__page-sheet {
@@ -745,7 +748,7 @@
   margin: 0 auto;
   background: var(--vb-sheet);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
-  min-height: 520px;
+  min-height: 0;
   overflow: visible;
 }
 
@@ -772,7 +775,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0 2.5rem 2rem 2.75rem;
+  padding: 0 2.5rem 1rem 2.75rem;
 }
 
 .page-builder__section-preview {
@@ -1341,13 +1344,20 @@
   cursor: grabbing;
 }
 
-/* ——— Add section FAB ——— */
+/* ——— Add section control (below page content, in document flow) ——— */
+
+.page-builder__add-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem 2.75rem;
+  position: relative;
+  z-index: 5;
+  pointer-events: auto;
+}
 
 .page-builder__add-section-fab {
-  position: absolute;
-  bottom: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
+  position: static;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1361,13 +1371,14 @@
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 4px 16px var(--vb-outline-soft);
-  z-index: 30;
+  transform: none;
+  z-index: 5;
   transition: transform 0.12s ease, background 0.12s ease;
 }
 
 .page-builder__add-section-fab:hover {
   background: var(--vb-accent-hover);
-  transform: translateX(-50%) scale(1.08);
+  transform: scale(1.08);
 }
 
 .page-builder__add-row {
@@ -1475,7 +1486,8 @@ body.visual-builder-admin #content-main {
   margin: 0;
 }
 
-body.blog-visual-builder-admin .breadcrumbs {
+body.blog-visual-builder-admin .breadcrumbs,
+body.visual-builder-admin .breadcrumbs {
   display: none;
 }
 
@@ -1485,7 +1497,14 @@ body.visual-builder-admin .change-form {
 
 body.visual-builder-admin .blog-post-editor--visual {
   margin: 0;
-  min-height: calc(100vh - var(--header-height, 0px));
+  display: flex;
+  flex-direction: column;
+  /* Fill flex parent — do NOT use 100dvh here (stacks under #header) */
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  overflow: hidden;
 }
 
 /* ——— Visual layout: writing + overlay drawer + rail ——— */
@@ -1494,20 +1513,29 @@ body.visual-builder-admin .blog-post-editor--visual {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-rows: minmax(0, 1fr);
-  min-height: calc(100vh - 52px);
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .blog-post-editor--visual .blog-post-editor__writing {
   grid-column: 1;
   grid-row: 1;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .blog-post-editor__rail--visual {
   grid-column: 2;
   grid-row: 1;
+  align-self: stretch;
+  overflow: auto;
 }
 
 /* ——— Right rail (Elementor-style) ——— */
@@ -1558,13 +1586,7 @@ body.visual-builder-admin .blog-post-editor--visual {
   justify-self: end;
   align-self: stretch;
   position: relative;
-  z-index: 40;
-  top: auto;
-  right: auto;
-  width: 320px;
-  height: auto;
-  min-height: 0;
-  max-height: none;
+  z-index: 100;
   border-left: 1px solid var(--vb-panel-border);
   background: var(--vb-panel-bg);
   box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12);
@@ -1577,8 +1599,9 @@ body.visual-builder-admin .blog-post-editor--visual {
 }
 
 .blog-post-editor--visual .blog-post-editor__drawer--docked.blog-post-editor__drawer--wide {
-  width: min(780px, calc(100vw - 120px));
-  min-width: 520px;
+  width: min(780px, calc(100vw - 140px));
+  min-width: min(520px, calc(100vw - 140px));
+  max-width: calc(100vw - 140px);
 }
 
 .blog-post-editor--visual .blog-post-editor__drawer--docked[hidden] {
@@ -1611,7 +1634,8 @@ body.visual-builder-admin .blog-post-editor--visual {
 
 .blog-post-editor--visual .blog-post-editor__drawer-body {
   flex: 1;
-  overflow-x: hidden;
+  min-width: 0;
+  overflow-x: auto;
   overflow-y: auto;
   padding: 0.85rem 1rem;
   box-sizing: border-box;

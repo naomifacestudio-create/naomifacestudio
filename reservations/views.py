@@ -126,14 +126,15 @@ def reservation_calendar(request, treatment_slug=None):
     language_code = get_language()[:2]
     
     if treatment_slug:
+        qs = Treatment.objects.publicly_visible()
         if language_code == 'en':
-            treatment = get_object_or_404(Treatment, slug_en=treatment_slug, is_active=True)
+            treatment = get_object_or_404(qs, slug_en=treatment_slug)
         else:
-            treatment = get_object_or_404(Treatment, slug_hr=treatment_slug, is_active=True)
+            treatment = get_object_or_404(qs, slug_hr=treatment_slug)
     else:
         treatment = None
     
-    treatments = Treatment.objects.filter(is_active=True)
+    treatments = Treatment.objects.publicly_visible()
     
     # Get current date in local timezone for calendar
     today_local = timezone.localtime(timezone.now()).date()
@@ -188,7 +189,7 @@ def get_available_slots(request):
         return JsonResponse({'error': 'Missing parameters'}, status=400)
     
     try:
-        treatment = Treatment.objects.get(id=treatment_id, is_active=True)
+        treatment = Treatment.objects.publicly_visible().get(id=treatment_id)
         selected_date = datetime.strptime(selected_date, '%Y-%m-%d').date()
     except (Treatment.DoesNotExist, ValueError):
         return JsonResponse({'error': 'Invalid treatment or date'}, status=400)
@@ -302,7 +303,7 @@ def create_reservation(request):
         return JsonResponse({'error': 'Missing required fields'}, status=400)
     
     try:
-        treatment = Treatment.objects.get(id=treatment_id, is_active=True)
+        treatment = Treatment.objects.publicly_visible().get(id=treatment_id)
         reservation_date = datetime.strptime(reservation_date, '%Y-%m-%d').date()
         start_time = datetime.strptime(start_time_str, '%H:%M').time()
     except (Treatment.DoesNotExist, ValueError):

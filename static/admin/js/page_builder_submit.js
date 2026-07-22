@@ -15,7 +15,7 @@
       event.preventDefault();
       const result = await glue.flushBeforeSubmit(state);
       if (!result || !result.ok) {
-        window.alert((result && result.message) || "Vizualni sadržaj nije moguće spremiti.");
+        window.alert((result && result.message) || "Unable to save visual content.");
         return;
       }
       form.dataset.builderSubmitting = "1";

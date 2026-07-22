@@ -1,3 +1,5 @@
+"""SEO signal handlers — score refresh + media cleanup."""
+
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
@@ -7,7 +9,13 @@ from core.media_refs import delete_later_if_unreferenced, file_name
 from education.models import Education
 from treatments.models import Treatment
 
-from .models import SeoMetadata
+from seo.models import SeoMetadata
+from seo.services import refresh_seo_scores
+
+
+@receiver(pre_save, sender=SeoMetadata)
+def seo_metadata_pre_save(sender, instance: SeoMetadata, **kwargs):
+    refresh_seo_scores(instance)
 
 
 @receiver(post_delete, sender=Blog)

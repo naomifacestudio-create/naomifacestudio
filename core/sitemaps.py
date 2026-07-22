@@ -10,13 +10,18 @@ from treatments.models import Treatment
 
 
 def sitemap_content(model):
+    from django.utils import timezone
+
     content_type = ContentType.objects.get_for_model(model)
     excluded_ids = SeoMetadata.objects.filter(
         content_type=content_type,
         locale="hr",
         include_in_sitemap=False,
     ).values_list("object_id", flat=True)
-    return model.objects.filter(is_active=True).exclude(pk__in=excluded_ids)
+    return (
+        model.objects.filter(is_active=True, publish_date__lte=timezone.localdate())
+        .exclude(pk__in=excluded_ids)
+    )
 
 
 class StaticViewSitemap(Sitemap):

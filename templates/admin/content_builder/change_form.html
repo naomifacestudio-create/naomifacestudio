@@ -3,107 +3,154 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=14">
-<link rel="stylesheet" href="{% static 'admin/css/content_builder.css' %}?v=18">
-<link rel="stylesheet" href="{% static 'admin/css/page_builder.css' %}?v=18">
+<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=26">
+<link rel="stylesheet" href="{% static 'admin/css/page_builder.css' %}?v=26">
+<link rel="stylesheet" href="{% static 'admin/css/content_builder.css' %}?v=26">
+<link rel="stylesheet" href="{% static 'admin/css/seo_drawer.css' %}?v=26">
 {% endblock %}
 
 {% block extrahead %}
 {{ block.super }}
-<script src="{% static 'admin/js/page_builder.js' %}?v=18" defer></script>
-<script src="{% static 'admin/js/page_builder_submit.js' %}?v=18" defer></script>
-<script src="{% static 'admin/js/content_builder.js' %}?v=18" defer></script>
+<script src="{% static 'admin/js/content_builder.js' %}?v=26" defer></script>
 {% endblock %}
 
-{% block bodyclass %}{{ block.super }} content-builder-admin blog-post-editor--visual{% endblock %}
+{% block bodyclass %}{{ block.super }} content-builder-admin visual-builder-admin blog-post-editor--visual{% endblock %}
 {% block field_sets %}{% endblock %}
 {% block inline_field_sets %}{% endblock %}
 
 {% block after_field_sets %}
 {{ block.super }}
-<section class="builder-fields" data-page-editor>
-  <header class="builder-topbar">
-    <a href="{{ builder_changelist_url }}" class="builder-back">← Nazad</a>
-    <div class="builder-locales" role="tablist" aria-label="Jezik vizuelnog sadržaja">
-      {% for code,label in builder_locales %}
-        <button type="button" role="tab" data-builder-locale="{{ code }}" aria-selected="{% if code == builder_locale %}true{% else %}false{% endif %}" class="{% if code == builder_locale %}active{% endif %}">{{ label }}</button>
-      {% endfor %}
+<section class="builder-fields blog-post-editor blog-post-editor--visual" data-page-editor data-blog-post-editor>
+  <header class="builder-topbar blog-post-editor__topbar blog-post-editor__topbar--visual">
+    <div class="blog-post-editor__topbar-left">
+      <a href="{{ builder_changelist_url }}" class="builder-back blog-post-editor__back">← Nazad</a>
+      <span class="blog-post-editor__mode-pill">Vizualni builder</span>
+      <div class="builder-locales" role="tablist" aria-label="Jezik vizualnog sadržaja">
+        {% for code,label in builder_locales %}
+          <button type="button" role="tab" data-builder-locale="{{ code }}" aria-selected="{% if code == builder_locale %}true{% else %}false{% endif %}" class="{% if code == builder_locale %}active{% endif %}">{{ label }}</button>
+        {% endfor %}
+      </div>
+      <span class="builder-save-status blog-post-editor__save-status" data-page-save-status data-state="saved">
+        <span class="builder-save-dot blog-post-editor__save-dot" aria-hidden="true"></span>
+        <span data-page-save-label>Spremljeno</span>
+      </span>
     </div>
-    <span class="builder-save-status" data-page-save-status data-state="saved">
-      <span class="builder-save-dot" aria-hidden="true"></span>
-      <span data-page-save-label>Spremljeno</span>
-    </span>
-    <a class="builder-preview" data-builder-preview href="{{ builder_preview_url }}" target="_blank" rel="noopener">Pregled ↗</a>
-    <button type="button" class="builder-drawer-trigger" data-builder-drawer-trigger="details">Detalji</button>
-    {% if builder_seo_enabled %}
-    <button type="button" class="builder-drawer-trigger" data-builder-drawer-trigger="seo">SEO</button>
-    {% endif %}
-    <button type="submit" class="button default" name="_save">Spremi</button>
+    <div class="blog-post-editor__topbar-right">
+      <a class="builder-preview blog-post-editor__preview-link" data-builder-preview href="{{ builder_preview_url }}" target="_blank" rel="noopener">Pregled ↗</a>
+      <button type="submit" class="button default blog-post-editor__primary-action" name="_save">Spremi</button>
+    </div>
   </header>
   <div class="builder-blocker" data-page-blocker hidden role="alert">
     <span data-page-blocker-message></span>
     <button type="button" data-page-blocker-close aria-label="Zatvori">×</button>
   </div>
   <input type="hidden" name="_builder_locale" value="{{ builder_locale }}">
-  <input type="hidden" id="id_body_plaintext" value="">
+  <input type="hidden" id="id_body_plaintext" name="body_plaintext" value="">
   {{ builder_documents|json_script:"page-builder-documents" }}
-  <div
-    class="page-builder"
-    data-page-builder
-    data-page-save-url="{{ page_builder_save_url }}"
-    data-upload-url="{{ page_builder_upload_url }}"
-    data-video-upload-url="{{ page_builder_video_upload_url }}"
-    data-cleanup-pending-url="{{ page_builder_cleanup_pending_url }}"
-    data-resolve-media-url="{{ page_builder_resolve_media_url }}"
-    data-page-version="{{ page_builder_version }}"
-  >
-    {{ page_builder_initial_page|json_script:"page-builder-initial-page" }}
-    {{ page_builder_catalog|json_script:"page-builder-catalog" }}
-    <div class="page-builder__workspace">
-      <aside class="page-builder__panel" data-builder-panel>
-        <div data-builder-panel-browse>
-          <div class="page-builder__panel-tabs">
-            <button type="button" class="is-active" data-panel-tab="widgets">Elementi</button>
-            <button type="button" data-panel-tab="navigator">Navigacija</button>
+
+  <div class="blog-post-editor__layout blog-post-editor__layout--visual">
+    <div class="blog-post-editor__writing">
+      <div
+        class="page-builder blog-page-builder"
+        data-page-builder
+        data-page-save-url="{{ page_builder_save_url }}"
+        data-upload-url="{{ page_builder_upload_url }}"
+        data-video-upload-url="{{ page_builder_video_upload_url }}"
+        data-cleanup-pending-url="{{ page_builder_cleanup_pending_url }}"
+        data-resolve-media-url="{{ page_builder_resolve_media_url }}"
+        data-page-version="{{ page_builder_version }}"
+      >
+        {{ page_builder_initial_page|json_script:"page-builder-initial-page" }}
+        {{ page_builder_catalog|json_script:"page-builder-catalog" }}
+        <div class="page-builder__workspace">
+          <aside class="page-builder__panel" data-builder-panel>
+            <div data-builder-panel-browse>
+              <div class="page-builder__panel-tabs">
+                <button type="button" class="is-active" data-panel-tab="widgets">Elementi</button>
+                <button type="button" data-panel-tab="navigator">Navigacija</button>
+              </div>
+              <div class="page-builder__panel-body" data-builder-panel-widgets></div>
+              <div class="page-builder__panel-body" data-builder-panel-navigator hidden></div>
+            </div>
+            <div class="page-builder__panel-edit" data-builder-panel-edit hidden>
+              <button type="button" class="page-builder__panel-back" data-builder-panel-back>← Nazad</button>
+              <h3 class="page-builder__panel-edit-title" data-builder-panel-edit-title></h3>
+              <div class="page-builder__panel-edit-body" data-builder-inspector-body></div>
+            </div>
+          </aside>
+          <div class="page-builder__stage">
+            <div class="page-builder__page-sheet">
+              <div class="page-builder__canvas" data-builder-canvas></div>
+              <div class="page-builder__add-section">
+                <button type="button" class="page-builder__add-section-fab" data-builder-add-section title="Dodaj sekciju" aria-label="Dodaj sekciju">+</button>
+              </div>
+            </div>
           </div>
-          <div class="page-builder__panel-body" data-builder-panel-widgets></div>
-          <div class="page-builder__panel-body" data-builder-panel-navigator hidden></div>
         </div>
-        <div class="page-builder__panel-edit" data-builder-panel-edit hidden>
-          <button type="button" class="page-builder__panel-back" data-builder-panel-back>← Nazad</button>
-          <h3 class="page-builder__panel-edit-title" data-builder-panel-edit-title></h3>
-          <div class="page-builder__panel-edit-body" data-builder-inspector-body></div>
-        </div>
-      </aside>
-      <div class="page-builder__stage">
-        <div class="page-builder__page-sheet">
-          <div class="page-builder__canvas" data-builder-canvas></div>
-        </div>
-        <button type="button" class="page-builder__add-section-fab" data-builder-add-section title="Dodaj sekciju" aria-label="Dodaj sekciju">+</button>
+        <div class="page-builder__toast" data-builder-toast hidden></div>
       </div>
     </div>
-    <div class="page-builder__toast" data-builder-toast hidden></div>
+
+    <aside class="builder-drawer blog-post-editor__drawer blog-post-editor__drawer--docked" data-builder-drawer data-blog-drawer hidden aria-hidden="true">
+      <header class="blog-post-editor__drawer-header">
+        <h2 class="blog-post-editor__drawer-title" data-builder-drawer-title data-blog-drawer-title>Detalji</h2>
+        <button type="button" class="blog-post-editor__drawer-close" data-builder-drawer-close data-blog-drawer-close aria-label="Zatvori">×</button>
+      </header>
+      <div class="builder-drawer-body blog-post-editor__drawer-body">
+        <div class="blog-post-editor__drawer-panel" data-builder-drawer-panel="details" data-blog-drawer-panel="details">
+          <p class="builder-locale-note">Aktivna su polja za jezik <strong data-builder-active-locale>{{ builder_locale }}</strong>.</p>
+          {% for fieldset in adminform %}
+            {% include "admin/includes/fieldset.html" with heading_level=3 prefix="builder-fieldset" id_prefix=0 id_suffix=forloop.counter0 %}
+          {% endfor %}
+        </div>
+        <div class="blog-post-editor__drawer-panel" data-builder-drawer-panel="seo" data-blog-drawer-panel="seo" hidden>
+          <p class="builder-locale-note">Svaki jezik ima svoj SEO profil. Ocjene i pregledi se ažuriraju uživo dok tipkate.</p>
+          {% for inline_admin_formset in inline_admin_formsets %}
+            {% include "admin/seo/edit_inline/stacked_no_header.html" %}
+          {% endfor %}
+        </div>
+        <div class="blog-post-editor__drawer-panel" data-builder-drawer-panel="publish" data-blog-drawer-panel="publish" hidden>
+          <p class="builder-locale-note">Kontrole objave</p>
+          <div class="blog-post-editor__field blog-post-editor__field--checkbox field-is_active">
+            {{ adminform.form.is_active }}
+            {{ adminform.form.is_active.label_tag }}
+          </div>
+          <div class="blog-post-editor__field field-publish_date">
+            {{ adminform.form.publish_date.label_tag }}
+            <div class="blog-post-editor__field-control">{{ adminform.form.publish_date }}</div>
+          </div>
+          <div class="blog-post-editor__field field-thumbnail">
+            {{ adminform.form.thumbnail.label_tag }}
+            <div class="blog-post-editor__field-control">{{ adminform.form.thumbnail }}</div>
+          </div>
+          {% if original %}
+          <div class="blog-post-editor__field blog-post-editor__field--readonly">
+            <span class="blog-post-editor__field-label">Kreirano</span>
+            <p class="blog-post-editor__readonly-value">{{ original.created_at }}</p>
+          </div>
+          <div class="blog-post-editor__field blog-post-editor__field--readonly">
+            <span class="blog-post-editor__field-label">Ažurirano</span>
+            <p class="blog-post-editor__readonly-value">{{ original.updated_at }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+
+    <nav class="blog-post-editor__rail blog-post-editor__rail--visual" aria-label="Paneli editora">
+      <button type="button" class="blog-post-editor__rail-btn builder-drawer-trigger" data-builder-drawer-trigger="details" data-blog-drawer-trigger="details" title="Detalji">
+        <span class="blog-post-editor__rail-icon" aria-hidden="true">☰</span>
+        <span>Detalji</span>
+      </button>
+      <button type="button" class="blog-post-editor__rail-btn builder-drawer-trigger" data-builder-drawer-trigger="seo" data-blog-drawer-trigger="seo" title="SEO">
+        <span class="blog-post-editor__rail-icon" aria-hidden="true">◎</span>
+        <span>SEO</span>
+      </button>
+      <button type="button" class="blog-post-editor__rail-btn builder-drawer-trigger" data-builder-drawer-trigger="publish" data-blog-drawer-trigger="publish" title="Objava">
+        <span class="blog-post-editor__rail-icon" aria-hidden="true">▶</span>
+        <span>Objava</span>
+      </button>
+    </nav>
   </div>
-  <div class="builder-drawer-backdrop" data-builder-drawer-backdrop hidden></div>
-  <aside class="builder-drawer" data-builder-drawer hidden aria-hidden="true">
-    <header>
-      <h2 data-builder-drawer-title>Detalji</h2>
-      <button type="button" data-builder-drawer-close aria-label="Zatvori">×</button>
-    </header>
-    <div class="builder-drawer-body">
-      <div data-builder-drawer-panel="details">
-        <p class="builder-locale-note">Aktivna su polja za jezik <strong data-builder-active-locale>{{ builder_locale }}</strong>.</p>
-        {% for fieldset in adminform %}
-          {% include "admin/includes/fieldset.html" with heading_level=3 prefix="builder-fieldset" id_prefix=0 id_suffix=forloop.counter0 %}
-        {% endfor %}
-      </div>
-      <div data-builder-drawer-panel="seo" hidden>
-        <p class="builder-locale-note">Hrvatski i engleski imaju odvojene SEO profile.</p>
-        {% for inline_admin_formset in inline_admin_formsets %}
-          {% include inline_admin_formset.opts.template %}
-        {% endfor %}
-      </div>
-    </div>
-  </aside>
 </section>
 {% endblock %}

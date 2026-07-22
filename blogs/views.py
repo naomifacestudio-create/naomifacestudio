@@ -8,7 +8,7 @@ from .models import Blog
 def blog_list(request):
     """List all blogs with pagination"""
     language_code = active_language_code()
-    blogs = Blog.objects.filter(is_active=True).order_by('-created_at')
+    blogs = Blog.objects.publicly_visible().order_by('-publish_date', '-created_at')
 
     paginator = Paginator(blogs, 6)
     page_number = request.GET.get('page', 1)
@@ -27,14 +27,11 @@ def blog_detail(request, slug):
     language_code = active_language_code()
     preview = request.GET.get('preview') == '1' and request.user.is_staff
 
-    qs = Blog.objects.all() if preview else Blog.objects.filter(is_active=True)
+    qs = Blog.objects.all() if preview else Blog.objects.publicly_visible()
     if language_code == 'en':
         blog = get_object_or_404(qs, slug_en=slug)
     else:
         blog = get_object_or_404(qs, slug_hr=slug)
-
-    if not preview and not blog.is_active:
-        raise Http404
 
     context = {
         'blog': blog,

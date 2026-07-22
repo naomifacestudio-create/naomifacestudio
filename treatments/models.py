@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from core.content import LocalizedBuilderContent
+from core.content import BuilderContentQuerySet, LocalizedBuilderContent
 from core.i18n_utils import active_language_code
 
 
@@ -13,6 +13,7 @@ def treatment_thumbnail_upload_path(instance, filename):
 
 
 class Treatment(LocalizedBuilderContent):
+    objects = BuilderContentQuerySet.as_manager()
     duration_hours = models.PositiveIntegerField(_('Duration (Hours)'), default=0, validators=[MinValueValidator(0)])
     duration_minutes = models.PositiveIntegerField(_('Duration (Minutes)'), default=0, validators=[MinValueValidator(0)])
     pause_hours = models.PositiveIntegerField(_('Pause After Treatment (Hours)'), default=0, validators=[MinValueValidator(0)], help_text=_('Rest time needed after this treatment (not visible to users)'))

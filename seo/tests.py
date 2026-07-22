@@ -70,7 +70,14 @@ class SeoIntegrationTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'data-builder-drawer-panel="seo"')
-        self.assertContains(response, "Hrvatski i engleski imaju odvojene SEO profile.")
+        self.assertContains(response, 'data-builder-drawer-panel="publish"')
+        self.assertContains(response, 'data-builder-drawer-trigger="details"')
+        self.assertContains(response, "Svaki jezik ima svoj SEO profil.")
+        self.assertContains(response, "blog-post-editor__rail")
+        self.assertContains(response, 'data-seo-locale="hr"')
+        self.assertContains(response, 'data-seo-locale="en"')
+        self.assertContains(response, 'name="seo-seometadata-content_type-object_id-0-seo_title"')
+        self.assertContains(response, "seo-analyzer")
         self.assertEqual(
             set(
                 SeoMetadata.objects.filter(object_id=self.blog.pk).values_list(
