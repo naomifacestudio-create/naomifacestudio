@@ -25,7 +25,9 @@
 }
 
 .iv-page-section--width-contained .iv-page-section__inner {
-  width: min(90%, 72rem);
+  /* Centered article column on the page (not a wide 72rem shell
+     with a left-stuck reading strip inside). */
+  width: min(92%, 48rem);
   max-width: none;
   margin-inline: auto;
   padding-inline: 1.25rem;
@@ -41,13 +43,12 @@
   padding-inline: 0;
 }
 
-/*
- * Contained sections already center a max ~72rem box on the page.
- * Do not keep a second 65ch cap flush-left inside it — that made body
- * text look stuck on the left of the screen.
- */
-.iv-page-section--width-contained .iv-page-text {
+/* Contained: text fills the centered column; lines stay left-aligned via block align. */
+.iv-page-section--width-contained .iv-page-text,
+.iv-page-section--width-contained .iv-page-heading {
   max-width: none;
+  width: 100%;
+  margin-inline: 0;
 }
 
 /* Full-width sections: text uses the full column, not a 65ch reading measure. */
@@ -85,9 +86,8 @@
 .iv-page-row--align-bottom { align-items: end; }
 
 /*
- * Column "Poravnanje" places the reading box in the column.
- * Block "Poravnanje" controls text-align inside that box.
- * So: column center + text left = centered box, left-aligned lines.
+ * Column poravnanje positions the reading box; block poravnanje is text-align.
+ * Center/right must target the block wrapper (flex item), not only the text node.
  */
 .iv-page-col--align-left {
   text-align: left;
@@ -105,12 +105,29 @@
   align-items: flex-end;
 }
 
-.iv-page-col--align-center .iv-page-text,
-.iv-page-col--align-center .iv-page-heading,
-.iv-page-col--align-right .iv-page-text,
-.iv-page-col--align-right .iv-page-heading {
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-text),
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-heading),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-text),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-heading) {
   width: 100%;
   max-width: 42rem;
+}
+
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-text) .iv-page-text,
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-heading) .iv-page-heading,
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-text) .iv-page-text,
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-heading) .iv-page-heading {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+}
+
+/* Inside Contained, do not shrink again — the section is already the reading column. */
+.iv-page-section--width-contained .iv-page-col--align-center > .iv-page-block,
+.iv-page-section--width-contained .iv-page-col--align-right > .iv-page-block {
+  max-width: none;
+  width: 100%;
+  align-self: stretch;
 }
 
 .iv-page-col--align-center > .iv-page-block:has(.iv-page-media),
@@ -131,7 +148,7 @@
 .iv-page-heading--align-center,
 .iv-page-text--align-center { text-align: center; margin-inline: auto; }
 .iv-page-heading--align-right,
-.iv-page-text--align-right { text-align: right; margin-left: auto; }
+.iv-page-text--align-right { text-align: right; margin-left: auto; margin-right: 0; }
 
 .iv-page-divider {
   border: 0;
