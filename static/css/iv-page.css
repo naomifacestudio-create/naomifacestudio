@@ -36,6 +36,11 @@
   padding-inline: 0;
 }
 
+/* Full-width sections: text uses the full column, not a 65ch reading measure. */
+.iv-page-section--width-full .iv-page-text {
+  max-width: none;
+}
+
 .iv-page-section--bg-default { background: transparent; }
 .iv-page-section--bg-light { background: var(--color-surface-muted, #f4f4f5); }
 .iv-page-section--bg-dark {
