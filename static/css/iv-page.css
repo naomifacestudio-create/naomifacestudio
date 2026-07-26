@@ -39,8 +39,11 @@
 }
 
 .iv-page-section--width-full .iv-page-section__inner {
+  width: 100%;
   max-width: none;
-  padding-inline: 0;
+  margin-inline: 0;
+  /* Edge-to-edge column with page gutters only (no 48rem reading shell). */
+  padding-inline: var(--iv-page-gutter);
 }
 
 /* Contained: text fills the centered column; lines stay left-aligned via block align. */
@@ -51,9 +54,12 @@
   margin-inline: 0;
 }
 
-/* Full-width sections: text uses the full column, not a 65ch reading measure. */
-.iv-page-section--width-full .iv-page-text {
+/* Full: use the full section/column width — no reading-measure cap. */
+.iv-page-section--width-full .iv-page-text,
+.iv-page-section--width-full .iv-page-heading {
   max-width: none;
+  width: 100%;
+  margin-inline: 0;
 }
 
 .iv-page-section--bg-default { background: transparent; }
@@ -86,62 +92,13 @@
 .iv-page-row--align-bottom { align-items: end; }
 
 /*
- * Column poravnanje positions the reading box; block poravnanje is text-align.
- * Center/right must target the block wrapper (flex item), not only the text node.
+ * Column poravnanje only sets text-align inheritance.
+ * Contained/Full on the SECTION controls whether the content box is
+ * centered on the page or edge-to-edge — do not re-cap Full to 42rem.
  */
-.iv-page-col--align-left {
-  text-align: left;
-}
-
-.iv-page-col--align-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.iv-page-col--align-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-text),
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-heading),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-text),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-heading) {
-  width: 100%;
-  max-width: 42rem;
-}
-
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-text) .iv-page-text,
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-heading) .iv-page-heading,
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-text) .iv-page-text,
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-heading) .iv-page-heading {
-  max-width: none;
-  width: 100%;
-  margin-inline: 0;
-}
-
-/* Inside Contained, do not shrink again — the section is already the reading column. */
-.iv-page-section--width-contained .iv-page-col--align-center > .iv-page-block,
-.iv-page-section--width-contained .iv-page-col--align-right > .iv-page-block {
-  max-width: none;
-  width: 100%;
-  align-self: stretch;
-}
-
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-media),
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-faq),
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-button-wrap),
-.iv-page-col--align-center > .iv-page-block:has(.iv-page-divider),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-media),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-faq),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-button-wrap),
-.iv-page-col--align-right > .iv-page-block:has(.iv-page-divider) {
-  align-self: stretch;
-  width: 100%;
-  max-width: none;
-}
+.iv-page-col--align-left { text-align: left; }
+.iv-page-col--align-center { text-align: center; }
+.iv-page-col--align-right { text-align: right; }
 
 .iv-page-heading--align-left,
 .iv-page-text--align-left { text-align: left; }
@@ -257,7 +214,7 @@
 .iv-page-text {
   margin: 0;
   width: 100%;
-  max-width: 65ch;
+  max-width: none;
   line-height: 1.65;
   font-size: 1rem;
   overflow-wrap: anywhere;
@@ -270,9 +227,7 @@
   word-break: inherit;
 }
 
-/* Must come after the base .iv-page-text rule: its `margin: 0` would
-   otherwise override these auto margins and the capped 65ch box would
-   stay flushed left even with text-align: center/right. */
+/* Alignment margins (no 65ch reading cap — Contained/Full own the width). */
 .iv-page-text--align-center {
   margin-inline: auto;
 }
