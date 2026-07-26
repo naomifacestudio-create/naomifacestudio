@@ -12,7 +12,7 @@
 {% block structured_data %}<script type="application/ld+json">{{ seo.schema_json|safe }}</script>{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=31">
+<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=34">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
 <div class="py-8">
     <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
         <div class="iv-page-section__inner">
-            <h1 class="text-4xl font-bold text-[#5D5350] text-left">{{ treatment.get_title }}</h1>
+            <h1 class="iv-page-detail-title text-4xl font-bold text-[#5D5350]" style="text-align:left;">{{ treatment.get_title }}</h1>
         </div>
     </header>
 
