@@ -31,6 +31,11 @@
   padding-inline: 1.25rem;
 }
 
+/* Detail page chrome (title / price / CTA) — match builder column gutters. */
+.iv-page-detail-chrome .iv-page-section__inner {
+  padding-inline: 1.25rem;
+}
+
 .iv-page-section--width-full .iv-page-section__inner {
   max-width: none;
   padding-inline: 0;
@@ -112,6 +117,10 @@
 
   .iv-page-section--width-contained .iv-page-section__inner {
     padding-inline: 0;
+  }
+
+  .iv-page-detail-chrome .iv-page-section__inner {
+    padding-inline: var(--iv-page-gutter);
   }
 
   /* Elementor-style gutter: padding on columns, not grid track gaps */

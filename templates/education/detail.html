@@ -16,25 +16,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ education.get_title }}</h1>
+{# No max-w-4xl wrapper — section Contained/Full from the builder controls width. #}
+<div class="py-12">
+    <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
+        <div class="iv-page-section__inner">
+            <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ education.get_title }}</h1>
 
-        {% if education.thumbnail %}
-        <div class="mb-8 flex justify-center">
-            <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="max-w-full h-auto object-contain rounded-lg">
-        </div>
-        {% endif %}
+            {% if education.thumbnail %}
+            <div class="mb-8 flex justify-center">
+                <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="max-w-full h-auto object-contain rounded-lg">
+            </div>
+            {% endif %}
 
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
-            <div>
-                <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-2 p-6 bg-gray-50 rounded-lg">
+                <div>
+                    <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ education.price }} €</p>
+                </div>
             </div>
         </div>
-
-        <div class="iv-page-host text-[#5D5350]">
-            {% render_localized_page education %}
-        </div>
+    </header>
+    <div class="iv-page-host text-[#5D5350]">
+        {% render_localized_page education %}
     </div>
 </div>
 {% endblock %}

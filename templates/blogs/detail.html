@@ -16,12 +16,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ blog.get_title }}</h1>
-        <div class="iv-page-host text-[#5D5350]">
-            {% render_localized_page blog %}
+{# No max-w-4xl wrapper — section Contained/Full from the builder controls width. #}
+<div class="py-12">
+    <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
+        <div class="iv-page-section__inner">
+            <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ blog.get_title }}</h1>
         </div>
+    </header>
+    <div class="iv-page-host text-[#5D5350]">
+        {% render_localized_page blog %}
     </div>
 </div>
 {% endblock %}

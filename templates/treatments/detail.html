@@ -16,24 +16,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ treatment.get_title }}</h1>
-
-        <div class="iv-page-host text-[#5D5350] mb-8">
-            {% render_localized_page treatment %}
+{# No max-w-4xl wrapper — section Contained/Full from the builder controls width. #}
+<div class="py-12">
+    <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
+        <div class="iv-page-section__inner">
+            <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ treatment.get_title }}</h1>
         </div>
+    </header>
 
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
-            <div>
-                <p class="text-lg text-[#5D5350]"><strong>{% trans "Duration:" %}</strong> {{ treatment.get_duration_display }}</p>
-                <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ treatment.price }} €</p>
+    <div class="iv-page-host text-[#5D5350] mb-8">
+        {% render_localized_page treatment %}
+    </div>
+
+    <div class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
+        <div class="iv-page-section__inner">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-6 bg-gray-50 rounded-lg">
+                <div>
+                    <p class="text-lg text-[#5D5350]"><strong>{% trans "Duration:" %}</strong> {{ treatment.get_duration_display }}</p>
+                    <p class="text-lg text-[#5D5350]"><strong>{% trans "Price:" %}</strong> {{ treatment.price }} €</p>
+                </div>
+                <a href="{% url 'reservations:calendar_with_treatment' treatment.get_slug %}" class="bg-[#5D5350] text-white px-8 py-4 rounded-lg hover:bg-[#4a4340] transition-colors shadow-lg">
+                    {% trans "Reservation" %}
+                </a>
             </div>
-            <a href="{% url 'reservations:calendar_with_treatment' treatment.get_slug %}" class="bg-[#5D5350] text-white px-8 py-4 rounded-lg hover:bg-[#4a4340] transition-colors shadow-lg">
-                {% trans "Reservation" %}
-            </a>
         </div>
     </div>
 </div>
 {% endblock %}
-
