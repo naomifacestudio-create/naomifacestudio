@@ -41,6 +41,15 @@
   padding-inline: 0;
 }
 
+/*
+ * Contained sections already center a max ~72rem box on the page.
+ * Do not keep a second 65ch cap flush-left inside it — that made body
+ * text look stuck on the left of the screen.
+ */
+.iv-page-section--width-contained .iv-page-text {
+  max-width: none;
+}
+
 /* Full-width sections: text uses the full column, not a 65ch reading measure. */
 .iv-page-section--width-full .iv-page-text {
   max-width: none;
@@ -75,9 +84,47 @@
 .iv-page-row--align-center { align-items: center; }
 .iv-page-row--align-bottom { align-items: end; }
 
-.iv-page-col--align-left { text-align: left; }
-.iv-page-col--align-center { text-align: center; }
-.iv-page-col--align-right { text-align: right; }
+/*
+ * Column "Poravnanje" places the reading box in the column.
+ * Block "Poravnanje" controls text-align inside that box.
+ * So: column center + text left = centered box, left-aligned lines.
+ */
+.iv-page-col--align-left {
+  text-align: left;
+}
+
+.iv-page-col--align-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iv-page-col--align-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.iv-page-col--align-center .iv-page-text,
+.iv-page-col--align-center .iv-page-heading,
+.iv-page-col--align-right .iv-page-text,
+.iv-page-col--align-right .iv-page-heading {
+  width: 100%;
+  max-width: 42rem;
+}
+
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-media),
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-faq),
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-button-wrap),
+.iv-page-col--align-center > .iv-page-block:has(.iv-page-divider),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-media),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-faq),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-button-wrap),
+.iv-page-col--align-right > .iv-page-block:has(.iv-page-divider) {
+  align-self: stretch;
+  width: 100%;
+  max-width: none;
+}
 
 .iv-page-heading--align-left,
 .iv-page-text--align-left { text-align: left; }
