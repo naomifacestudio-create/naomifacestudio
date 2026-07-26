@@ -262,9 +262,9 @@ class FaqBlockRenderer:
 
 def _block_align(block: dict[str, Any]) -> str:
     settings = block.get("settings") or {}
-    align = settings.get("align", "center")
+    align = settings.get("align", "left")
     if align not in {"left", "center", "right"}:
-        return "center"
+        return "left"
     return align
 
 

@@ -116,7 +116,7 @@ class SeoMetadata(models.Model):
         return f"{self.get_locale_display()}: {self.seo_title or fallback_title}"
 
     def save(self, *args, **kwargs):
-        # Scores are refreshed in seo.signals.seo_metadata_pre_save via refresh_seo_scores.
+        # Scores are refreshed asynchronously in seo.signals after save.
         super().save(*args, **kwargs)
 
     @property

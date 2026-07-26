@@ -207,11 +207,15 @@ def _targets_from_posts(post_list: list[BlogPost]) -> list[ArticleLinkTarget]:
         focus_keyword = metadata.focus_keyword.strip() if metadata else ""
         secondary = metadata.secondary_keywords_list if metadata else []
         title = resolve_seo_title(post, metadata)
+        if hasattr(post, "get_slug"):
+            slug = post.get_slug() or ""
+        else:
+            slug = getattr(post, "slug", "") or ""
         targets.append(
             ArticleLinkTarget(
                 post_id=post.pk,
                 title=title,
-                slug=post.slug,
+                slug=slug,
                 url_path=post.get_absolute_url(),
                 focus_keyword=focus_keyword,
                 secondary_keywords=tuple(secondary),

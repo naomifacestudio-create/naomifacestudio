@@ -20,11 +20,11 @@ DEFAULT_COLUMN_SETTINGS: dict[str, Any] = {
     "width_mobile": 12,
     "width_tablet": 12,
     "width_desktop": 12,
-    "horizontal_align": "center",
+    "horizontal_align": "left",
 }
 
 DEFAULT_BLOCK_SETTINGS: dict[str, str] = {
-    "align": "center",
+    "align": "left",
 }
 
 MEDIA_WIDTH_PERCENT_MIN = 10

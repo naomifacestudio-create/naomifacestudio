@@ -5,16 +5,23 @@
 .iv-page {
   width: 100%;
   --iv-page-gutter: 1.25rem;
-  --iv-page-gutter-between: calc(var(--iv-page-gutter) * 2);
+  /* Vertical rhythm between rows — keep independent of side gutters
+     so desktop column padding does not blow up row spacing. */
+  --iv-page-gutter-between: 1.25rem;
 }
 
 .iv-page-section {
   width: 100%;
-  padding-block: 2rem;
+  padding-block: 1rem;
 }
 
 .iv-page-section + .iv-page-section {
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+/* Plain stacked sections read as one article — collapse double padding. */
+.iv-page-section--bg-default + .iv-page-section--bg-default {
+  padding-top: 0.35rem;
 }
 
 .iv-page-section__inner {
@@ -34,8 +41,22 @@
 }
 
 /* Detail page chrome (title / price / CTA) — match builder column gutters. */
+.iv-page-detail-chrome,
+.iv-page-detail-chrome h1 {
+  text-align: left;
+}
+
+.iv-page-detail-chrome {
+  padding-block: 0 0.35rem;
+}
+
 .iv-page-detail-chrome .iv-page-section__inner {
   padding-inline: 1.25rem;
+  gap: 0.75rem;
+}
+
+.iv-page-detail-chrome h1 {
+  margin-bottom: 0;
 }
 
 .iv-page-section--width-full .iv-page-section__inner {
@@ -73,6 +94,14 @@
 }
 .iv-page-section--bg-custom {
   /* color comes from inline style background-color */
+}
+
+/* Banded sections keep more vertical air than plain article flow. */
+.iv-page-section--bg-light,
+.iv-page-section--bg-dark,
+.iv-page-section--bg-accent,
+.iv-page-section--bg-custom {
+  padding-block: 2rem;
 }
 
 .iv-page-section--align-left { text-align: left; }
@@ -179,7 +208,7 @@
 }
 
 .iv-page-block + .iv-page-block {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .iv-page-block {

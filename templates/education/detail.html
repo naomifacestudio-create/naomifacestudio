@@ -12,18 +12,18 @@
 {% block structured_data %}<script type="application/ld+json">{{ seo.schema_json|safe }}</script>{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=29">
+<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=31">
 {% endblock %}
 
 {% block content %}
 {# No max-w-4xl wrapper — section Contained/Full from the builder controls width. #}
-<div class="py-12">
+<div class="py-8">
     <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
         <div class="iv-page-section__inner">
-            <h1 class="text-4xl font-bold mb-6 text-[#5D5350]">{{ education.get_title }}</h1>
+            <h1 class="text-4xl font-bold text-[#5D5350] text-left">{{ education.get_title }}</h1>
 
             {% if education.thumbnail %}
-            <div class="mb-8 flex justify-center">
+            <div class="mb-6 flex justify-center">
                 <img src="{{ education.thumbnail.url }}" alt="{{ education.get_title }}" class="max-w-full h-auto object-contain rounded-lg">
             </div>
             {% endif %}

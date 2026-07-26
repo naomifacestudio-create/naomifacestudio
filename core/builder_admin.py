@@ -46,8 +46,8 @@ class LocalizedBuilderAdmin(admin.ModelAdmin):
     )
 
     class Media:
-        # CSS is loaded with cache-bust in content_builder/change_form.html
-        js = ("admin/js/page_builder.js", "admin/js/page_builder_submit.js")
+        # JS/CSS are loaded with cache-bust in content_builder/change_form.html
+        js = ()
 
     def get_view_on_site_url(self, obj):
         if obj is None:

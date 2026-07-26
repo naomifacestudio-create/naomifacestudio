@@ -60,11 +60,11 @@
     width_mobile: 12,
     width_tablet: 12,
     width_desktop: 12,
-    horizontal_align: "center",
+    horizontal_align: "left",
   };
 
   const DEFAULT_BLOCK_SETTINGS = {
-    align: "center",
+    align: "left",
   };
 
   const MEDIA_WIDTH_MIN = 10;
@@ -3481,7 +3481,8 @@
     postRoot.pageBuilderState = state;
     window.PageBuilderGlue = {
       flushBeforeSubmit(currentState) {
-        return savePageContent(currentState || state, { force: true });
+        // Only POST the page document when the canvas is dirty.
+        return savePageContent(currentState || state);
       },
       abandonPendingUploads(currentState) {
         return abandonPendingUploads(currentState || state);
