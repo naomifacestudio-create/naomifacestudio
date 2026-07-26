@@ -178,4 +178,11 @@
   } else {
     boot();
   }
+
+  document.addEventListener("seo-analyzer-hydrated", function (event) {
+    var root = event.detail && event.detail.root;
+    if (root && root.matches("[data-seo-readability-analyzer]")) {
+      initReadabilityAnalyzer(root);
+    }
+  });
 })();

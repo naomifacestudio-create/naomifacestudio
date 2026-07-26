@@ -7,36 +7,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 
-from seo.ai_readiness import analyze_ai_readiness
 from seo.analysis_ui import (
-    render_ai_readiness_html,
-    render_cornerstone_analysis_html,
     render_empty_analysis_html,
-    render_image_seo_html,
-    render_internal_linking_html,
-    render_keyword_analysis_html,
-    render_open_graph_preview_html,
-    render_readability_analysis_html,
     render_robots_preview_html,
-    render_schema_preview_html,
-    render_serp_preview_html,
-    render_slug_analysis_html,
-    render_twitter_preview_html,
-    render_unified_scoring_html,
 )
-from seo.image_seo import analyze_image_seo
 from seo.robots import build_robots_preview
-from seo.serp_preview import build_serp_preview
-from seo.unified_scoring import analyze_unified_seo
-from seo.cornerstone import analyze_cornerstone_content
-from seo.internal_linking import analyze_internal_linking
-from seo.keyword_analyzer import analyze_content_object
-from seo.open_graph import build_open_graph_tags, validate_og_image_file
-from seo.readability_analyzer import analyze_readability_for_object
+from seo.open_graph import validate_og_image_file
 from seo.reading_time import reading_time_for_content_object
-from seo.schema.engine import preview_schema_bundle
-from seo.slug_analyzer import analyze_slug_for_object
-from seo.twitter_card import build_twitter_card_tags
 from seo.models import SeoMetadata
 from seo.dashboard_actions import apply_bulk_action
 from seo.forms import SeoMetadataAdminForm
@@ -78,6 +55,7 @@ class SeoAnalyzerAdminMixin:
             )
         }
         js = (
+            "admin/js/seo_lazy_hydrate.js",
             "admin/js/seo_keyword_analyzer.js",
             "admin/js/seo_slug_analyzer.js",
             "admin/js/seo_ai_readiness.js",
@@ -141,62 +119,56 @@ class SeoAnalyzerAdminMixin:
 
         return content_type_id, object_id
 
-    @admin.display(description="Keyword analysis")
-    def keyword_analysis_panel(self, obj):
-        if obj is None:
-            return render_empty_analysis_html(
-                "Save the post to see keyword analysis."
-            )
+    def _deferred_analyzer_panel(
+        self,
+        obj,
+        *,
+        api_name: str,
+        analyzer_type: str,
+        message: str,
+    ):
+        """
+        Return a lightweight shell + live-config only.
 
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
+        Cement is fast partly because it has one SEO profile; Naomi has two
+        (hr/en). Running every analyzer server-side on change_form made Spremi
+        redirects feel multi-second. Live JS hydrates these shells on demand.
+        """
+        if obj is None:
             return format_html(
                 "{}{}",
-                render_empty_analysis_html(
-                    "Save the post, then enter a focus keyword for live analysis."
-                ),
-                self._analyzer_config_html(api_name="seo_keyword_analysis"),
+                render_empty_analysis_html(message, analyzer_type=analyzer_type),
+                self._analyzer_config_html(api_name=api_name),
             )
 
-        result = analyze_content_object(content_object, obj, visible_only=False)
+        content_object = self._resolve_inline_content_object(obj)
+        content_type_id, object_id = self._inline_analyzer_config_ids(obj, content_object)
         return format_html(
             "{}{}",
-            render_keyword_analysis_html(result),
+            render_empty_analysis_html(message, analyzer_type=analyzer_type),
             self._analyzer_config_html(
-                api_name="seo_keyword_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
+                api_name=api_name,
+                content_type_id=content_type_id,
+                object_id=object_id,
             ),
+        )
+
+    @admin.display(description="Keyword analysis")
+    def keyword_analysis_panel(self, obj):
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_keyword_analysis",
+            analyzer_type="keyword",
+            message="Keyword analysis loads when you open SEO.",
         )
 
     @admin.display(description="Readability analysis")
     def readability_analysis_panel(self, obj):
-        if obj is None:
-            return render_empty_analysis_html(
-                "Save the post to see readability analysis.",
-                analyzer_type="readability",
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to run readability analysis.",
-                    analyzer_type="readability",
-                ),
-                self._analyzer_config_html(api_name="seo_readability_analysis"),
-            )
-
-        result = analyze_readability_for_object(content_object, visible_only=False)
-        return format_html(
-            "{}{}",
-            render_readability_analysis_html(result),
-            self._analyzer_config_html(
-                api_name="seo_readability_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_readability_analysis",
+            analyzer_type="readability",
+            message="Readability analysis loads when you open SEO.",
         )
 
     @admin.display(description="OG image validation")
@@ -219,23 +191,11 @@ class SeoAnalyzerAdminMixin:
 
     @admin.display(description="Open Graph preview")
     def og_preview_panel(self, obj):
-        request = getattr(self, "_current_request", None)
-        content_object = self._resolve_inline_content_object(obj)
-        tags = build_open_graph_tags(
-            content_object,
-            request,
-            metadata=obj,
-            visible_only=False,
-        )
-        content_type_id, object_id = self._inline_analyzer_config_ids(obj, content_object)
-        return format_html(
-            "{}{}",
-            render_open_graph_preview_html(tags),
-            self._analyzer_config_html(
-                api_name="seo_open_graph_preview",
-                content_type_id=content_type_id,
-                object_id=object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_open_graph_preview",
+            analyzer_type="open_graph",
+            message="Open Graph preview loads when you open SEO.",
         )
 
     @admin.display(description="Reading time")
@@ -272,282 +232,65 @@ class SeoAnalyzerAdminMixin:
 
     @admin.display(description="Twitter Card preview")
     def twitter_preview_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_twitter_card_preview")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Enter Twitter fields — the preview updates as you type.",
-                    analyzer_type="twitter",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the full Twitter preview.",
-                    analyzer_type="twitter",
-                ),
-                config_html,
-            )
-
-        og_tags = build_open_graph_tags(content_object, metadata=obj, visible_only=False)
-        tags = build_twitter_card_tags(
-            content_object,
-            metadata=obj,
-            og_tags=og_tags,
-            visible_only=False,
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_twitter_card_preview",
+            analyzer_type="twitter",
+            message="Twitter preview loads when you open SEO.",
         )
-        return format_html(
-            "{}{}",
-            render_twitter_preview_html(tags),
-            self._analyzer_config_html(
-                api_name="seo_twitter_card_preview",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
-        )
-
 
     @admin.display(description="Schema.org preview")
     def schema_preview_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_schema_preview")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Choose a schema type — the JSON-LD preview updates as you edit.",
-                    analyzer_type="schema",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see JSON-LD and Google validation.",
-                    analyzer_type="schema",
-                ),
-                config_html,
-            )
-
-        request = getattr(self, "_current_request", None)
-        try:
-            _, payloads, validation = preview_schema_bundle(
-                request,
-                content_object,
-                metadata=obj,
-                schema_type=obj.schema_type or None,
-                visible_only=False,
-            )
-        except Exception as exc:  # noqa: BLE001
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    f"Schema preview unavailable: {exc}",
-                    analyzer_type="schema",
-                ),
-                config_html,
-            )
-        return format_html(
-            "{}{}",
-            render_schema_preview_html(
-                schema_types=validation.schema_types,
-                json_payloads=payloads,
-                validation=validation,
-            ),
-            self._analyzer_config_html(
-                api_name="seo_schema_preview",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_schema_preview",
+            analyzer_type="schema",
+            message="Schema preview loads when you open SEO.",
         )
 
     @admin.display(description="Internal links")
     def internal_linking_analysis_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_internal_linking_analysis")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the blog post to see internal link suggestions.",
-                    analyzer_type="internal_linking",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to run the internal link analysis.",
-                    analyzer_type="internal_linking",
-                ),
-                config_html,
-            )
-
-        result = analyze_internal_linking(content_object, obj, visible_only=False)
-        return format_html(
-            "{}{}",
-            render_internal_linking_html(result),
-            self._analyzer_config_html(
-                api_name="seo_internal_linking_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_internal_linking_analysis",
+            analyzer_type="internal_linking",
+            message="Internal link analysis loads when you open SEO.",
         )
 
     @admin.display(description="Slug analysis")
     def slug_analysis_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_slug_analysis")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Enter a slug in the post details — analysis updates live.",
-                    analyzer_type="slug",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the slug analysis.",
-                    analyzer_type="slug",
-                ),
-                config_html,
-            )
-
-        result = analyze_slug_for_object(content_object, obj)
-        return format_html(
-            "{}{}",
-            render_slug_analysis_html(result),
-            self._analyzer_config_html(
-                api_name="seo_slug_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_slug_analysis",
+            analyzer_type="slug",
+            message="Slug analysis loads when you open SEO.",
         )
 
     @admin.display(description="AI readiness")
     def ai_readiness_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_ai_readiness")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the AI readiness analysis.",
-                    analyzer_type="ai_readiness",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the AI readiness analysis.",
-                    analyzer_type="ai_readiness",
-                ),
-                config_html,
-            )
-
-        result = analyze_ai_readiness(content_object, obj)
-        return format_html(
-            "{}{}",
-            render_ai_readiness_html(result),
-            self._analyzer_config_html(
-                api_name="seo_ai_readiness",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_ai_readiness",
+            analyzer_type="ai_readiness",
+            message="AI readiness loads when you open SEO.",
         )
 
     @admin.display(description="Image analysis")
     def image_seo_analysis_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_image_seo_analysis")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the image analysis.",
-                    analyzer_type="image_seo",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post and add images in the builder.",
-                    analyzer_type="image_seo",
-                ),
-                config_html,
-            )
-
-        result = analyze_image_seo(content_object, obj, visible_only=False)
-        return format_html(
-            "{}{}",
-            render_image_seo_html(result),
-            self._analyzer_config_html(
-                api_name="seo_image_seo_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_image_seo_analysis",
+            analyzer_type="image_seo",
+            message="Image analysis loads when you open SEO.",
         )
 
     @admin.display(description="Google SERP preview")
     def serp_preview_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_serp_preview")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Enter SEO title and meta description — the preview updates as you type.",
-                    analyzer_type="serp",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        request = getattr(self, "_current_request", None)
-
-        if content_object is None or not getattr(content_object, "pk", None):
-            preview = build_serp_preview(None, request, obj)
-            return format_html(
-                "{}{}",
-                render_serp_preview_html(preview),
-                config_html,
-            )
-
-        preview = build_serp_preview(content_object, request, obj)
-        return format_html(
-            "{}{}",
-            render_serp_preview_html(preview),
-            self._analyzer_config_html(
-                api_name="seo_serp_preview",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_serp_preview",
+            analyzer_type="serp",
+            message="SERP preview loads when you open SEO.",
         )
 
     @admin.display(description="Robots meta tag")
@@ -557,85 +300,25 @@ class SeoAnalyzerAdminMixin:
 
     @admin.display(description="SEO score")
     def unified_score_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_unified_score")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to see the overall SEO score.",
-                    analyzer_type="unified_score",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to run unified SEO scoring.",
-                    analyzer_type="unified_score",
-                ),
-                config_html,
-            )
-
-        request = getattr(self, "_current_request", None)
-        try:
-            result = analyze_unified_seo(content_object, obj, request=request, visible_only=False)
-        except Exception as exc:  # noqa: BLE001
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    f"SEO score unavailable: {exc}",
-                    analyzer_type="unified_score",
-                ),
-                config_html,
-            )
-        return format_html(
-            "{}{}",
-            render_unified_scoring_html(result),
-            self._analyzer_config_html(
-                api_name="seo_unified_score",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        stored = getattr(obj, "seo_score", None) if obj is not None else None
+        if stored is not None:
+            message = f"Overall SEO score loads when you open SEO (last saved: {stored}/100)."
+        else:
+            message = "Overall SEO score loads when you open SEO."
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_unified_score",
+            analyzer_type="unified_score",
+            message=message,
         )
 
     @admin.display(description="Cornerstone analysis")
     def cornerstone_analysis_panel(self, obj):
-        config_html = self._analyzer_config_html(api_name="seo_cornerstone_analysis")
-
-        if obj is None:
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the blog post to see the cornerstone analysis.",
-                    analyzer_type="cornerstone",
-                ),
-                config_html,
-            )
-
-        content_object = getattr(obj, "content_object", None)
-        if content_object is None or not getattr(content_object, "pk", None):
-            return format_html(
-                "{}{}",
-                render_empty_analysis_html(
-                    "Save the post to run the cornerstone analysis.",
-                    analyzer_type="cornerstone",
-                ),
-                config_html,
-            )
-
-        result = analyze_cornerstone_content(content_object, obj, visible_only=False)
-        return format_html(
-            "{}{}",
-            render_cornerstone_analysis_html(result),
-            self._analyzer_config_html(
-                api_name="seo_cornerstone_analysis",
-                content_type_id=obj.content_type_id,
-                object_id=obj.object_id,
-            ),
+        return self._deferred_analyzer_panel(
+            obj,
+            api_name="seo_cornerstone_analysis",
+            analyzer_type="cornerstone",
+            message="Cornerstone analysis loads when you open SEO.",
         )
 
 
