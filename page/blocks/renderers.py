@@ -110,9 +110,9 @@ class ImageBlockRenderer:
         caption = str(attrs.get("caption", "")).strip()
         if not src:
             return ""
-        align = settings.get("align", "left")
+        align = settings.get("align", "center")
         if align not in {"left", "center", "right"}:
-            align = "left"
+            align = "center"
         explicit_loading = str(attrs.get("loading") or "").strip().lower()
         if explicit_loading in {"eager", "lazy", "auto"}:
             loading = explicit_loading
@@ -171,9 +171,9 @@ class VideoBlockRenderer:
         aspect = settings.get("aspect", "16:9")
         if aspect not in {"16:9", "4:3"}:
             aspect = "16:9"
-        align = settings.get("align", "left")
+        align = settings.get("align", "center")
         if align not in {"left", "center", "right"}:
-            align = "left"
+            align = "center"
 
         if not embed_url and not file_src:
             return ""
@@ -262,9 +262,9 @@ class FaqBlockRenderer:
 
 def _block_align(block: dict[str, Any]) -> str:
     settings = block.get("settings") or {}
-    align = settings.get("align", "left")
+    align = settings.get("align", "center")
     if align not in {"left", "center", "right"}:
-        return "left"
+        return "center"
     return align
 
 

@@ -60,11 +60,11 @@
     width_mobile: 12,
     width_tablet: 12,
     width_desktop: 12,
-    horizontal_align: "left",
+    horizontal_align: "center",
   };
 
   const DEFAULT_BLOCK_SETTINGS = {
-    align: "left",
+    align: "center",
   };
 
   const MEDIA_WIDTH_MIN = 10;
@@ -297,7 +297,7 @@
         id: uid("blk"),
         type: "image",
         settings: { ...DEFAULT_BLOCK_SETTINGS, width_percent: "100" },
-        attrs: { src: "", path: "", alt: "", caption: "", media_asset_id: "" },
+        attrs: { src: "", path: "", storage: "", alt: "", caption: "", media_asset_id: "" },
       };
     }
     if (type === "video") {
@@ -308,9 +308,11 @@
         attrs: {
           url: "",
           path: "",
+          storage: "",
           src: "",
           poster: "",
           poster_path: "",
+          poster_storage: "",
           caption: "",
         },
       };
@@ -452,7 +454,7 @@
   }
 
   function blockAlignClass(block, prefix) {
-    const align = (block.settings || {}).align || "left";
+    const align = (block.settings || {}).align || "center";
     return `${prefix}--align-${align}`;
   }
 
@@ -1062,7 +1064,7 @@
   }
 
   function mediaAlignClass(block) {
-    const align = (block.settings || {}).align || "left";
+    const align = (block.settings || {}).align || "center";
     return `iv-page-media iv-page-media--align-${align}`;
   }
 
@@ -1999,9 +2001,11 @@
         videoBlock.attrs.url = value;
         if (value.trim()) {
           videoBlock.attrs.path = "";
+          videoBlock.attrs.storage = "";
           videoBlock.attrs.src = "";
           videoBlock.attrs.poster = "";
           videoBlock.attrs.poster_path = "";
+          videoBlock.attrs.poster_storage = "";
         }
         markDirty(state);
         renderCanvas(state);
@@ -2035,9 +2039,11 @@
         clearBtn.className = "page-builder__inspector-btn";
         clearBtn.addEventListener("click", () => {
           videoBlock.attrs.path = "";
+          videoBlock.attrs.storage = "";
           videoBlock.attrs.src = "";
           videoBlock.attrs.poster = "";
           videoBlock.attrs.poster_path = "";
+          videoBlock.attrs.poster_storage = "";
           videoBlock.attrs.video_width = "";
           videoBlock.attrs.video_height = "";
           markDirty(state);
@@ -2293,6 +2299,7 @@
 
       block.attrs.src = data.url;
       block.attrs.path = data.path;
+      block.attrs.storage = data.storage || "default";
       if (!String(block.attrs.alt || "").trim()) {
         const fromServer = String(data.alt || "").trim();
         const fromFile = String(file.name || "")
@@ -2301,7 +2308,7 @@
           .trim();
         block.attrs.alt = fromServer || fromFile || "Image";
       }
-      trackSessionUpload(state, "default", data.path);
+      trackSessionUpload(state, block.attrs.storage, data.path);
       markDirty(state);
       renderCanvas(state);
       renderEditPanel(state);
@@ -2400,9 +2407,10 @@
       }
       block.attrs.poster = data.url;
       block.attrs.poster_path = data.path;
+      block.attrs.poster_storage = data.storage || "default";
       block.attrs.video_width = poster.width;
       block.attrs.video_height = poster.height;
-      trackSessionUpload(state, "default", data.path);
+      trackSessionUpload(state, block.attrs.poster_storage, data.path);
       markDirty(state);
       renderCanvas(state);
     } catch (_error) {
@@ -2444,8 +2452,9 @@
         }
         block.attrs.src = data.url;
         block.attrs.path = data.path;
+        block.attrs.storage = data.storage || "default";
         block.attrs.url = "";
-        trackSessionUpload(state, "default", data.path);
+        trackSessionUpload(state, block.attrs.storage, data.path);
         markDirty(state);
         renderCanvas(state);
         renderEditPanel(state);
@@ -2491,7 +2500,7 @@
   }
 
   function renderBlockPreview(state, block, preview) {
-    const align = (block.settings || {}).align || "left";
+    const align = (block.settings || {}).align || "center";
 
     if (block.type === "heading") {
       const level = block.attrs.level || 2;

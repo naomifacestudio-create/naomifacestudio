@@ -20,11 +20,11 @@ DEFAULT_COLUMN_SETTINGS: dict[str, Any] = {
     "width_mobile": 12,
     "width_tablet": 12,
     "width_desktop": 12,
-    "horizontal_align": "left",
+    "horizontal_align": "center",
 }
 
 DEFAULT_BLOCK_SETTINGS: dict[str, str] = {
-    "align": "left",
+    "align": "center",
 }
 
 MEDIA_WIDTH_PERCENT_MIN = 10
@@ -122,6 +122,7 @@ def create_image_block() -> dict[str, Any]:
         "attrs": {
             "src": "",
             "path": "",
+            "storage": "",
             "alt": "",
             "caption": "",
             "media_asset_id": "",
@@ -137,9 +138,11 @@ def create_video_block() -> dict[str, Any]:
         "attrs": {
             "url": "",
             "path": "",
+            "storage": "",
             "src": "",
             "poster": "",
             "poster_path": "",
+            "poster_storage": "",
             "caption": "",
         },
     }
