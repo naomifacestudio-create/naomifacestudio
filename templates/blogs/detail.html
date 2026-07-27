@@ -12,17 +12,27 @@
 {% block structured_data %}<script type="application/ld+json">{{ seo.schema_json|safe }}</script>{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=34">
+<link rel="stylesheet" href="{% static 'css/iv-page.css' %}?v=43">
 {% endblock %}
 
 {% block content %}
-{# No max-w-4xl wrapper — section Contained/Full from the builder controls width. #}
 <div class="py-8">
-    <header class="iv-page-section iv-page-section--width-contained iv-page-detail-chrome">
+    <header class="iv-page-section iv-page-section--width-full iv-page-detail-chrome iv-page-detail-chrome--blog-title-center">
         <div class="iv-page-section__inner">
-            <h1 class="iv-page-detail-title text-4xl font-bold text-[#5D5350]" style="text-align:left;">{{ blog.get_title }}</h1>
+            <h1 class="iv-page-detail-title">{{ blog.get_title }}</h1>
+            <div class="iv-page-detail-meta">
+                <time datetime="{{ blog.publish_date|date:'Y-m-d' }}">
+                    {% trans "Published:" %} {{ blog.publish_date|date:"d.m.Y." }}
+                </time>
+                {% if blog.updated_at|date:"Ymd" > blog.publish_date|date:"Ymd" %}
+                <time datetime="{{ blog.updated_at|date:'Y-m-d' }}">
+                    {% trans "Updated:" %} {{ blog.updated_at|date:"d.m.Y." }}
+                </time>
+                {% endif %}
+            </div>
         </div>
     </header>
+    <hr class="iv-page-divider" />
     <div class="iv-page-host text-[#5D5350]">
         {% render_localized_page blog %}
     </div>

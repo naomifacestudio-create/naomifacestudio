@@ -1667,6 +1667,14 @@ msgstr "Pauza nakon tretmana (minute)"
 msgid "Treatment"
 msgstr "Tretman"
 
+#: .\templates\blogs\detail.html
+msgid "Published:"
+msgstr "Objavljeno:"
+
+#: .\templates\blogs\detail.html
+msgid "Updated:"
+msgstr "Ažurirano:"
+
 #~ msgid "Blog Details"
 #~ msgstr "Detalji bloga"
 
