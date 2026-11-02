@@ -38,8 +38,7 @@ USE_POSTGRES=False
 # DB_PORT=5432
 
 USE_R2=False
-BREVO_SMTP_LOGIN=your-brevo-smtp-login
-BREVO_SMTP_KEY=your-brevo-smtp-key
+BREVO_API_KEY=your-brevo-api-key
 DEFAULT_FROM_EMAIL=info@naomifacestudio.com
 ADMIN_EMAIL=info@naomifacestudio.com
 SITE_URL=http://localhost:8000
@@ -114,5 +113,5 @@ python manage.py runserver
 - If static files don't load: Run `python manage.py collectstatic`
 - If translations don't work: Run `python manage.py compilemessages`
 - If R2 uploads fail: Check credentials and bucket configuration
-- If emails don't send: Verify Brevo SMTP login and key, and that the sender address is verified in Brevo
+- If emails don't send: Verify the Brevo API key, that Render's IP is not blocked under Authorized IPs in Brevo, and that the sender address is verified in Brevo
 

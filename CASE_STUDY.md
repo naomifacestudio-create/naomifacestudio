@@ -67,7 +67,7 @@ The application follows a **Model-View-Template (MVT)** architecture pattern usi
         ▼            ▼            ▼
 ┌─────────────┐ ┌──────────┐ ┌──────────────┐
 │ PostgreSQL  │ │Cloudflare│ │   Brevo      │
-│  Database   │ │    R2     │ │   SMTP Relay │
+│  Database   │ │    R2     │ │   Email API  │
 │             │ │  Storage  │ │              │
 └─────────────┘ └──────────┘ └──────────────┘
 ```
@@ -575,8 +575,8 @@ Treatment ──┬──> Reservation (ForeignKey)
 ### 9.1 Brevo Integration
 
 **Configuration:**
-- SMTP backend via Brevo
-- SMTP login and key authentication
+- Brevo API backend via django-anymail
+- API key authentication
 - TLS encryption
 - Custom from email address
 
@@ -951,9 +951,8 @@ R2_BUCKET_NAME=
 R2_ENDPOINT_URL=
 R2_CUSTOM_DOMAIN=
 
-# Brevo SMTP
-BREVO_SMTP_LOGIN=
-BREVO_SMTP_KEY=
+# Brevo API
+BREVO_API_KEY=
 DEFAULT_FROM_EMAIL=
 ADMIN_EMAIL=
 
