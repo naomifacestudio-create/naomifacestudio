@@ -7,7 +7,7 @@
 **Key Highlights:**
 - **Platform Type:** B2C E-commerce & Booking System
 - **Primary Market:** Croatian and English support
-- **Technology:** Django 5.0.1, PostgreSQL, Cloudflare R2, SendGrid
+- **Technology:** Django 5.0.1, PostgreSQL, Cloudflare R2, Brevo
 - **Deployment:** Render.com (Cloud Platform)
 - **Development Timeline:** Modern Django application with production-ready features
 
@@ -66,8 +66,8 @@ The application follows a **Model-View-Template (MVT)** architecture pattern usi
         ┌────────────┼────────────┐
         ▼            ▼            ▼
 ┌─────────────┐ ┌──────────┐ ┌──────────────┐
-│ PostgreSQL  │ │Cloudflare│ │  SendGrid    │
-│  Database   │ │    R2     │ │   Email API  │
+│ PostgreSQL  │ │Cloudflare│ │   Brevo      │
+│  Database   │ │    R2     │ │   SMTP Relay │
 │             │ │  Storage  │ │              │
 └─────────────┘ └──────────┘ └──────────────┘
 ```
@@ -106,7 +106,7 @@ naomi_face_studio/
 
 #### Third-Party Services
 - **Cloud Storage:** Cloudflare R2 (S3-compatible)
-- **Email Service:** SendGrid
+- **Email Service:** Brevo
 - **Hosting:** Render.com
 - **CDN:** Cloudflare (via custom domain)
 
@@ -273,7 +273,7 @@ A sophisticated calendar-based booking system with intelligent time slot managem
 2. Fills in voucher details
 3. Chooses email delivery option
 4. System creates voucher record
-5. Email sent automatically via SendGrid
+5. Email sent automatically via Brevo
 5. Admin can track sent status
 
 ### 3.6 Contact Form System
@@ -572,11 +572,11 @@ Treatment ──┬──> Reservation (ForeignKey)
 
 ## 9. Email System
 
-### 9.1 SendGrid Integration
+### 9.1 Brevo Integration
 
 **Configuration:**
-- SMTP backend via SendGrid
-- API key authentication
+- SMTP backend via Brevo
+- SMTP login and key authentication
 - TLS encryption
 - Custom from email address
 
@@ -600,7 +600,7 @@ Treatment ──┬──> Reservation (ForeignKey)
 - HTML email templates
 - Language-specific content
 - Professional branding
-- Delivery tracking (via SendGrid dashboard)
+- Delivery tracking (via Brevo dashboard)
 
 ---
 
@@ -632,7 +632,7 @@ Treatment ──┬──> Reservation (ForeignKey)
 **Production:**
 - PostgreSQL database
 - Cloudflare R2 storage
-- SendGrid email
+- Brevo email
 - Debug mode disabled
 - Security headers enabled
 - Custom domain with SSL
@@ -879,7 +879,7 @@ Contact forms vulnerable to bot submissions.
 ### 16.3 Third-Party Integrations
 
 - **Cloudflare R2:** Media storage
-- **SendGrid:** Email delivery
+- **Brevo:** Email delivery
 - **Render.com:** Hosting and database
 - **Cloudflare CDN:** Content delivery
 
@@ -951,8 +951,9 @@ R2_BUCKET_NAME=
 R2_ENDPOINT_URL=
 R2_CUSTOM_DOMAIN=
 
-# SendGrid
-SENDGRID_API_KEY=
+# Brevo SMTP
+BREVO_SMTP_LOGIN=
+BREVO_SMTP_KEY=
 DEFAULT_FROM_EMAIL=
 ADMIN_EMAIL=
 

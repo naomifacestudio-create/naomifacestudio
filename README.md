@@ -10,7 +10,7 @@ A comprehensive Django web application for a beauty studio featuring treatments,
 - **Reservation System**: Calendar-based booking with working hours and duration-based blocking
 - **Gift Vouchers**: Purchase and email delivery system
 - **Contact Forms**: With spam protection (rate limiting + honeypot)
-- **Email Notifications**: SendGrid integration for all email communications
+- **Email Notifications**: Brevo SMTP integration for all email communications
 - **Cloudflare R2 Storage**: For media files with automatic orphaned file cleanup
 - **SEO Optimized**: Modern SEO practices including canonical URLs, meta tags, and structured data
 - **Mobile-First Design**: Fully responsive with Tailwind CSS and Flowbite
@@ -22,7 +22,7 @@ A comprehensive Django web application for a beauty studio featuring treatments,
 - PostgreSQL
 - Tailwind CSS + Flowbite
 - Custom multilingual visual page builder
-- SendGrid
+- Brevo (SMTP)
 - Cloudflare R2
 - WhiteNoise (for static files)
 
@@ -63,8 +63,9 @@ R2_BUCKET_NAME=
 R2_ENDPOINT_URL=
 R2_CUSTOM_DOMAIN=
 
-# SendGrid
-SENDGRID_API_KEY=your-sendgrid-api-key
+# Brevo SMTP
+BREVO_SMTP_LOGIN=your-brevo-smtp-login
+BREVO_SMTP_KEY=your-brevo-smtp-key
 DEFAULT_FROM_EMAIL=info@naomifacestudio.com
 ADMIN_EMAIL=info@naomifacestudio.com
 
@@ -156,7 +157,7 @@ Set these in Render's environment variables:
 - `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`
 - `USE_R2=True`
 - R2 credentials
-- `SENDGRID_API_KEY`
+- `BREVO_SMTP_LOGIN`, `BREVO_SMTP_KEY`
 - `ALLOWED_HOSTS`
 - `SITE_URL`
 

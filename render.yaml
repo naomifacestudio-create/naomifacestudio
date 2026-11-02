@@ -20,7 +20,9 @@ services:
         sync: false
       - key: R2_CUSTOM_DOMAIN
         sync: false
-      - key: SENDGRID_API_KEY
+      - key: BREVO_SMTP_LOGIN
+        sync: false
+      - key: BREVO_SMTP_KEY
         sync: false
 
 databases:
